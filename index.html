@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PC2Deal - ตลาดซื้อขายคอมมือสอง</title>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -159,11 +161,70 @@
       text-align: center;
     }
 
-    @media (max-width: 600px) {
-      .header {
-        gap: 10px;
-      }
+    /* LOGIN */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 999;
+    }
 
+    .modal-box {
+      background: white;
+      width: 100%;
+      max-width: 400px;
+      padding: 25px;
+      border-radius: 14px;
+    }
+
+    .modal-box h2 {
+      margin-bottom: 18px;
+    }
+
+    .modal-box input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .modal-box button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .close {
+      background: #e5e7eb !important;
+      color: #222 !important;
+    }
+
+    .switch {
+      text-align: center;
+      margin-top: 15px;
+      color: #2563eb;
+      cursor: pointer;
+    }
+
+    #message {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
       .hero h1 {
         font-size: 26px;
       }
@@ -185,75 +246,268 @@
 
 <body>
 
-  <header>
-    <div class="header">
-      <div class="logo">PC2Deal</div>
-      <button class="login">เข้าสู่ระบบ</button>
-    </div>
-  </header>
+<header>
+  <div class="header">
+    <div class="logo">PC2Deal</div>
+    <button class="login" id="loginButton">เข้าสู่ระบบ</button>
+  </div>
+</header>
 
-  <section class="hero">
-    <h1>ตลาดซื้อขายคอมมือสอง</h1>
-    <p>ซื้อขาย PC และอุปกรณ์คอมพิวเตอร์ง่าย ๆ ในที่เดียว</p>
+<section class="hero">
+  <h1>ตลาดซื้อขายคอมมือสอง</h1>
+  <p>ซื้อขาย PC และอุปกรณ์คอมพิวเตอร์ง่าย ๆ ในที่เดียว</p>
 
-    <div class="search">
-      <input type="text" placeholder="ค้นหา เช่น RTX 3060, i5, RAM...">
-      <button>ค้นหา</button>
-    </div>
-  </section>
+  <div class="search">
+    <input type="text" placeholder="ค้นหา เช่น RTX 3060, i5, RAM...">
+    <button>ค้นหา</button>
+  </div>
+</section>
 
-  <main class="container">
+<main class="container">
 
-    <div class="top">
-      <h2>สินค้าล่าสุด</h2>
-      <button class="sell">+ ลงขายสินค้า</button>
-    </div>
+  <div class="top">
+    <h2>สินค้าล่าสุด</h2>
+    <button class="sell">+ ลงขายสินค้า</button>
+  </div>
 
-    <div class="products">
+  <div class="products">
 
-      <div class="card">
-        <div class="image">🖥️</div>
-        <div class="info">
-          <h3>Gaming PC i5 + RTX 3060</h3>
-          <div class="price">15,900 บาท</div>
-          <div class="location">📍 กรุงเทพฯ</div>
-        </div>
+    <div class="card">
+      <div class="image">🖥️</div>
+      <div class="info">
+        <h3>Gaming PC i5 + RTX 3060</h3>
+        <div class="price">15,900 บาท</div>
+        <div class="location">📍 กรุงเทพฯ</div>
       </div>
-
-      <div class="card">
-        <div class="image">🎮</div>
-        <div class="info">
-          <h3>RTX 3060 12GB</h3>
-          <div class="price">7,500 บาท</div>
-          <div class="location">📍 นครนายก</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="image">💾</div>
-        <div class="info">
-          <h3>RAM DDR4 16GB</h3>
-          <div class="price">1,200 บาท</div>
-          <div class="location">📍 ปทุมธานี</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="image">⚙️</div>
-        <div class="info">
-          <h3>Intel Core i5-12400F</h3>
-          <div class="price">3,900 บาท</div>
-          <div class="location">📍 ชลบุรี</div>
-        </div>
-      </div>
-
     </div>
 
-  </main>
+    <div class="card">
+      <div class="image">🎮</div>
+      <div class="info">
+        <h3>RTX 3060 12GB</h3>
+        <div class="price">7,500 บาท</div>
+        <div class="location">📍 นครนายก</div>
+      </div>
+    </div>
 
-  <footer>
-    PC2Deal © 2026 — ตลาดซื้อขายคอมพิวเตอร์มือสอง
-  </footer>
+    <div class="card">
+      <div class="image">💾</div>
+      <div class="info">
+        <h3>RAM DDR4 16GB</h3>
+        <div class="price">1,200 บาท</div>
+        <div class="location">📍 ปทุมธานี</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="image">⚙️</div>
+      <div class="info">
+        <h3>Intel Core i5-12400F</h3>
+        <div class="price">3,900 บาท</div>
+        <div class="location">📍 ชลบุรี</div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  PC2Deal © 2026 — ตลาดซื้อขายคอมพิวเตอร์มือสอง
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+  <div class="modal-box">
+
+    <h2 id="modalTitle">เข้าสู่ระบบ</h2>
+
+    <input type="email" id="email" placeholder="อีเมล">
+
+    <input type="password" id="password" placeholder="รหัสผ่าน">
+
+    <button id="submitButton">เข้าสู่ระบบ</button>
+
+    <div class="switch" id="switchMode">
+      ยังไม่มีบัญชี? สมัครสมาชิก
+    </div>
+
+    <div id="message"></div>
+
+    <button class="close" id="closeButton">ปิด</button>
+
+  </div>
+</div>
+
+<script>
+
+  // ============================
+  // SUPABASE
+  // ============================
+
+  const SUPABASE_URL = "https://jnkeffwgnjjebujrcprb.supabase.co";
+
+  // ใส่ Publishable Key ของคุณตรงนี้
+  const SUPABASE_KEY = "sb_publishable_q0UFEgWWvBZLXPlEwLX01w_HhK47RtP";
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+  // ============================
+  // LOGIN SYSTEM
+  // ============================
+
+  const loginButton = document.getElementById("loginButton");
+  const loginModal = document.getElementById("loginModal");
+  const closeButton = document.getElementById("closeButton");
+  const submitButton = document.getElementById("submitButton");
+  const switchMode = document.getElementById("switchMode");
+
+  const modalTitle = document.getElementById("modalTitle");
+  const message = document.getElementById("message");
+
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+
+  let registerMode = false;
+
+
+  loginButton.onclick = function() {
+    loginModal.style.display = "flex";
+  };
+
+
+  closeButton.onclick = function() {
+    loginModal.style.display = "none";
+    message.innerText = "";
+  };
+
+
+  switchMode.onclick = function() {
+
+    registerMode = !registerMode;
+
+    if (registerMode) {
+
+      modalTitle.innerText = "สมัครสมาชิก";
+      submitButton.innerText = "สมัครสมาชิก";
+
+      switchMode.innerText =
+        "มีบัญชีแล้ว? เข้าสู่ระบบ";
+
+    } else {
+
+      modalTitle.innerText = "เข้าสู่ระบบ";
+      submitButton.innerText = "เข้าสู่ระบบ";
+
+      switchMode.innerText =
+        "ยังไม่มีบัญชี? สมัครสมาชิก";
+    }
+
+  };
+
+
+  submitButton.onclick = async function() {
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+
+    if (!email || !password) {
+      message.innerText = "กรุณากรอกอีเมลและรหัสผ่าน";
+      return;
+    }
+
+    message.innerText = "กำลังดำเนินการ...";
+
+
+    if (registerMode) {
+
+      const { data, error } =
+        await supabaseClient.auth.signUp({
+          email: email,
+          password: password
+        });
+
+      if (error) {
+
+        message.innerText = error.message;
+
+      } else {
+
+        message.innerText =
+          "สมัครสมาชิกสำเร็จ! กรุณาตรวจสอบอีเมลเพื่อยืนยันบัญชี";
+
+      }
+
+    } else {
+
+      const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+
+      if (error) {
+
+        message.innerText = error.message;
+
+      } else {
+
+        message.innerText = "เข้าสู่ระบบสำเร็จ!";
+
+        loginButton.innerText = "ออกจากระบบ";
+
+        setTimeout(function() {
+          loginModal.style.display = "none";
+        }, 1000);
+
+      }
+
+    }
+
+  };
+
+
+  // ตรวจสอบว่ามีผู้ใช้เข้าสู่ระบบอยู่หรือไม่
+
+  async function checkUser() {
+
+    const { data } =
+      await supabaseClient.auth.getUser();
+
+    if (data.user) {
+
+      loginButton.innerText = "ออกจากระบบ";
+
+    }
+
+  }
+
+
+  loginButton.addEventListener("click", async function() {
+
+    const { data } =
+      await supabaseClient.auth.getUser();
+
+    if (data.user) {
+
+      await supabaseClient.auth.signOut();
+
+      loginButton.innerText = "เข้าสู่ระบบ";
+
+      alert("ออกจากระบบแล้ว");
+
+    }
+
+  });
+
+
+  checkUser();
+
+</script>
 
 </body>
 </html>

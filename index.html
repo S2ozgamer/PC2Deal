@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -20,10 +21,6 @@ font-family:Arial,sans-serif;
 background:#f5f6f8;
 color:#222
 }
-
-/* =========================
-HEADER
-========================= */
 
 header{
 background:#111827;
@@ -52,10 +49,6 @@ padding:9px 14px;
 border-radius:8px;
 cursor:pointer
 }
-
-/* =========================
-HERO
-========================= */
 
 .hero{
 background:#1f2937;
@@ -96,10 +89,6 @@ border-radius:8px;
 cursor:pointer;
 font-weight:bold
 }
-
-/* =========================
-PRODUCTS
-========================= */
 
 .container{
 max-width:1100px;
@@ -203,10 +192,6 @@ color:#777;
 grid-column:1/-1
 }
 
-/* =========================
-FOOTER
-========================= */
-
 footer{
 margin-top:50px;
 padding:25px;
@@ -214,10 +199,6 @@ background:#111827;
 color:#9ca3af;
 text-align:center
 }
-
-/* =========================
-MODAL
-========================= */
 
 .modal{
 display:none;
@@ -295,10 +276,6 @@ text-align:center;
 font-size:14px
 }
 
-/* =========================
-SELL
-========================= */
-
 .sell-label{
 font-size:14px;
 font-weight:bold;
@@ -330,10 +307,6 @@ object-fit:cover;
 border-radius:10px;
 margin-top:10px
 }
-
-/* =========================
-PRODUCT DETAIL
-========================= */
 
 #detailModal{
 display:none;
@@ -397,10 +370,6 @@ color:#6b7280;
 margin-bottom:12px
 }
 
-/* =========================
-SELLER
-========================= */
-
 .detail-seller{
 display:block;
 width:100%;
@@ -429,10 +398,6 @@ white-space:pre-wrap;
 min-height:80px;
 word-break:break-word
 }
-
-/* =========================
-CONTACT SELLER
-========================= */
 
 .detail-contact{
 display:block!important;
@@ -625,10 +590,6 @@ padding:10px!important;
 flex-shrink:0
 }
 
-/* =========================
-MOBILE
-========================= */
-
 @media(max-width:600px){
 
 .hero h1{
@@ -679,36 +640,20 @@ max-width:85%
 
 <body>
 
-<!-- =========================
-HEADER
-========================= -->
-
 <header>
-
 <div class="header">
-
-<div class="logo">
-PC2Deal
-</div>
+<div class="logo">PC2Deal</div>
 
 <button class="login" id="loginButton">
 เข้าสู่ระบบ
 </button>
 
 </div>
-
 </header>
-
-
-<!-- =========================
-HERO
-========================= -->
 
 <section class="hero">
 
-<h1>
-ตลาดซื้อขายคอมมือสอง
-</h1>
+<h1>ตลาดซื้อขายคอมมือสอง</h1>
 
 <p>
 ซื้อขาย PC และอุปกรณ์คอมพิวเตอร์ง่าย ๆ ในที่เดียว
@@ -730,18 +675,11 @@ placeholder="ค้นหา เช่น RTX 3060, i5, RAM..."
 
 </section>
 
-
-<!-- =========================
-PRODUCT LIST
-========================= -->
-
 <main class="container">
 
 <div class="top">
 
-<h2>
-สินค้าล่าสุด
-</h2>
+<h2>สินค้าล่าสุด</h2>
 
 <button class="sell" id="sellButton">
 + ลงขายสินค้า
@@ -759,15 +697,11 @@ PRODUCT LIST
 
 </main>
 
-
 <footer>
 PC2Deal © 2026 — ตลาดซื้อขายคอมพิวเตอร์มือสอง
 </footer>
 
-
-<!-- =========================
-LOGIN MODAL
-========================= -->
+<!-- LOGIN -->
 
 <div class="modal" id="loginModal">
 
@@ -825,18 +759,13 @@ placeholder="รหัสผ่านใหม่"
 
 </div>
 
-
-<!-- =========================
-SELL MODAL
-========================= -->
+<!-- SELL -->
 
 <div class="modal" id="sellModal">
 
 <div class="modal-box">
 
-<h2>
-ลงขายสินค้า
-</h2>
+<h2>ลงขายสินค้า</h2>
 
 <label class="sell-label">
 ชื่อสินค้า
@@ -913,10 +842,7 @@ alt="ตัวอย่างรูปสินค้า"
 
 </div>
 
-
-<!-- =========================
-PRODUCT DETAIL MODAL
-========================= -->
+<!-- PRODUCT DETAIL -->
 
 <div id="detailModal">
 
@@ -928,14 +854,11 @@ PRODUCT DETAIL MODAL
 
 <div class="detail-content">
 
-<div id="detailTitle" class="detail-title">
-</div>
+<div id="detailTitle" class="detail-title"></div>
 
-<div id="detailPrice" class="detail-price">
-</div>
+<div id="detailPrice" class="detail-price"></div>
 
-<div id="detailLocation" class="detail-location">
-</div>
+<div id="detailLocation" class="detail-location"></div>
 
 <div id="detailSeller" class="detail-seller">
 👤 ผู้ขาย: กำลังโหลด...
@@ -971,10 +894,7 @@ type="button"
 
 </div>
 
-
-<!-- =========================
-CHAT MODAL
-========================= -->
+<!-- CHAT -->
 
 <div id="chatModal">
 
@@ -1010,7 +930,6 @@ class="chat-subtitle"
 
 </div>
 
-
 <div
 id="chatMessages"
 class="chat-messages"
@@ -1023,14 +942,12 @@ class="chat-messages"
 
 </div>
 
-
 <div
 id="chatStatus"
 class="chat-status"
 >
 พร้อมสนทนา
 </div>
-
 
 <div class="chat-input-area">
 
@@ -1053,7 +970,6 @@ type="button"
 </div>
 
 </div>
-
 
 <script>
 
@@ -1231,7 +1147,7 @@ message.innerText =
 
 if(registerMode){
 
-const {error} =
+const {data,error} =
 await supabaseClient
 .auth
 .signUp({
@@ -1245,6 +1161,17 @@ message.innerText =
 error.message;
 
 }else{
+
+if(data.user){
+
+await supabaseClient
+.from("profiles")
+.upsert({
+id:data.user.id,
+display_name:"ผู้ขาย PC2Deal"
+});
+
+}
 
 message.innerText =
 "สมัครสมาชิกสำเร็จ! กรุณาตรวจสอบอีเมล";
@@ -1627,8 +1554,6 @@ return;
 }
 
 
-/* IMAGE CHECK */
-
 if(file){
 
 if(!file.type.startsWith("image/")){
@@ -1743,17 +1668,11 @@ await supabaseClient
 .insert({
 
 user_id:user.id,
-
 title:title,
-
 price:Number(price),
-
 location:location,
-
 description:description,
-
 image_url:image_url,
-
 status:"active"
 
 });
@@ -1896,8 +1815,6 @@ productsBox.innerHTML =
 "";
 
 
-/* CREATE CARDS */
-
 data.forEach(
 function(product){
 
@@ -1968,8 +1885,6 @@ product.description
 
 productsBox.appendChild(card);
 
-
-/* DETAIL BUTTON */
 
 const detailButton =
 card.querySelector(
@@ -2044,8 +1959,6 @@ document.getElementById(
 );
 
 
-/* SAVE PRODUCT */
-
 currentProduct =
 product;
 
@@ -2086,14 +1999,11 @@ detailImage.innerHTML =
 }
 
 
-/* TITLE */
+/* INFO */
 
 detailTitle.innerText =
 product.title ||
 "ไม่ระบุชื่อสินค้า";
-
-
-/* PRICE */
 
 detailPrice.innerText =
 Number(
@@ -2102,9 +2012,6 @@ product.price || 0
 .toLocaleString() +
 " บาท";
 
-
-/* LOCATION */
-
 detailLocation.innerText =
 "📍 " +
 (
@@ -2112,30 +2019,15 @@ product.location ||
 "ไม่ระบุสถานที่"
 );
 
-
-/* DESCRIPTION */
-
 detailDescription.innerText =
 product.description ||
 "ผู้ขายไม่ได้ระบุรายละเอียดสินค้า";
 
-
-/* SELLER */
-
-detailSeller.style.display =
-"block";
-
 detailSeller.innerText =
-"👤 ผู้ขาย: ผู้ขาย PC2Deal";
+"👤 ผู้ขาย: กำลังโหลด...";
 
 
-/* CONTACT BUTTON */
-
-contactSellerButton.style.display =
-"block";
-
-
-/* SHOW MODAL */
+/* SHOW */
 
 detailModal.style.display =
 "flex";
@@ -2144,7 +2036,7 @@ document.body.style.overflow =
 "hidden";
 
 
-/* LOAD SELLER PROFILE */
+/* SELLER */
 
 if(product.user_id){
 
@@ -2174,23 +2066,26 @@ detailSeller.innerText =
 "👤 ผู้ขาย: " +
 seller.display_name;
 
+}else{
+
+detailSeller.innerText =
+"👤 ผู้ขาย: ผู้ขาย PC2Deal";
+
 }
 
 }catch(error){
 
-console.error(
-"โหลดข้อมูลผู้ขายไม่สำเร็จ:",
-error
-);
+console.error(error);
+
+detailSeller.innerText =
+"👤 ผู้ขาย: ผู้ขาย PC2Deal";
 
 }
 
 }
 
 
-/* =========================
-CONTACT SELLER
-========================= */
+/* CONTACT */
 
 contactSellerButton.onclick =
 openChat;
@@ -2199,17 +2094,14 @@ openChat;
 
 
 /* =========================
-CLOSE PRODUCT DETAIL
+CLOSE DETAIL
 ========================= */
 
 function closeProductDetail(){
 
-const detailModal =
 document.getElementById(
 "detailModal"
-);
-
-detailModal.style.display =
+).style.display =
 "none";
 
 document.body.style.overflow =
@@ -2218,26 +2110,14 @@ document.body.style.overflow =
 }
 
 
-/* CLOSE BUTTON */
-
 document.getElementById(
 "closeDetailButton"
 )
 .addEventListener(
 "click",
-function(event){
-
-event.preventDefault();
-
-event.stopPropagation();
-
-closeProductDetail();
-
-}
+closeProductDetail
 );
 
-
-/* CLICK BACKGROUND */
 
 document.getElementById(
 "detailModal"
@@ -2246,9 +2126,7 @@ document.getElementById(
 "click",
 function(event){
 
-if(
-event.target === this
-){
+if(event.target === this){
 
 closeProductDetail();
 
@@ -2315,8 +2193,6 @@ await supabaseClient
 .getUser();
 
 
-/* NOT LOGIN */
-
 if(!userData.user){
 
 closeProductDetail();
@@ -2332,11 +2208,7 @@ return;
 }
 
 
-/* NO PRODUCT */
-
-if(
-!currentProduct
-){
+if(!currentProduct){
 
 alert(
 "ไม่พบข้อมูลสินค้า"
@@ -2346,8 +2218,6 @@ return;
 
 }
 
-
-/* OWN PRODUCT */
 
 if(
 userData.user.id ===
@@ -2363,8 +2233,6 @@ return;
 }
 
 
-/* SET CHAT INFO */
-
 chatProductTitle.innerText =
 currentProduct.title ||
 "สินค้า";
@@ -2372,8 +2240,6 @@ currentProduct.title ||
 chatSellerName.innerText =
 "👤 ผู้ขาย PC2Deal";
 
-
-/* SHOW CHAT */
 
 chatModal.style.display =
 "flex";
@@ -2391,7 +2257,7 @@ document.body.style.overflow =
 
 try{
 
-const {data:seller} =
+const {data:seller,error} =
 await supabaseClient
 .from("profiles")
 .select("display_name")
@@ -2403,6 +2269,7 @@ currentProduct.user_id
 
 
 if(
+!error &&
 seller &&
 seller.display_name
 ){
@@ -2423,7 +2290,7 @@ error
 }
 
 
-/* LOAD MESSAGES */
+/* LOAD CHAT */
 
 await loadMessages();
 
@@ -2433,7 +2300,7 @@ chatInput.focus();
 
 
 /* =========================
-LOAD CHAT MESSAGES
+LOAD MESSAGES
 ========================= */
 
 async function loadMessages(){
@@ -2519,8 +2386,6 @@ return;
 }
 
 
-/* DISPLAY MESSAGES */
-
 data.forEach(
 function(msg){
 
@@ -2553,7 +2418,6 @@ document.createElement(
 bubble.className =
 "message-bubble";
 
-
 bubble.innerText =
 msg.message;
 
@@ -2565,7 +2429,6 @@ document.createElement(
 
 time.className =
 "message-time";
-
 
 time.innerText =
 new Date(
@@ -2595,11 +2458,8 @@ row
 });
 
 
-/* SCROLL BOTTOM */
-
 chatMessages.scrollTop =
 chatMessages.scrollHeight;
-
 
 chatStatus.innerText =
 "พร้อมสนทนา";
@@ -2630,9 +2490,7 @@ await supabaseClient
 .getUser();
 
 
-if(
-!userData.user
-){
+if(!userData.user){
 
 alert(
 "กรุณาเข้าสู่ระบบก่อน"
@@ -2643,9 +2501,7 @@ return;
 }
 
 
-if(
-!currentProduct
-){
+if(!currentProduct){
 
 alert(
 "ไม่พบข้อมูลสินค้า"
@@ -2670,16 +2526,12 @@ return;
 }
 
 
-/* DISABLE */
-
 chatSendButton.disabled =
 true;
 
 chatSendButton.innerText =
 "กำลังส่ง...";
 
-
-/* INSERT MESSAGE */
 
 const {error} =
 await supabaseClient
@@ -2701,16 +2553,12 @@ text
 });
 
 
-/* ENABLE */
-
 chatSendButton.disabled =
 false;
 
 chatSendButton.innerText =
 "ส่ง";
 
-
-/* ERROR */
 
 if(error){
 
@@ -2729,13 +2577,8 @@ return;
 }
 
 
-/* CLEAR */
-
 chatInput.value =
 "";
-
-
-/* RELOAD */
 
 await loadMessages();
 
@@ -2744,15 +2587,13 @@ chatInput.focus();
 }
 
 
-/* SEND BUTTON */
+/* SEND */
 
 chatSendButton.onclick =
 sendMessage;
 
 
-/* =========================
-ENTER TO SEND
-========================= */
+/* ENTER */
 
 chatInput.addEventListener(
 "keydown",
@@ -2774,7 +2615,7 @@ sendMessage();
 
 
 /* =========================
-BACK FROM CHAT
+BACK
 ========================= */
 
 chatBackButton.onclick =
@@ -2786,7 +2627,6 @@ chatModal.style.display =
 document.body.style.overflow =
 "";
 
-
 document.getElementById(
 "detailModal"
 ).style.display =
@@ -2796,17 +2636,14 @@ document.getElementById(
 
 
 /* =========================
-CLICK CHAT BACKGROUND
+CHAT BACKGROUND
 ========================= */
 
 chatModal.addEventListener(
 "click",
 function(event){
 
-if(
-event.target ===
-chatModal
-){
+if(event.target === chatModal){
 
 chatModal.style.display =
 "none";
@@ -2828,16 +2665,12 @@ document.addEventListener(
 "keydown",
 function(event){
 
-if(
-event.key !== "Escape"
-){
+if(event.key !== "Escape"){
 
 return;
 
 }
 
-
-/* CHAT */
 
 if(
 chatModal.style.display ===
@@ -2855,15 +2688,10 @@ return;
 }
 
 
-/* DETAIL */
-
-const modal =
+if(
 document.getElementById(
 "detailModal"
-);
-
-if(
-modal.style.display ===
+).style.display ===
 "flex"
 ){
 
@@ -2876,7 +2704,7 @@ closeProductDetail();
 
 
 /* =========================
-AUTO REFRESH CHAT
+AUTO REFRESH
 ========================= */
 
 setInterval(
@@ -2942,9 +2770,7 @@ searchInput.addEventListener(
 "keydown",
 function(event){
 
-if(
-event.key === "Enter"
-){
+if(event.key === "Enter"){
 
 loadProducts(
 searchInput.value.trim()
@@ -2968,3 +2794,4 @@ loadProducts();
 
 </body>
 </html>
+```

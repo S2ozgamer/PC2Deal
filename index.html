@@ -342,6 +342,8 @@ border-radius:10px;
 margin-top:10px
 }
 
+/* DETAIL */
+
 #detailModal{
 display:none;
 position:fixed;
@@ -465,7 +467,6 @@ font-size:16px;
 font-weight:bold;
 cursor:pointer
 }
-
 
 /* =========================
 CHAT
@@ -624,7 +625,6 @@ margin:0!important;
 padding:10px!important;
 flex-shrink:0
 }
-
 
 /* =========================
 INBOX
@@ -1317,9 +1317,9 @@ type="button"
 
 <script>
 
-/* =========================
+/* =====================================================
 SUPABASE
-========================= */
+===================================================== */
 
 const SUPABASE_URL =
 "https://jnkeffwgnjjebujrcprb.supabase.co";
@@ -1334,9 +1334,9 @@ SUPABASE_KEY
 );
 
 
-/* =========================
+/* =====================================================
 GLOBAL
-========================= */
+===================================================== */
 
 let currentProduct = null;
 
@@ -1344,10 +1344,20 @@ let currentChatPartner = null;
 
 let currentChatProduct = null;
 
+let currentUserId = null;
 
-/* =========================
-LOGIN
-========================= */
+let realtimeChannel = null;
+
+let knownIncomingMessageIds =
+new Set();
+
+let firstMessageCheckDone =
+false;
+
+
+/* =====================================================
+ELEMENTS
+===================================================== */
 
 const loginButton =
 document.getElementById("loginButton");
@@ -1388,10 +1398,51 @@ document.getElementById("newPassword");
 const resetButton =
 document.getElementById("resetButton");
 
+const messageButton =
+document.getElementById("messageButton");
+
+const messageBadge =
+document.getElementById("messageBadge");
+
+const inboxModal =
+document.getElementById("inboxModal");
+
+const inboxList =
+document.getElementById("inboxList");
+
+const inboxCloseButton =
+document.getElementById("inboxCloseButton");
+
+const chatModal =
+document.getElementById("chatModal");
+
+const chatMessages =
+document.getElementById("chatMessages");
+
+const chatInput =
+document.getElementById("chatInput");
+
+const chatSendButton =
+document.getElementById("chatSendButton");
+
+const chatBackButton =
+document.getElementById("chatBackButton");
+
+const chatProductTitle =
+document.getElementById("chatProductTitle");
+
+const chatSellerName =
+document.getElementById("chatSellerName");
+
+const chatStatus =
+document.getElementById("chatStatus");
+
 let registerMode = false;
 
 
-/* LOGIN BUTTON */
+/* =====================================================
+LOGIN BUTTON
+===================================================== */
 
 loginButton.onclick =
 async function(){
@@ -1407,15 +1458,20 @@ await supabaseClient
 .auth
 .signOut();
 
+currentUserId = null;
+
+stopRealtimeMessages();
+
 loginButton.innerText =
 "เข้าสู่ระบบ";
 
-document.getElementById(
-"messageButton"
-).style.display =
+messageButton.style.display =
 "none";
 
-updateMessageBadge();
+messageBadge.style.display =
+"none";
+
+knownIncomingMessageIds.clear();
 
 return;
 
@@ -1427,7 +1483,9 @@ loginModal.style.display =
 };
 
 
-/* CLOSE LOGIN */
+/* =====================================================
+CLOSE LOGIN
+===================================================== */
 
 closeButton.onclick =
 function(){
@@ -1441,7 +1499,9 @@ message.innerText =
 };
 
 
-/* SWITCH LOGIN / REGISTER */
+/* =====================================================
+SWITCH LOGIN / REGISTER
+===================================================== */
 
 switchMode.onclick =
 function(){
@@ -1476,7 +1536,9 @@ switchMode.innerText =
 };
 
 
-/* LOGIN / REGISTER */
+/* =====================================================
+LOGIN / REGISTER
+===================================================== */
 
 submitButton.onclick =
 async function(){
@@ -1523,7 +1585,7 @@ await supabaseClient
 .from("profiles")
 .upsert({
 id:data.user.id,
-display_name:"ผู้ขาย PC2Deal"
+display_name:"ผู้ใช้ PC2Deal"
 });
 
 }
@@ -1535,7 +1597,7 @@ message.innerText =
 
 }else{
 
-const {error} =
+const {data,error} =
 await supabaseClient
 .auth
 .signInWithPassword({
@@ -1550,29 +1612,30 @@ error.message;
 
 }else{
 
+currentUserId =
+data.user.id;
+
 message.innerText =
 "เข้าสู่ระบบสำเร็จ!";
 
 loginButton.innerText =
 "ออกจากระบบ";
 
-document.getElementById(
-"messageButton"
-).style.display =
+messageButton.style.display =
 "block";
 
 setTimeout(
-function(){
+async function(){
 
 loginModal.style.display =
 "none";
 
+await initializeMessaging();
+
 loadProducts();
 
-updateMessageBadge();
-
 },
-1000
+800
 );
 
 }
@@ -1582,7 +1645,9 @@ updateMessageBadge();
 };
 
 
-/* FORGOT PASSWORD */
+/* =====================================================
+FORGOT PASSWORD
+===================================================== */
 
 forgotPassword.onclick =
 async function(){
@@ -1625,10 +1690,12 @@ message.innerText =
 };
 
 
-/* PASSWORD RECOVERY */
+/* =====================================================
+PASSWORD RECOVERY
+===================================================== */
 
 supabaseClient.auth.onAuthStateChange(
-async function(event){
+async function(event,session){
 
 if(event === "PASSWORD_RECOVERY"){
 
@@ -1658,11 +1725,55 @@ resetBox.style.display =
 
 }
 
+if(
+session &&
+session.user &&
+event === "SIGNED_IN"
+){
+
+currentUserId =
+session.user.id;
+
+loginButton.innerText =
+"ออกจากระบบ";
+
+messageButton.style.display =
+"block";
+
+setTimeout(
+function(){
+
+initializeMessaging();
+
+},
+300
+);
+
+}
+
+if(event === "SIGNED_OUT"){
+
+currentUserId = null;
+
+stopRealtimeMessages();
+
+messageButton.style.display =
+"none";
+
+messageBadge.style.display =
+"none";
+
+knownIncomingMessageIds.clear();
+
+}
+
 }
 );
 
 
-/* RESET PASSWORD */
+/* =====================================================
+RESET PASSWORD
+===================================================== */
 
 resetButton.onclick =
 async function(){
@@ -1713,7 +1824,9 @@ location.reload();
 };
 
 
-/* CHECK USER */
+/* =====================================================
+CHECK USER
+===================================================== */
 
 async function checkUser(){
 
@@ -1724,24 +1837,25 @@ await supabaseClient
 
 if(data.user){
 
+currentUserId =
+data.user.id;
+
 loginButton.innerText =
 "ออกจากระบบ";
 
-document.getElementById(
-"messageButton"
-).style.display =
+messageButton.style.display =
 "block";
 
-updateMessageBadge();
+await initializeMessaging();
 
 }else{
+
+currentUserId = null;
 
 loginButton.innerText =
 "เข้าสู่ระบบ";
 
-document.getElementById(
-"messageButton"
-).style.display =
+messageButton.style.display =
 "none";
 
 }
@@ -1749,9 +1863,422 @@ document.getElementById(
 }
 
 
-/* =========================
+/* =====================================================
+MESSAGING INITIALIZE
+===================================================== */
+
+async function initializeMessaging(){
+
+const {data} =
+await supabaseClient
+.auth
+.getUser();
+
+if(!data.user){
+
+return;
+
+}
+
+currentUserId =
+data.user.id;
+
+
+/*
+โหลดข้อความเก่าก่อน
+เพื่อไม่ให้ข้อความเก่าถูกแจ้งเตือนว่าเป็นข้อความใหม่
+*/
+
+await loadKnownIncomingMessages();
+
+firstMessageCheckDone = true;
+
+
+/*
+เปิด Realtime
+*/
+
+startRealtimeMessages();
+
+
+/*
+อัปเดต badge
+*/
+
+await updateMessageBadge();
+
+}
+
+
+/* =====================================================
+LOAD KNOWN INCOMING
+===================================================== */
+
+async function loadKnownIncomingMessages(){
+
+if(!currentUserId){
+
+return;
+
+}
+
+const {data,error} =
+await supabaseClient
+.from("messages")
+.select("id")
+.eq(
+"receiver_id",
+currentUserId
+);
+
+if(error){
+
+console.error(
+"โหลดข้อความเดิมไม่สำเร็จ:",
+error
+);
+
+return;
+
+}
+
+knownIncomingMessageIds =
+new Set(
+(data || []).map(
+function(item){
+return item.id;
+}
+)
+);
+
+
+/*
+ถ้ามีข้อความเดิม
+แสดงจำนวนใน badge
+*/
+
+if(data){
+
+const count =
+data.length;
+
+if(count > 0){
+
+messageBadge.innerText =
+count > 99
+?
+"99+"
+:
+count;
+
+messageBadge.style.display =
+"flex";
+
+}
+
+}
+
+}
+
+
+/* =====================================================
+REALTIME
+===================================================== */
+
+function startRealtimeMessages(){
+
+stopRealtimeMessages();
+
+if(!currentUserId){
+
+return;
+
+}
+
+realtimeChannel =
+supabaseClient
+.channel(
+"pc2deal-messages-" +
+currentUserId +
+"-" +
+Date.now()
+)
+.on(
+"postgres_changes",
+{
+event:"INSERT",
+schema:"public",
+table:"messages",
+filter:
+"receiver_id=eq." +
+currentUserId
+},
+async function(payload){
+
+console.log(
+"ข้อความใหม่:",
+payload.new
+);
+
+const newMessage =
+payload.new;
+
+
+/*
+กันข้อความซ้ำ
+*/
+
+if(
+knownIncomingMessageIds.has(
+newMessage.id
+)
+){
+
+return;
+
+}
+
+knownIncomingMessageIds.add(
+newMessage.id
+);
+
+
+/*
+แสดง badge
+*/
+
+await updateMessageBadge();
+
+
+/*
+ถ้ากำลังเปิดแชทเดียวกับคนส่ง
+ให้โหลดข้อความทันที
+*/
+
+if(
+chatModal.style.display === "flex" &&
+currentChatPartner ===
+newMessage.sender_id &&
+(
+!currentChatProduct ||
+currentChatProduct.id ===
+newMessage.product_id
+)
+){
+
+await loadMessages();
+
+return;
+
+}
+
+
+/*
+แจ้งเตือน
+*/
+
+let senderName =
+"ผู้ใช้ PC2Deal";
+
+try{
+
+const {data:profile} =
+await supabaseClient
+.from("profiles")
+.select("display_name")
+.eq(
+"id",
+newMessage.sender_id
+)
+.maybeSingle();
+
+if(
+profile &&
+profile.display_name
+){
+
+senderName =
+profile.display_name;
+
+}
+
+}catch(error){
+
+console.error(error);
+
+}
+
+
+showNewMessageNotification(
+senderName,
+newMessage.message
+);
+
+
+/*
+ถ้า Inbox เปิดอยู่
+รีเฟรชทันที
+*/
+
+if(
+inboxModal.style.display === "flex"
+){
+
+await loadInbox();
+
+}
+
+}
+)
+.subscribe(
+function(status){
+
+console.log(
+"Message realtime:",
+status
+);
+
+if(status === "SUBSCRIBED"){
+
+console.log(
+"PC2Deal realtime พร้อมใช้งาน"
+);
+
+}
+
+if(status === "CHANNEL_ERROR"){
+
+console.warn(
+"Realtime มีปัญหา จะใช้ระบบตรวจทุก 3 วินาทีแทน"
+);
+
+}
+
+if(status === "TIMED_OUT"){
+
+console.warn(
+"Realtime timeout"
+);
+
+}
+
+}
+);
+
+}
+
+
+/* =====================================================
+STOP REALTIME
+===================================================== */
+
+function stopRealtimeMessages(){
+
+if(realtimeChannel){
+
+supabaseClient
+.removeChannel(
+realtimeChannel
+);
+
+realtimeChannel = null;
+
+}
+
+}
+
+
+/* =====================================================
+NEW MESSAGE NOTIFICATION
+===================================================== */
+
+function showNewMessageNotification(
+senderName,
+text
+){
+
+/*
+ถ้า browser อนุญาต notification
+*/
+
+if(
+"Notification" in window &&
+Notification.permission === "granted"
+){
+
+try{
+
+new Notification(
+"PC2Deal - มีข้อความใหม่",
+{
+body:
+senderName +
+": " +
+text.substring(0,100),
+icon:""
+}
+);
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+
+/*
+แจ้งเตือนแบบ popup ในเว็บ
+*/
+
+alert(
+"💬 มีข้อความใหม่!\n\n" +
+senderName +
+"\n\n" +
+text
+);
+
+}
+
+
+/* =====================================================
+REQUEST NOTIFICATION
+===================================================== */
+
+async function requestBrowserNotification(){
+
+if(
+!("Notification" in window)
+){
+
+return;
+
+}
+
+if(
+Notification.permission ===
+"default"
+){
+
+try{
+
+await Notification.requestPermission();
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+}
+
+
+/* =====================================================
 SELL PRODUCT
-========================= */
+===================================================== */
 
 const sellButton =
 document.getElementById("sellButton");
@@ -1774,8 +2301,6 @@ document.getElementById("productImage");
 const imagePreview =
 document.getElementById("imagePreview");
 
-
-/* IMAGE PREVIEW */
 
 productImage.addEventListener(
 "change",
@@ -1867,9 +2392,9 @@ sellMessage.innerText =
 };
 
 
-/* =========================
+/* =====================================================
 PUBLISH PRODUCT
-========================= */
+===================================================== */
 
 publishButton.onclick =
 async function(){
@@ -1932,7 +2457,6 @@ return;
 
 }
 
-
 if(file){
 
 if(!file.type.startsWith("image/")){
@@ -1965,8 +2489,6 @@ publishButton.innerText =
 let image_url =
 "";
 
-
-/* UPLOAD IMAGE */
 
 if(file){
 
@@ -2034,8 +2556,6 @@ publicData.publicUrl;
 
 }
 
-
-/* SAVE PRODUCT */
 
 sellMessage.innerText =
 "กำลังบันทึกสินค้า...";
@@ -2121,9 +2641,9 @@ loadProducts();
 };
 
 
-/* =========================
+/* =====================================================
 LOAD PRODUCTS
-========================= */
+===================================================== */
 
 async function loadProducts(
 searchText=""
@@ -2289,9 +2809,9 @@ openProductDetail(product);
 }
 
 
-/* =========================
-OPEN PRODUCT DETAIL
-========================= */
+/* =====================================================
+PRODUCT DETAIL
+===================================================== */
 
 async function openProductDetail(
 product
@@ -2342,8 +2862,6 @@ currentProduct =
 product;
 
 
-/* IMAGE */
-
 detailImage.innerHTML =
 "";
 
@@ -2378,8 +2896,6 @@ detailImage.innerHTML =
 }
 
 
-/* INFO */
-
 detailTitle.innerText =
 product.title ||
 "ไม่ระบุชื่อสินค้า";
@@ -2406,16 +2922,12 @@ detailSeller.innerText =
 "👤 ผู้ขาย: กำลังโหลด...";
 
 
-/* SHOW */
-
 detailModal.style.display =
 "flex";
 
 document.body.style.overflow =
 "hidden";
 
-
-/* SELLER */
 
 if(product.user_id){
 
@@ -2464,17 +2976,15 @@ detailSeller.innerText =
 }
 
 
-/* CONTACT */
-
 contactSellerButton.onclick =
 openChat;
 
 }
 
 
-/* =========================
+/* =====================================================
 CLOSE DETAIL
-========================= */
+===================================================== */
 
 function closeProductDetail(){
 
@@ -2515,54 +3025,9 @@ closeProductDetail();
 );
 
 
-/* =========================
-CHAT ELEMENTS
-========================= */
-
-const chatModal =
-document.getElementById(
-"chatModal"
-);
-
-const chatMessages =
-document.getElementById(
-"chatMessages"
-);
-
-const chatInput =
-document.getElementById(
-"chatInput"
-);
-
-const chatSendButton =
-document.getElementById(
-"chatSendButton"
-);
-
-const chatBackButton =
-document.getElementById(
-"chatBackButton"
-);
-
-const chatProductTitle =
-document.getElementById(
-"chatProductTitle"
-);
-
-const chatSellerName =
-document.getElementById(
-"chatSellerName"
-);
-
-const chatStatus =
-document.getElementById(
-"chatStatus"
-);
-
-
-/* =========================
-OPEN CHAT
-========================= */
+/* =====================================================
+OPEN CHAT FROM PRODUCT
+===================================================== */
 
 async function openChat(){
 
@@ -2604,7 +3069,7 @@ currentProduct.user_id
 ){
 
 alert(
-"นี่คือสินค้าของคุณเอง\n\nให้เปิดกล่องข้อความเพื่อดูคนที่ทักเข้ามา"
+"นี่คือสินค้าของคุณเอง\n\nให้เปิด 💬 ข้อความ เพื่อดูคนที่ทักเข้ามา"
 );
 
 return;
@@ -2639,8 +3104,6 @@ document.body.style.overflow =
 "hidden";
 
 
-/* LOAD SELLER */
-
 try{
 
 const {data:seller,error} =
@@ -2668,15 +3131,10 @@ seller.display_name;
 
 }catch(error){
 
-console.error(
-"โหลดชื่อผู้ขายไม่สำเร็จ:",
-error
-);
+console.error(error);
 
 }
 
-
-/* LOAD CHAT */
 
 await loadMessages();
 
@@ -2685,9 +3143,9 @@ chatInput.focus();
 }
 
 
-/* =========================
+/* =====================================================
 OPEN CHAT FROM INBOX
-========================= */
+===================================================== */
 
 async function openInboxChat(
 conversation
@@ -2720,14 +3178,13 @@ conversation.product.title
 :
 "แชท";
 
+
 chatSellerName.innerText =
 "👤 " +
 conversation.otherName;
 
 
-document.getElementById(
-"inboxModal"
-).style.display =
+inboxModal.style.display =
 "none";
 
 chatModal.style.display =
@@ -2744,9 +3201,9 @@ chatInput.focus();
 }
 
 
-/* =========================
+/* =====================================================
 LOAD MESSAGES
-========================= */
+===================================================== */
 
 async function loadMessages(){
 
@@ -2810,10 +3267,7 @@ ascending:true
 
 if(error){
 
-console.error(
-"โหลดข้อความไม่สำเร็จ:",
-error
-);
+console.error(error);
 
 chatStatus.innerText =
 "โหลดข้อความไม่สำเร็จ";
@@ -2904,17 +3358,11 @@ minute:"2-digit"
 );
 
 
-bubble.appendChild(
-time
-);
+bubble.appendChild(time);
 
-row.appendChild(
-bubble
-);
+row.appendChild(bubble);
 
-chatMessages.appendChild(
-row
-);
+chatMessages.appendChild(row);
 
 });
 
@@ -2928,9 +3376,9 @@ chatStatus.innerText =
 }
 
 
-/* =========================
+/* =====================================================
 SEND MESSAGE
-========================= */
+===================================================== */
 
 async function sendMessage(){
 
@@ -2980,7 +3428,7 @@ chatSendButton.innerText =
 "กำลังส่ง...";
 
 
-const {error} =
+const {data:newMessage,error} =
 await supabaseClient
 .from("messages")
 .insert({
@@ -3001,7 +3449,9 @@ null,
 message:
 text
 
-});
+})
+.select()
+.maybeSingle();
 
 
 chatSendButton.disabled =
@@ -3031,9 +3481,18 @@ return;
 chatInput.value =
 "";
 
-await loadMessages();
 
-updateMessageBadge();
+if(newMessage){
+
+/*
+ไม่ต้องเอาไปนับเป็น incoming
+เพราะเราเป็น sender
+*/
+
+}
+
+
+await loadMessages();
 
 chatInput.focus();
 
@@ -3067,9 +3526,9 @@ sendMessage();
 );
 
 
-/* =========================
+/* =====================================================
 BACK FROM CHAT
-========================= */
+===================================================== */
 
 chatBackButton.onclick =
 function(){
@@ -3085,9 +3544,9 @@ openInbox();
 };
 
 
-/* =========================
+/* =====================================================
 CHAT BACKGROUND
-========================= */
+===================================================== */
 
 chatModal.addEventListener(
 "click",
@@ -3107,37 +3566,9 @@ document.body.style.overflow =
 );
 
 
-/* =========================
-INBOX
-========================= */
-
-const messageButton =
-document.getElementById(
-"messageButton"
-);
-
-const messageBadge =
-document.getElementById(
-"messageBadge"
-);
-
-const inboxModal =
-document.getElementById(
-"inboxModal"
-);
-
-const inboxList =
-document.getElementById(
-"inboxList"
-);
-
-const inboxCloseButton =
-document.getElementById(
-"inboxCloseButton"
-);
-
-
-/* OPEN INBOX */
+/* =====================================================
+OPEN INBOX
+===================================================== */
 
 messageButton.onclick =
 async function(){
@@ -3157,12 +3588,22 @@ return;
 
 }
 
+
+/*
+ขอสิทธิ์ browser notification
+ครั้งแรกที่ผู้ใช้กดกล่องข้อความ
+*/
+
+requestBrowserNotification();
+
 await openInbox();
 
 };
 
 
-/* OPEN INBOX FUNCTION */
+/* =====================================================
+OPEN INBOX FUNCTION
+===================================================== */
 
 async function openInbox(){
 
@@ -3190,7 +3631,9 @@ await loadInbox();
 }
 
 
-/* CLOSE INBOX */
+/* =====================================================
+CLOSE INBOX
+===================================================== */
 
 inboxCloseButton.onclick =
 function(){
@@ -3204,7 +3647,9 @@ document.body.style.overflow =
 };
 
 
-/* CLICK OUTSIDE */
+/* =====================================================
+INBOX BACKGROUND
+===================================================== */
 
 inboxModal.addEventListener(
 "click",
@@ -3224,9 +3669,9 @@ document.body.style.overflow =
 );
 
 
-/* =========================
+/* =====================================================
 LOAD INBOX
-========================= */
+===================================================== */
 
 async function loadInbox(){
 
@@ -3250,11 +3695,6 @@ inboxList.innerHTML =
 </div>
 `;
 
-
-/*
-ดึงข้อความทั้งหมดที่ผู้ใช้เป็น
-sender หรือ receiver
-*/
 
 const {data:messagesData,error} =
 await supabaseClient
@@ -3302,7 +3742,7 @@ messagesData.length === 0
 inboxList.innerHTML =
 `
 <div class="inbox-empty">
-📭 ยังไม่มีข้อความ<br>
+📭 ยังไม่มีข้อความ<br><br>
 เมื่อลูกค้าทักเข้ามา<br>
 ข้อความจะแสดงที่นี่
 </div>
@@ -3315,7 +3755,6 @@ return;
 
 /*
 สร้าง conversation
-จากคู่ผู้ใช้ + สินค้า
 */
 
 const conversations =
@@ -3348,10 +3787,16 @@ if(!conversations.has(key)){
 conversations.set(
 key,
 {
-otherUserId:otherUserId,
-productId:msg.product_id,
-lastMessage:msg,
-unread:0
+otherUserId:
+otherUserId,
+
+productId:
+msg.product_id,
+
+lastMessage:
+msg,
+
+unread:false
 }
 );
 
@@ -3362,28 +3807,19 @@ conversations.get(key);
 
 
 /*
-นับข้อความที่เข้ามา
+ถ้าข้อความล่าสุดเป็นข้อความที่ส่งเข้ามา
+ให้แสดงจุดแจ้งเตือน
 */
 
 if(
+msg ===
+conversation.lastMessage &&
 msg.receiver_id ===
 userData.user.id
 ){
 
-/*
-ระบบปัจจุบันยังไม่มี read_at
-ดังนั้นถือว่าข้อความของอีกฝ่าย
-เป็นข้อความใหม่
-*/
-
-if(
-msg.id ===
-conversation.lastMessage.id
-){
-
-conversation.unread = 1;
-
-}
+conversation.unread =
+true;
 
 }
 
@@ -3397,7 +3833,7 @@ conversations.values()
 
 
 /*
-โหลดชื่อผู้ใช้ + ข้อมูลสินค้า
+โหลดข้อมูลเพิ่มเติม
 */
 
 for(
@@ -3469,7 +3905,28 @@ null;
 }
 
 
-/* RENDER */
+/*
+เรียงล่าสุดก่อน
+*/
+
+conversationArray.sort(
+function(a,b){
+
+return new Date(
+b.lastMessage.created_at
+)
+-
+new Date(
+a.lastMessage.created_at
+);
+
+}
+);
+
+
+/*
+RENDER
+*/
 
 inboxList.innerHTML =
 "";
@@ -3600,17 +4057,11 @@ unreadDot.className =
 "unread-dot";
 
 
-item.appendChild(
-avatar
-);
+item.appendChild(avatar);
 
-item.appendChild(
-content
-);
+item.appendChild(content);
 
-item.appendChild(
-unreadDot
-);
+item.appendChild(unreadDot);
 
 
 item.addEventListener(
@@ -3625,18 +4076,16 @@ conversation
 );
 
 
-inboxList.appendChild(
-item
-);
+inboxList.appendChild(item);
 
 });
 
 }
 
 
-/* =========================
-MESSAGE BADGE
-========================= */
+/* =====================================================
+UPDATE BADGE
+===================================================== */
 
 async function updateMessageBadge(){
 
@@ -3656,10 +4105,6 @@ return;
 }
 
 
-/*
-หาข้อความที่ส่งมาหาผู้ใช้
-*/
-
 const {data,error} =
 await supabaseClient
 .from("messages")
@@ -3673,7 +4118,7 @@ userData.user.id
 if(error){
 
 console.error(
-"ตรวจข้อความใหม่ไม่สำเร็จ:",
+"ตรวจข้อความไม่สำเร็จ:",
 error
 );
 
@@ -3712,9 +4157,220 @@ messageBadge.style.display =
 }
 
 
-/* =========================
+/* =====================================================
+POLLING FALLBACK
+===================================================== */
+
+async function checkForNewMessages(){
+
+if(!currentUserId){
+
+return;
+
+}
+
+
+const {data,error} =
+await supabaseClient
+.from("messages")
+.select(
+"id,sender_id,receiver_id,product_id,message,created_at"
+)
+.eq(
+"receiver_id",
+currentUserId
+)
+.order(
+"created_at",
+{
+ascending:false
+}
+)
+.limit(100);
+
+
+if(error){
+
+console.error(
+"ตรวจข้อความใหม่ไม่สำเร็จ:",
+error
+);
+
+return;
+
+}
+
+
+if(!data){
+
+return;
+
+}
+
+
+/*
+ครั้งแรกไม่แจ้งเตือน
+*/
+
+if(!firstMessageCheckDone){
+
+data.forEach(
+function(msg){
+
+knownIncomingMessageIds.add(
+msg.id
+);
+
+});
+
+firstMessageCheckDone =
+true;
+
+return;
+
+}
+
+
+/*
+หาข้อความใหม่
+*/
+
+const newMessages =
+data.filter(
+function(msg){
+
+return !knownIncomingMessageIds.has(
+msg.id
+);
+
+}
+);
+
+
+/*
+บันทึก ID ทั้งหมด
+*/
+
+data.forEach(
+function(msg){
+
+knownIncomingMessageIds.add(
+msg.id
+);
+
+});
+
+
+if(
+newMessages.length === 0
+){
+
+return;
+
+}
+
+
+/*
+อัปเดต badge
+*/
+
+await updateMessageBadge();
+
+
+/*
+ถ้ากำลังเปิดแชทที่ตรงกัน
+*/
+
+for(
+const newMessage
+of newMessages
+){
+
+if(
+chatModal.style.display === "flex" &&
+currentChatPartner ===
+newMessage.sender_id &&
+(
+!currentChatProduct ||
+currentChatProduct.id ===
+newMessage.product_id
+)
+){
+
+await loadMessages();
+
+continue;
+
+}
+
+
+/*
+โหลดชื่อผู้ส่ง
+*/
+
+let senderName =
+"ผู้ใช้ PC2Deal";
+
+try{
+
+const {data:profile} =
+await supabaseClient
+.from("profiles")
+.select("display_name")
+.eq(
+"id",
+newMessage.sender_id
+)
+.maybeSingle();
+
+
+if(
+profile &&
+profile.display_name
+){
+
+senderName =
+profile.display_name;
+
+}
+
+}catch(error){
+
+console.error(error);
+
+}
+
+
+/*
+แจ้งเตือน
+*/
+
+showNewMessageNotification(
+senderName,
+newMessage.message
+);
+
+}
+
+
+/*
+รีเฟรช Inbox ถ้าเปิดอยู่
+*/
+
+if(
+inboxModal.style.display === "flex"
+){
+
+await loadInbox();
+
+}
+
+}
+
+
+/* =====================================================
 FORMAT TIME
-========================= */
+===================================================== */
 
 function formatMessageTime(
 dateString
@@ -3776,9 +4432,9 @@ month:"short"
 }
 
 
-/* =========================
+/* =====================================================
 ESC
-========================= */
+===================================================== */
 
 document.addEventListener(
 "keydown",
@@ -3838,15 +4494,15 @@ closeProductDetail();
 );
 
 
-/* =========================
+/* =====================================================
 AUTO REFRESH
-========================= */
+===================================================== */
 
 setInterval(
 async function(){
 
 /*
-รีเฟรชแชทที่กำลังเปิด
+รีเฟรชแชท
 */
 
 if(
@@ -3860,15 +4516,30 @@ await loadMessages();
 
 
 /*
-เช็กข้อความใหม่
+ตรวจข้อความใหม่
+เป็นระบบสำรอง Realtime
 */
 
-await updateMessageBadge();
+if(currentUserId){
+
+await checkForNewMessages();
+
+}
 
 
 /*
-ถ้ากล่องข้อความเปิดอยู่
-รีเฟรชรายการด้วย
+อัปเดต badge
+*/
+
+if(currentUserId){
+
+await updateMessageBadge();
+
+}
+
+
+/*
+รีเฟรช Inbox
 */
 
 if(
@@ -3885,9 +4556,9 @@ await loadInbox();
 );
 
 
-/* =========================
+/* =====================================================
 SECURITY
-========================= */
+===================================================== */
 
 function escapeHTML(text){
 
@@ -3902,9 +4573,9 @@ return div.innerHTML;
 }
 
 
-/* =========================
+/* =====================================================
 SEARCH
-========================= */
+===================================================== */
 
 const searchInput =
 document.getElementById(
@@ -3943,54 +4614,13 @@ searchInput.value.trim()
 );
 
 
-/* =========================
-AUTH STATE
-========================= */
-
-supabaseClient.auth.onAuthStateChange(
-function(event,session){
-
-if(session && session.user){
-
-loginButton.innerText =
-"ออกจากระบบ";
-
-messageButton.style.display =
-"block";
-
-}else{
-
-loginButton.innerText =
-"เข้าสู่ระบบ";
-
-messageButton.style.display =
-"none";
-
-messageBadge.style.display =
-"none";
-
-}
-
-}
-);
-
-
-/* =========================
+/* =====================================================
 START
-========================= */
+===================================================== */
 
 checkUser();
 
 loadProducts();
-
-setTimeout(
-function(){
-
-updateMessageBadge();
-
-},
-1000
-);
 
 </script>
 

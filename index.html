@@ -231,6 +231,11 @@ cursor:pointer;
 margin-top:5px
 }
 
+.modal-box button:disabled{
+opacity:.6;
+cursor:not-allowed
+}
+
 .close{
 background:#e5e7eb!important;
 color:#222!important
@@ -250,15 +255,36 @@ text-align:center;
 font-size:14px
 }
 
-.sell-modal{
-display:none
-}
-
 .sell-label{
 font-size:14px;
 font-weight:bold;
 display:block;
 margin-bottom:6px
+}
+
+.file-box{
+border:2px dashed #d1d5db;
+border-radius:10px;
+padding:18px;
+text-align:center;
+margin-bottom:12px;
+background:#f9fafb
+}
+
+.file-box input{
+border:0;
+padding:0;
+margin:10px 0 0;
+background:transparent
+}
+
+.preview{
+display:none;
+width:100%;
+height:180px;
+object-fit:cover;
+border-radius:10px;
+margin-top:10px
 }
 
 @media(max-width:600px){
@@ -312,9 +338,7 @@ PC2Deal
 
 <section class="hero">
 
-<h1>
-ตลาดซื้อขายคอมมือสอง
-</h1>
+<h1>ตลาดซื้อขายคอมมือสอง</h1>
 
 <p>
 ซื้อขาย PC และอุปกรณ์คอมพิวเตอร์ง่าย ๆ ในที่เดียว
@@ -350,7 +374,6 @@ placeholder="ค้นหา เช่น RTX 3060, i5, RAM..."
 </button>
 
 </div>
-
 
 <div class="products" id="products">
 
@@ -479,14 +502,26 @@ placeholder="บอกรายละเอียดสินค้า เช่
 ></textarea>
 
 <label class="sell-label">
-ลิงก์รูปสินค้า
+รูปสินค้า
 </label>
 
+<div class="file-box">
+
+📷 เลือกรูปสินค้าจากเครื่อง
+
 <input
-type="text"
+type="file"
 id="productImage"
-placeholder="ใส่ลิงก์รูปภาพ (ถ้ามี)"
+accept="image/*"
 >
+
+<img
+id="imagePreview"
+class="preview"
+alt="ตัวอย่างรูปสินค้า"
+>
+
+</div>
 
 <div id="sellMessage"></div>
 
@@ -519,9 +554,8 @@ SUPABASE_KEY
 );
 
 
-
 /* =========================
-   LOGIN SYSTEM
+LOGIN
 ========================= */
 
 const loginButton =
@@ -624,13 +658,13 @@ switchMode.innerText=
 
 submitButton.onclick=async function(){
 
-const email=
+const email =
 emailInput.value.trim();
 
-const password=
+const password =
 passwordInput.value;
 
-if(!email||!password){
+if(!email || !password){
 
 message.innerText=
 "กรุณากรอกอีเมลและรหัสผ่าน";
@@ -645,7 +679,7 @@ message.innerText=
 
 if(registerMode){
 
-const {error}=
+const {error} =
 await supabaseClient.auth.signUp({
 email:email,
 password:password
@@ -665,7 +699,7 @@ message.innerText=
 
 }else{
 
-const {error}=
+const {error} =
 await supabaseClient.auth.signInWithPassword({
 email:email,
 password:password
@@ -699,10 +733,9 @@ loadProducts();
 };
 
 
-
 forgotPassword.onclick=async function(){
 
-const email=
+const email =
 emailInput.value.trim();
 
 if(!email){
@@ -738,7 +771,6 @@ message.innerText=
 };
 
 
-
 supabaseClient.auth.onAuthStateChange(
 async function(event){
 
@@ -766,10 +798,9 @@ resetBox.style.display="block";
 });
 
 
-
 resetButton.onclick=async function(){
 
-const password=
+const password =
 newPassword.value;
 
 if(password.length<6){
@@ -809,7 +840,6 @@ location.reload();
 };
 
 
-
 async function checkUser(){
 
 const {data} =
@@ -827,7 +857,7 @@ loginButton.innerText=
 
 
 /* =========================
-   SELL PRODUCT
+SELL PRODUCT
 ========================= */
 
 const sellButton =
@@ -844,6 +874,58 @@ document.getElementById("publishButton");
 
 const sellMessage =
 document.getElementById("sellMessage");
+
+const productImage =
+document.getElementById("productImage");
+
+const imagePreview =
+document.getElementById("imagePreview");
+
+
+/* PREVIEW IMAGE */
+
+productImage.addEventListener(
+"change",
+function(){
+
+const file =
+productImage.files[0];
+
+if(!file){
+
+imagePreview.style.display="none";
+
+return;
+
+}
+
+if(!file.type.startsWith("image/")){
+
+sellMessage.innerText=
+"กรุณาเลือกไฟล์รูปภาพ";
+
+productImage.value="";
+
+return;
+
+}
+
+const reader =
+new FileReader();
+
+reader.onload=function(event){
+
+imagePreview.src=
+event.target.result;
+
+imagePreview.style.display=
+"block";
+
+};
+
+reader.readAsDataURL(file);
+
+});
 
 
 sellButton.onclick=async function(){
@@ -877,12 +959,15 @@ sellMessage.innerText="";
 
 
 
+/* PUBLISH */
+
 publishButton.onclick=async function(){
 
 const {data} =
 await supabaseClient.auth.getUser();
 
-const user=data.user;
+const user =
+data.user;
 
 if(!user){
 
@@ -910,9 +995,8 @@ const description =
 document.getElementById("productDescription")
 .value.trim();
 
-const image_url =
-document.getElementById("productImage")
-.value.trim();
+const file =
+productImage.files[0];
 
 
 if(!title){
@@ -934,10 +1018,120 @@ return;
 }
 
 
+/* CHECK IMAGE */
+
+if(file){
+
+if(!file.type.startsWith("image/")){
+
+sellMessage.innerText=
+"ไฟล์ต้องเป็นรูปภาพเท่านั้น";
+
+return;
+
+}
+
+
+/* จำกัดขนาด 5MB */
+
+if(file.size > 5 * 1024 * 1024){
+
+sellMessage.innerText=
+"รูปต้องมีขนาดไม่เกิน 5MB";
+
+return;
+
+}
+
+}
+
+
 publishButton.disabled=true;
 
 publishButton.innerText=
 "กำลังลงขาย...";
+
+
+let image_url = "";
+
+
+/* =========================
+UPLOAD IMAGE
+========================= */
+
+if(file){
+
+sellMessage.innerText=
+"กำลังอัปโหลดรูป...";
+
+
+const extension =
+file.name.split(".").pop();
+
+const fileName =
+user.id +
+"/" +
+Date.now() +
+"-" +
+Math.random()
+.toString(36)
+.substring(2) +
+"." +
+extension;
+
+
+const {error:uploadError} =
+await supabaseClient
+.storage
+.from("product-images")
+.upload(
+fileName,
+file,
+{
+contentType:file.type,
+upsert:false
+}
+);
+
+
+if(uploadError){
+
+console.error(uploadError);
+
+publishButton.disabled=false;
+
+publishButton.innerText=
+"ลงขายสินค้า";
+
+sellMessage.innerText=
+"อัปโหลดรูปไม่สำเร็จ: "+
+uploadError.message;
+
+return;
+
+}
+
+
+/* GET PUBLIC URL */
+
+const {data:publicData} =
+supabaseClient
+.storage
+.from("product-images")
+.getPublicUrl(fileName);
+
+image_url =
+publicData.publicUrl;
+
+}
+
+
+/* =========================
+SAVE PRODUCT
+========================= */
+
+sellMessage.innerText=
+"กำลังบันทึกสินค้า...";
 
 
 const {error} =
@@ -971,7 +1165,8 @@ if(error){
 console.error(error);
 
 sellMessage.innerText=
-"เกิดข้อผิดพลาด: "+error.message;
+"เกิดข้อผิดพลาด: "+
+error.message;
 
 return;
 
@@ -982,11 +1177,28 @@ sellMessage.innerText=
 "ลงขายสินค้าเรียบร้อยแล้ว!";
 
 
-document.getElementById("productTitle").value="";
-document.getElementById("productPrice").value="";
-document.getElementById("productLocation").value="";
-document.getElementById("productDescription").value="";
-document.getElementById("productImage").value="";
+document.getElementById(
+"productTitle"
+).value="";
+
+document.getElementById(
+"productPrice"
+).value="";
+
+document.getElementById(
+"productLocation"
+).value="";
+
+document.getElementById(
+"productDescription"
+).value="";
+
+productImage.value="";
+
+imagePreview.src="";
+
+imagePreview.style.display=
+"none";
 
 
 setTimeout(function(){
@@ -1004,7 +1216,7 @@ loadProducts();
 
 
 /* =========================
-   LOAD PRODUCTS
+LOAD PRODUCTS
 ========================= */
 
 async function loadProducts(searchText=""){
@@ -1028,7 +1240,11 @@ if(searchText){
 
 query =
 query.or(
-"title.ilike.%"+searchText+"%,description.ilike.%"+searchText+"%"
+"title.ilike.%"+
+searchText+
+"%,description.ilike.%"+
+searchText+
+"%"
 );
 
 }
@@ -1071,13 +1287,13 @@ document.createElement("div");
 card.className="card";
 
 
-let imageHTML=
+let imageHTML =
 '<div class="image">🖥️</div>';
 
 
 if(product.image_url){
 
-imageHTML=
+imageHTML =
 '<div class="image">'+
 '<img src="'+
 escapeHTML(product.image_url)+
@@ -1087,7 +1303,7 @@ escapeHTML(product.image_url)+
 }
 
 
-card.innerHTML=
+card.innerHTML =
 
 imageHTML+
 
@@ -1098,18 +1314,27 @@ escapeHTML(product.title)+
 '</h3>'+
 
 '<div class="price">'+
-Number(product.price).toLocaleString()+
+Number(product.price)
+.toLocaleString()+
 ' บาท</div>'+
 
 '<div class="location">📍 '+
-escapeHTML(product.location || "ไม่ระบุ")+
+escapeHTML(
+product.location ||
+"ไม่ระบุ"
+)+
 '</div>'+
 
 (product.description ?
+
 '<div class="description">'+
-escapeHTML(product.description)+
+escapeHTML(
+product.description
+)+
 '</div>'
+
 :
+
 "")+
 
 '</div>';
@@ -1124,7 +1349,7 @@ productsBox.appendChild(card);
 
 
 /* =========================
-   SECURITY
+SECURITY
 ========================= */
 
 function escapeHTML(text){
@@ -1132,7 +1357,7 @@ function escapeHTML(text){
 const div =
 document.createElement("div");
 
-div.textContent=
+div.textContent =
 text || "";
 
 return div.innerHTML;
@@ -1142,7 +1367,7 @@ return div.innerHTML;
 
 
 /* =========================
-   SEARCH
+SEARCH
 ========================= */
 
 const searchInput =
@@ -1178,7 +1403,7 @@ searchInput.value.trim()
 
 
 /* =========================
-   START
+START
 ========================= */
 
 checkUser();

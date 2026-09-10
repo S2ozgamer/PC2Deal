@@ -4,18 +4,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>PC2Deal - ตลาดซื้อขายคอมมือสอง</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0
+}
 
 body{
 font-family:Arial,sans-serif;
 background:#f5f6f8;
 color:#222
 }
+
+/* =========================
+HEADER
+========================= */
 
 header{
 background:#111827;
@@ -44,6 +54,10 @@ padding:9px 14px;
 border-radius:8px;
 cursor:pointer
 }
+
+/* =========================
+HERO
+========================= */
 
 .hero{
 background:#1f2937;
@@ -84,6 +98,10 @@ border-radius:8px;
 cursor:pointer;
 font-weight:bold
 }
+
+/* =========================
+PRODUCTS
+========================= */
 
 .container{
 max-width:1100px;
@@ -187,6 +205,10 @@ color:#777;
 grid-column:1/-1
 }
 
+/* =========================
+FOOTER
+========================= */
+
 footer{
 margin-top:50px;
 padding:25px;
@@ -195,15 +217,19 @@ color:#9ca3af;
 text-align:center
 }
 
+/* =========================
+MODAL
+========================= */
+
 .modal{
 display:none;
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.6);
+background:rgba(0,0,0,.65);
 justify-content:center;
 align-items:center;
 padding:20px;
-z-index:999
+z-index:9999
 }
 
 .modal-box{
@@ -271,6 +297,10 @@ text-align:center;
 font-size:14px
 }
 
+/* =========================
+SELL
+========================= */
+
 .sell-label{
 font-size:14px;
 font-weight:bold;
@@ -303,10 +333,20 @@ border-radius:10px;
 margin-top:10px
 }
 
-
 /* =========================
 PRODUCT DETAIL
 ========================= */
+
+#detailModal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.65);
+justify-content:center;
+align-items:center;
+padding:20px;
+z-index:10000
+}
 
 .detail-box{
 background:white;
@@ -315,7 +355,8 @@ max-width:650px;
 border-radius:16px;
 overflow:hidden;
 max-height:90vh;
-overflow-y:auto
+overflow-y:auto;
+box-shadow:0 10px 40px rgba(0,0,0,.3)
 }
 
 .detail-image{
@@ -332,7 +373,8 @@ overflow:hidden
 .detail-image img{
 width:100%;
 height:100%;
-object-fit:cover
+object-fit:cover;
+display:block
 }
 
 .detail-content{
@@ -369,7 +411,8 @@ padding:15px;
 border-radius:10px;
 line-height:1.7;
 white-space:pre-wrap;
-min-height:80px
+min-height:80px;
+word-break:break-word
 }
 
 .detail-close{
@@ -378,6 +421,9 @@ background:#e5e7eb!important;
 color:#222!important
 }
 
+/* =========================
+MOBILE
+========================= */
 
 @media(max-width:600px){
 
@@ -414,10 +460,15 @@ font-size:21px
 }
 
 }
+
 </style>
 </head>
 
 <body>
+
+<!-- =========================
+HEADER
+========================= -->
 
 <header>
 
@@ -436,9 +487,15 @@ PC2Deal
 </header>
 
 
+<!-- =========================
+HERO
+========================= -->
+
 <section class="hero">
 
-<h1>ตลาดซื้อขายคอมมือสอง</h1>
+<h1>
+ตลาดซื้อขายคอมมือสอง
+</h1>
 
 <p>
 ซื้อขาย PC และอุปกรณ์คอมพิวเตอร์ง่าย ๆ ในที่เดียว
@@ -460,6 +517,10 @@ placeholder="ค้นหา เช่น RTX 3060, i5, RAM..."
 
 </section>
 
+
+<!-- =========================
+PRODUCT LIST
+========================= -->
 
 <main class="container">
 
@@ -491,8 +552,9 @@ PC2Deal © 2026 — ตลาดซื้อขายคอมพิวเตอ
 </footer>
 
 
-
-<!-- LOGIN MODAL -->
+<!-- =========================
+LOGIN MODAL
+========================= -->
 
 <div class="modal" id="loginModal">
 
@@ -551,8 +613,9 @@ placeholder="รหัสผ่านใหม่"
 </div>
 
 
-
-<!-- SELL MODAL -->
+<!-- =========================
+SELL MODAL
+========================= -->
 
 <div class="modal" id="sellModal">
 
@@ -638,10 +701,11 @@ alt="ตัวอย่างรูปสินค้า"
 </div>
 
 
+<!-- =========================
+PRODUCT DETAIL MODAL
+========================= -->
 
-<!-- PRODUCT DETAIL MODAL -->
-
-<div class="modal" id="detailModal">
+<div id="detailModal">
 
 <div class="detail-box">
 
@@ -651,17 +715,21 @@ alt="ตัวอย่างรูปสินค้า"
 
 <div class="detail-content">
 
-<div id="detailTitle" class="detail-title"></div>
+<div id="detailTitle" class="detail-title">
+</div>
 
-<div id="detailPrice" class="detail-price"></div>
+<div id="detailPrice" class="detail-price">
+</div>
 
-<div id="detailLocation" class="detail-location"></div>
+<div id="detailLocation" class="detail-location">
+</div>
 
 <div class="detail-label">
 รายละเอียดสินค้า
 </div>
 
-<div id="detailDescription" class="detail-description"></div>
+<div id="detailDescription" class="detail-description">
+</div>
 
 <button class="detail-close" id="closeDetailButton">
 ปิด
@@ -674,8 +742,11 @@ alt="ตัวอย่างรูปสินค้า"
 </div>
 
 
-
 <script>
+
+/* =========================
+SUPABASE
+========================= */
 
 const SUPABASE_URL =
 "https://jnkeffwgnjjebujrcprb.supabase.co";
@@ -745,46 +816,57 @@ if(data.user){
 
 await supabaseClient.auth.signOut();
 
-loginButton.innerText="เข้าสู่ระบบ";
+loginButton.innerText =
+"เข้าสู่ระบบ";
 
 return;
 
 }
 
-loginModal.style.display="flex";
+loginModal.style.display =
+"flex";
 
 };
 
 
-closeButton.onclick=function(){
+closeButton.onclick =
+function(){
 
-loginModal.style.display="none";
+loginModal.style.display =
+"none";
 
-message.innerText="";
+message.innerText =
+"";
 
 };
 
 
-switchMode.onclick=function(){
+switchMode.onclick =
+function(){
 
-registerMode=!registerMode;
+registerMode =
+!registerMode;
 
 if(registerMode){
 
-modalTitle.innerText="สมัครสมาชิก";
+modalTitle.innerText =
+"สมัครสมาชิก";
 
-submitButton.innerText="สมัครสมาชิก";
+submitButton.innerText =
+"สมัครสมาชิก";
 
-switchMode.innerText=
+switchMode.innerText =
 "มีบัญชีแล้ว? เข้าสู่ระบบ";
 
 }else{
 
-modalTitle.innerText="เข้าสู่ระบบ";
+modalTitle.innerText =
+"เข้าสู่ระบบ";
 
-submitButton.innerText="เข้าสู่ระบบ";
+submitButton.innerText =
+"เข้าสู่ระบบ";
 
-switchMode.innerText=
+switchMode.innerText =
 "ยังไม่มีบัญชี? สมัครสมาชิก";
 
 }
@@ -792,7 +874,8 @@ switchMode.innerText=
 };
 
 
-submitButton.onclick=async function(){
+submitButton.onclick =
+async function(){
 
 const email =
 emailInput.value.trim();
@@ -802,14 +885,14 @@ passwordInput.value;
 
 if(!email || !password){
 
-message.innerText=
+message.innerText =
 "กรุณากรอกอีเมลและรหัสผ่าน";
 
 return;
 
 }
 
-message.innerText=
+message.innerText =
 "กำลังดำเนินการ...";
 
 
@@ -817,18 +900,21 @@ if(registerMode){
 
 const {error} =
 await supabaseClient.auth.signUp({
+
 email:email,
+
 password:password
+
 });
 
 if(error){
 
-message.innerText=
+message.innerText =
 error.message;
 
 }else{
 
-message.innerText=
+message.innerText =
 "สมัครสมาชิกสำเร็จ! กรุณาตรวจสอบอีเมล";
 
 }
@@ -837,26 +923,30 @@ message.innerText=
 
 const {error} =
 await supabaseClient.auth.signInWithPassword({
+
 email:email,
+
 password:password
+
 });
 
 if(error){
 
-message.innerText=
+message.innerText =
 error.message;
 
 }else{
 
-message.innerText=
+message.innerText =
 "เข้าสู่ระบบสำเร็จ!";
 
-loginButton.innerText=
+loginButton.innerText =
 "ออกจากระบบ";
 
 setTimeout(function(){
 
-loginModal.style.display="none";
+loginModal.style.display =
+"none";
 
 loadProducts();
 
@@ -869,14 +959,15 @@ loadProducts();
 };
 
 
-forgotPassword.onclick=async function(){
+forgotPassword.onclick =
+async function(){
 
 const email =
 emailInput.value.trim();
 
 if(!email){
 
-message.innerText=
+message.innerText =
 "กรุณากรอกอีเมลก่อน";
 
 return;
@@ -885,21 +976,24 @@ return;
 
 const {error} =
 await supabaseClient.auth.resetPasswordForEmail(
+
 email,
+
 {
 redirectTo:
 "https://s2ozgamer.github.io/PC2Deal/"
 }
+
 );
 
 if(error){
 
-message.innerText=
+message.innerText =
 error.message;
 
 }else{
 
-message.innerText=
+message.innerText =
 "ส่งลิงก์เปลี่ยนรหัสผ่านไปที่อีเมลแล้ว";
 
 }
@@ -908,40 +1002,51 @@ message.innerText=
 
 
 supabaseClient.auth.onAuthStateChange(
+
 async function(event){
 
-if(event==="PASSWORD_RECOVERY"){
+if(event === "PASSWORD_RECOVERY"){
 
-loginModal.style.display="flex";
+loginModal.style.display =
+"flex";
 
-modalTitle.innerText=
+modalTitle.innerText =
 "ตั้งรหัสผ่านใหม่";
 
-emailInput.style.display="none";
+emailInput.style.display =
+"none";
 
-passwordInput.style.display="none";
+passwordInput.style.display =
+"none";
 
-submitButton.style.display="none";
+submitButton.style.display =
+"none";
 
-switchMode.style.display="none";
+switchMode.style.display =
+"none";
 
-forgotPassword.style.display="none";
+forgotPassword.style.display =
+"none";
 
-resetBox.style.display="block";
+resetBox.style.display =
+"block";
 
 }
 
-});
+}
+
+);
 
 
-resetButton.onclick=async function(){
+resetButton.onclick =
+async function(){
 
 const password =
 newPassword.value;
 
-if(password.length<6){
+if(password.length < 6){
 
-message.innerText=
+message.innerText =
 "รหัสผ่านต้องมีอย่างน้อย 6 ตัว";
 
 return;
@@ -950,22 +1055,25 @@ return;
 
 const {error} =
 await supabaseClient.auth.updateUser({
+
 password:password
+
 });
 
 if(error){
 
-message.innerText=
+message.innerText =
 error.message;
 
 }else{
 
-message.innerText=
+message.innerText =
 "เปลี่ยนรหัสผ่านสำเร็จแล้ว!";
 
 setTimeout(function(){
 
-loginModal.style.display="none";
+loginModal.style.display =
+"none";
 
 location.reload();
 
@@ -983,13 +1091,12 @@ await supabaseClient.auth.getUser();
 
 if(data.user){
 
-loginButton.innerText=
+loginButton.innerText =
 "ออกจากระบบ";
 
 }
 
 }
-
 
 
 /* =========================
@@ -1018,7 +1125,7 @@ const imagePreview =
 document.getElementById("imagePreview");
 
 
-/* PREVIEW IMAGE */
+/* IMAGE PREVIEW */
 
 productImage.addEventListener(
 "change",
@@ -1029,7 +1136,8 @@ productImage.files[0];
 
 if(!file){
 
-imagePreview.style.display="none";
+imagePreview.style.display =
+"none";
 
 return;
 
@@ -1037,10 +1145,11 @@ return;
 
 if(!file.type.startsWith("image/")){
 
-sellMessage.innerText=
+sellMessage.innerText =
 "กรุณาเลือกไฟล์รูปภาพ";
 
-productImage.value="";
+productImage.value =
+"";
 
 return;
 
@@ -1049,12 +1158,13 @@ return;
 const reader =
 new FileReader();
 
-reader.onload=function(event){
+reader.onload =
+function(event){
 
-imagePreview.src=
+imagePreview.src =
 event.target.result;
 
-imagePreview.style.display=
+imagePreview.style.display =
 "block";
 
 };
@@ -1064,40 +1174,48 @@ reader.readAsDataURL(file);
 });
 
 
-sellButton.onclick=async function(){
+sellButton.onclick =
+async function(){
 
 const {data} =
 await supabaseClient.auth.getUser();
 
 if(!data.user){
 
-loginModal.style.display="flex";
+loginModal.style.display =
+"flex";
 
-message.innerText=
+message.innerText =
 "กรุณาเข้าสู่ระบบก่อนลงขายสินค้า";
 
 return;
 
 }
 
-sellModal.style.display="flex";
+sellModal.style.display =
+"flex";
 
 };
 
 
-closeSellButton.onclick=function(){
+closeSellButton.onclick =
+function(){
 
-sellModal.style.display="none";
+sellModal.style.display =
+"none";
 
-sellMessage.innerText="";
+sellMessage.innerText =
+"";
 
 };
 
 
+/* =========================
+PUBLISH PRODUCT
+========================= */
 
-/* PUBLISH */
-
-publishButton.onclick=async function(){
+publishButton.onclick =
+async function(){
 
 const {data} =
 await supabaseClient.auth.getUser();
@@ -1107,7 +1225,7 @@ data.user;
 
 if(!user){
 
-sellMessage.innerText=
+sellMessage.innerText =
 "กรุณาเข้าสู่ระบบก่อน";
 
 return;
@@ -1137,7 +1255,7 @@ productImage.files[0];
 
 if(!title){
 
-sellMessage.innerText=
+sellMessage.innerText =
 "กรุณาใส่ชื่อสินค้า";
 
 return;
@@ -1146,7 +1264,7 @@ return;
 
 if(!price){
 
-sellMessage.innerText=
+sellMessage.innerText =
 "กรุณาใส่ราคา";
 
 return;
@@ -1154,25 +1272,23 @@ return;
 }
 
 
-/* CHECK IMAGE */
+/* IMAGE CHECK */
 
 if(file){
 
 if(!file.type.startsWith("image/")){
 
-sellMessage.innerText=
+sellMessage.innerText =
 "ไฟล์ต้องเป็นรูปภาพเท่านั้น";
 
 return;
 
 }
 
+if(file.size >
+5 * 1024 * 1024){
 
-/* จำกัดขนาด 5MB */
-
-if(file.size > 5 * 1024 * 1024){
-
-sellMessage.innerText=
+sellMessage.innerText =
 "รูปต้องมีขนาดไม่เกิน 5MB";
 
 return;
@@ -1182,22 +1298,22 @@ return;
 }
 
 
-publishButton.disabled=true;
+publishButton.disabled =
+true;
 
-publishButton.innerText=
+publishButton.innerText =
 "กำลังลงขาย...";
 
 
-let image_url = "";
+let image_url =
+"";
 
 
-/* =========================
-UPLOAD IMAGE
-========================= */
+/* UPLOAD IMAGE */
 
 if(file){
 
-sellMessage.innerText=
+sellMessage.innerText =
 "กำลังอัปโหลดรูป...";
 
 
@@ -1234,21 +1350,20 @@ if(uploadError){
 
 console.error(uploadError);
 
-publishButton.disabled=false;
+publishButton.disabled =
+false;
 
-publishButton.innerText=
+publishButton.innerText =
 "ลงขายสินค้า";
 
-sellMessage.innerText=
-"อัปโหลดรูปไม่สำเร็จ: "+
+sellMessage.innerText =
+"อัปโหลดรูปไม่สำเร็จ: " +
 uploadError.message;
 
 return;
 
 }
 
-
-/* GET PUBLIC URL */
 
 const {data:publicData} =
 supabaseClient
@@ -1262,11 +1377,9 @@ publicData.publicUrl;
 }
 
 
-/* =========================
-SAVE PRODUCT
-========================= */
+/* SAVE PRODUCT */
 
-sellMessage.innerText=
+sellMessage.innerText =
 "กำลังบันทึกสินค้า...";
 
 
@@ -1285,14 +1398,17 @@ location:location,
 
 description:description,
 
-image_url:image_url
+image_url:image_url,
+
+status:"active"
 
 });
 
 
-publishButton.disabled=false;
+publishButton.disabled =
+false;
 
-publishButton.innerText=
+publishButton.innerText =
 "ลงขายสินค้า";
 
 
@@ -1300,8 +1416,8 @@ if(error){
 
 console.error(error);
 
-sellMessage.innerText=
-"เกิดข้อผิดพลาด: "+
+sellMessage.innerText =
+"เกิดข้อผิดพลาด: " +
 error.message;
 
 return;
@@ -1309,46 +1425,45 @@ return;
 }
 
 
-sellMessage.innerText=
+sellMessage.innerText =
 "ลงขายสินค้าเรียบร้อยแล้ว!";
 
 
-document.getElementById(
-"productTitle"
-).value="";
+document.getElementById("productTitle").value =
+"";
 
-document.getElementById(
-"productPrice"
-).value="";
+document.getElementById("productPrice").value =
+"";
 
-document.getElementById(
-"productLocation"
-).value="";
+document.getElementById("productLocation").value =
+"";
 
-document.getElementById(
-"productDescription"
-).value="";
+document.getElementById("productDescription").value =
+"";
 
-productImage.value="";
+productImage.value =
+"";
 
-imagePreview.src="";
+imagePreview.src =
+"";
 
-imagePreview.style.display=
+imagePreview.style.display =
 "none";
 
 
 setTimeout(function(){
 
-sellModal.style.display="none";
+sellModal.style.display =
+"none";
 
-sellMessage.innerText="";
+sellMessage.innerText =
+"";
 
 loadProducts();
 
 },1000);
 
 };
-
 
 
 /* =========================
@@ -1360,7 +1475,7 @@ async function loadProducts(searchText=""){
 const productsBox =
 document.getElementById("products");
 
-productsBox.innerHTML=
+productsBox.innerHTML =
 '<div class="empty">กำลังโหลดสินค้า...</div>';
 
 
@@ -1369,17 +1484,22 @@ supabaseClient
 .from("products")
 .select("*")
 .eq("status","active")
-.order("created_at",{ascending:false});
+.order(
+"created_at",
+{
+ascending:false
+}
+);
 
 
 if(searchText){
 
 query =
 query.or(
-"title.ilike.%"+
-searchText+
-"%,description.ilike.%"+
-searchText+
+"title.ilike.%" +
+searchText +
+"%,description.ilike.%" +
+searchText +
 "%"
 );
 
@@ -1394,7 +1514,7 @@ if(error){
 
 console.error(error);
 
-productsBox.innerHTML=
+productsBox.innerHTML =
 '<div class="empty">ไม่สามารถโหลดสินค้าได้</div>';
 
 return;
@@ -1402,9 +1522,10 @@ return;
 }
 
 
-if(!data || data.length===0){
+if(!data ||
+data.length === 0){
 
-productsBox.innerHTML=
+productsBox.innerHTML =
 '<div class="empty">ยังไม่มีสินค้าที่ลงขาย</div>';
 
 return;
@@ -1412,15 +1533,22 @@ return;
 }
 
 
-productsBox.innerHTML="";
+productsBox.innerHTML =
+"";
 
 
-data.forEach(function(product){
+/* =========================
+CREATE PRODUCT CARDS
+========================= */
+
+data.forEach(
+function(product){
 
 const card =
 document.createElement("div");
 
-card.className="card";
+card.className =
+"card";
 
 
 let imageHTML =
@@ -1430,10 +1558,10 @@ let imageHTML =
 if(product.image_url){
 
 imageHTML =
-'<div class="image">'+
-'<img src="'+
-escapeHTML(product.image_url)+
-'" alt="สินค้า">'+
+'<div class="image">' +
+'<img src="' +
+escapeHTML(product.image_url) +
+'" alt="สินค้า">' +
 '</div>';
 
 }
@@ -1441,41 +1569,44 @@ escapeHTML(product.image_url)+
 
 card.innerHTML =
 
-imageHTML+
+imageHTML +
 
-'<div class="info">'+
+'<div class="info">' +
 
-'<h3>'+
-escapeHTML(product.title)+
-'</h3>'+
+'<h3>' +
+escapeHTML(product.title) +
+'</h3>' +
 
-'<div class="price">'+
+'<div class="price">' +
 Number(product.price)
-.toLocaleString()+
-' บาท</div>'+
+.toLocaleString() +
+' บาท</div>' +
 
-'<div class="location">📍 '+
+'<div class="location">📍 ' +
 escapeHTML(
 product.location ||
 "ไม่ระบุ"
-)+
-'</div>'+
+) +
+'</div>' +
 
-(product.description ?
+(
+product.description ?
 
-'<div class="description">'+
+'<div class="description">' +
 escapeHTML(
 product.description
-)+
+) +
 '</div>'
 
 :
 
-"")+
+""
 
-'<button class="detail-button" type="button">'+
-'🔎 ดูรายละเอียด'+
-'</button>'+
+) +
+
+'<button class="detail-button" type="button">' +
+'🔎 ดูรายละเอียด' +
+'</button>' +
 
 '</div>';
 
@@ -1490,18 +1621,23 @@ DETAIL BUTTON
 const detailButton =
 card.querySelector(".detail-button");
 
-detailButton.onclick=function(event){
+
+detailButton.addEventListener(
+"click",
+function(event){
+
+event.preventDefault();
 
 event.stopPropagation();
 
 openProductDetail(product);
 
-};
+}
+);
 
 });
 
 }
-
 
 
 /* =========================
@@ -1511,27 +1647,43 @@ OPEN PRODUCT DETAIL
 function openProductDetail(product){
 
 const detailModal =
-document.getElementById("detailModal");
+document.getElementById(
+"detailModal"
+);
 
 const detailImage =
-document.getElementById("detailImage");
+document.getElementById(
+"detailImage"
+);
 
 const detailTitle =
-document.getElementById("detailTitle");
+document.getElementById(
+"detailTitle"
+);
 
 const detailPrice =
-document.getElementById("detailPrice");
+document.getElementById(
+"detailPrice"
+);
 
 const detailLocation =
-document.getElementById("detailLocation");
+document.getElementById(
+"detailLocation"
+);
 
 const detailDescription =
-document.getElementById("detailDescription");
+document.getElementById(
+"detailDescription"
+);
+
+
+/* IMAGE */
+
+detailImage.innerHTML =
+"";
 
 
 if(product.image_url){
-
-detailImage.innerHTML="";
 
 const img =
 document.createElement("img");
@@ -1540,72 +1692,151 @@ img.src =
 product.image_url;
 
 img.alt =
-"สินค้า";
+escapeHTML(
+product.title ||
+"สินค้า"
+);
 
 detailImage.appendChild(img);
 
 }else{
 
-detailImage.innerHTML="🖥️";
+detailImage.innerHTML =
+"🖥️";
 
 }
 
+
+/* TITLE */
 
 detailTitle.innerText =
 product.title ||
 "ไม่ระบุชื่อสินค้า";
 
 
+/* PRICE */
+
 detailPrice.innerText =
-Number(product.price || 0)
-.toLocaleString()+
+Number(
+product.price || 0
+)
+.toLocaleString() +
 " บาท";
 
 
-detailLocation.innerText =
-"📍 "+
-(product.location ||
-"ไม่ระบุสถานที่");
+/* LOCATION */
 
+detailLocation.innerText =
+"📍 " +
+(
+product.location ||
+"ไม่ระบุสถานที่"
+);
+
+
+/* DESCRIPTION */
 
 detailDescription.innerText =
 product.description ||
 "ผู้ขายไม่ได้ระบุรายละเอียดสินค้า";
 
 
-detailModal.style.display="flex";
+/* SHOW MODAL */
+
+detailModal.style.display =
+"flex";
+
+document.body.style.overflow =
+"hidden";
 
 }
-
 
 
 /* =========================
-CLOSE DETAIL
+CLOSE PRODUCT DETAIL
 ========================= */
 
-document.getElementById(
-"closeDetailButton"
-).onclick=function(){
+function closeProductDetail(){
 
-document.getElementById(
-"detailModal"
-).style.display="none";
-
-};
-
-
+const detailModal =
 document.getElementById(
 "detailModal"
-).onclick=function(event){
+);
 
-if(event.target === this){
+detailModal.style.display =
+"none";
 
-this.style.display="none";
+document.body.style.overflow =
+"";
 
 }
 
-};
 
+document.getElementById(
+"closeDetailButton"
+).addEventListener(
+"click",
+function(event){
+
+event.preventDefault();
+
+event.stopPropagation();
+
+closeProductDetail();
+
+}
+);
+
+
+/* CLICK BACKGROUND TO CLOSE */
+
+document.getElementById(
+"detailModal"
+).addEventListener(
+"click",
+function(event){
+
+if(
+event.target ===
+this
+){
+
+closeProductDetail();
+
+}
+
+}
+);
+
+
+/* ESC TO CLOSE */
+
+document.addEventListener(
+"keydown",
+function(event){
+
+if(
+event.key === "Escape"
+){
+
+const modal =
+document.getElementById(
+"detailModal"
+);
+
+if(
+modal.style.display ===
+"flex"
+){
+
+closeProductDetail();
+
+}
+
+}
+
+}
+);
 
 
 /* =========================
@@ -1625,19 +1856,23 @@ return div.innerHTML;
 }
 
 
-
 /* =========================
 SEARCH
 ========================= */
 
 const searchInput =
-document.getElementById("searchInput");
+document.getElementById(
+"searchInput"
+);
 
 const searchButton =
-document.getElementById("searchButton");
+document.getElementById(
+"searchButton"
+);
 
 
-searchButton.onclick=function(){
+searchButton.onclick =
+function(){
 
 loadProducts(
 searchInput.value.trim()
@@ -1650,7 +1885,9 @@ searchInput.addEventListener(
 "keydown",
 function(event){
 
-if(event.key==="Enter"){
+if(
+event.key === "Enter"
+){
 
 loadProducts(
 searchInput.value.trim()
@@ -1658,8 +1895,8 @@ searchInput.value.trim()
 
 }
 
-});
-
+}
+);
 
 
 /* =========================

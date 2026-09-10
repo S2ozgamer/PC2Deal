@@ -1,513 +1,429 @@
+```html
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PC2Deal - ตลาดซื้อขายคอมมือสอง</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PC2Deal - ตลาดซื้อขายคอมมือสอง</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f6f8;color:#222}
+header{background:#111827;color:white;padding:18px}
+.header{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:25px;font-weight:bold}
+.login{background:white;color:#111827;border:0;padding:9px 14px;border-radius:8px;cursor:pointer}
+.hero{background:#1f2937;color:white;text-align:center;padding:45px 20px}
+.hero h1{font-size:32px;margin-bottom:10px}
+.hero p{color:#d1d5db;margin-bottom:22px}
+.search{max-width:600px;margin:auto;display:flex;gap:8px}
+.search input{flex:1;padding:14px;border-radius:8px;border:0;font-size:16px}
+.search button{padding:14px 20px;border:0;border-radius:8px;cursor:pointer;font-weight:bold}
+.container{max-width:1100px;margin:30px auto;padding:0 18px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.sell{background:#2563eb;color:white;border:0;padding:11px 16px;border-radius:8px;cursor:pointer;font-weight:bold}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.image{height:150px;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:50px}
+.info{padding:15px}
+.info h3{margin-bottom:8px}
+.price{color:#2563eb;font-size:20px;font-weight:bold}
+.location{color:#6b7280;font-size:14px;margin-top:6px}
+footer{margin-top:50px;padding:25px;background:#111827;color:#9ca3af;text-align:center}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f6f8;
-      color: #222;
-    }
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);justify-content:center;align-items:center;padding:20px;z-index:999}
+.modal-box{background:white;width:100%;max-width:400px;padding:25px;border-radius:14px}
+.modal-box h2{margin-bottom:18px}
+.modal-box input{width:100%;padding:12px;margin-bottom:12px;border:1px solid #ddd;border-radius:8px;font-size:16px}
+.modal-box button{width:100%;padding:12px;border:0;border-radius:8px;background:#2563eb;color:white;font-weight:bold;cursor:pointer;margin-top:5px}
+.close{background:#e5e7eb!important;color:#222!important}
+.switch{text-align:center;margin-top:15px;color:#2563eb;cursor:pointer}
+#message{margin-top:12px;text-align:center;font-size:14px}
 
-    header {
-      background: #111827;
-      color: white;
-      padding: 18px;
-    }
-
-    .header {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-    }
-
-    .login {
-      background: white;
-      color: #111827;
-      border: none;
-      padding: 9px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .hero {
-      background: #1f2937;
-      color: white;
-      text-align: center;
-      padding: 45px 20px;
-    }
-
-    .hero h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      color: #d1d5db;
-      margin-bottom: 22px;
-    }
-
-    .search {
-      max-width: 600px;
-      margin: auto;
-      display: flex;
-      gap: 8px;
-    }
-
-    .search input {
-      flex: 1;
-      padding: 14px;
-      border-radius: 8px;
-      border: none;
-      font-size: 16px;
-    }
-
-    .search button {
-      padding: 14px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 30px auto;
-      padding: 0 18px;
-    }
-
-    .top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .sell {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 11px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    .image {
-      height: 150px;
-      background: #e5e7eb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 50px;
-    }
-
-    .info {
-      padding: 15px;
-    }
-
-    .info h3 {
-      margin-bottom: 8px;
-    }
-
-    .price {
-      color: #2563eb;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .location {
-      color: #6b7280;
-      font-size: 14px;
-      margin-top: 6px;
-    }
-
-    footer {
-      margin-top: 50px;
-      padding: 25px;
-      background: #111827;
-      color: #9ca3af;
-      text-align: center;
-    }
-
-    /* LOGIN */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      z-index: 999;
-    }
-
-    .modal-box {
-      background: white;
-      width: 100%;
-      max-width: 400px;
-      padding: 25px;
-      border-radius: 14px;
-    }
-
-    .modal-box h2 {
-      margin-bottom: 18px;
-    }
-
-    .modal-box input {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    .modal-box button {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      background: #2563eb;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 5px;
-    }
-
-    .close {
-      background: #e5e7eb !important;
-      color: #222 !important;
-    }
-
-    .switch {
-      text-align: center;
-      margin-top: 15px;
-      color: #2563eb;
-      cursor: pointer;
-    }
-
-    #message {
-      margin-top: 12px;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    @media (max-width: 600px) {
-      .hero h1 {
-        font-size: 26px;
-      }
-
-      .search {
-        flex-direction: column;
-      }
-
-      .search button {
-        width: 100%;
-      }
-
-      .top {
-        gap: 10px;
-      }
-    }
-  </style>
+@media(max-width:600px){
+.hero h1{font-size:26px}
+.search{flex-direction:column}
+.search button{width:100%}
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <div class="header">
-    <div class="logo">PC2Deal</div>
-    <button class="login" id="loginButton">เข้าสู่ระบบ</button>
-  </div>
+<div class="header">
+<div class="logo">PC2Deal</div>
+<button class="login" id="loginButton">เข้าสู่ระบบ</button>
+</div>
 </header>
 
 <section class="hero">
-  <h1>ตลาดซื้อขายคอมมือสอง</h1>
-  <p>ซื้อขาย PC และอุปกรณ์คอมพิวเตอร์ง่าย ๆ ในที่เดียว</p>
-
-  <div class="search">
-    <input type="text" placeholder="ค้นหา เช่น RTX 3060, i5, RAM...">
-    <button>ค้นหา</button>
-  </div>
+<h1>ตลาดซื้อขายคอมมือสอง</h1>
+<p>ซื้อขาย PC และอุปกรณ์คอมพิวเตอร์ง่าย ๆ ในที่เดียว</p>
+<div class="search">
+<input type="text" placeholder="ค้นหา เช่น RTX 3060, i5, RAM...">
+<button>ค้นหา</button>
+</div>
 </section>
 
 <main class="container">
+<div class="top">
+<h2>สินค้าล่าสุด</h2>
+<button class="sell">+ ลงขายสินค้า</button>
+</div>
 
-  <div class="top">
-    <h2>สินค้าล่าสุด</h2>
-    <button class="sell">+ ลงขายสินค้า</button>
-  </div>
+<div class="products">
 
-  <div class="products">
+<div class="card">
+<div class="image">🖥️</div>
+<div class="info">
+<h3>Gaming PC i5 + RTX 3060</h3>
+<div class="price">15,900 บาท</div>
+<div class="location">📍 กรุงเทพฯ</div>
+</div>
+</div>
 
-    <div class="card">
-      <div class="image">🖥️</div>
-      <div class="info">
-        <h3>Gaming PC i5 + RTX 3060</h3>
-        <div class="price">15,900 บาท</div>
-        <div class="location">📍 กรุงเทพฯ</div>
-      </div>
-    </div>
+<div class="card">
+<div class="image">🎮</div>
+<div class="info">
+<h3>RTX 3060 12GB</h3>
+<div class="price">7,500 บาท</div>
+<div class="location">📍 นครนายก</div>
+</div>
+</div>
 
-    <div class="card">
-      <div class="image">🎮</div>
-      <div class="info">
-        <h3>RTX 3060 12GB</h3>
-        <div class="price">7,500 บาท</div>
-        <div class="location">📍 นครนายก</div>
-      </div>
-    </div>
+<div class="card">
+<div class="image">💾</div>
+<div class="info">
+<h3>RAM DDR4 16GB</h3>
+<div class="price">1,200 บาท</div>
+<div class="location">📍 ปทุมธานี</div>
+</div>
+</div>
 
-    <div class="card">
-      <div class="image">💾</div>
-      <div class="info">
-        <h3>RAM DDR4 16GB</h3>
-        <div class="price">1,200 บาท</div>
-        <div class="location">📍 ปทุมธานี</div>
-      </div>
-    </div>
+<div class="card">
+<div class="image">⚙️</div>
+<div class="info">
+<h3>Intel Core i5-12400F</h3>
+<div class="price">3,900 บาท</div>
+<div class="location">📍 ชลบุรี</div>
+</div>
+</div>
 
-    <div class="card">
-      <div class="image">⚙️</div>
-      <div class="info">
-        <h3>Intel Core i5-12400F</h3>
-        <div class="price">3,900 บาท</div>
-        <div class="location">📍 ชลบุรี</div>
-      </div>
-    </div>
-
-  </div>
-
+</div>
 </main>
 
 <footer>
-  PC2Deal © 2026 — ตลาดซื้อขายคอมพิวเตอร์มือสอง
+PC2Deal © 2026 — ตลาดซื้อขายคอมพิวเตอร์มือสอง
 </footer>
 
-<!-- LOGIN MODAL -->
 <div class="modal" id="loginModal">
-  <div class="modal-box">
+<div class="modal-box">
 
-    <h2 id="modalTitle">เข้าสู่ระบบ</h2>
+<h2 id="modalTitle">เข้าสู่ระบบ</h2>
 
-    <input type="email" id="email" placeholder="อีเมล">
+<input type="email" id="email" placeholder="อีเมล">
+<input type="password" id="password" placeholder="รหัสผ่าน">
 
-    <input type="password" id="password" placeholder="รหัสผ่าน">
+<button id="submitButton">เข้าสู่ระบบ</button>
 
-    <button id="submitButton">เข้าสู่ระบบ</button>
+<div class="switch" id="switchMode">
+ยังไม่มีบัญชี? สมัครสมาชิก
+</div>
 
-    <div class="switch" id="switchMode">
-      ยังไม่มีบัญชี? สมัครสมาชิก
-    </div>
+<div class="switch" id="forgotPassword">
+ลืมรหัสผ่าน?
+</div>
 
-    <div id="message"></div>
+<div id="resetBox" style="display:none">
+<input type="password" id="newPassword" placeholder="รหัสผ่านใหม่">
+<button id="resetButton">เปลี่ยนรหัสผ่าน</button>
+</div>
 
-    <button class="close" id="closeButton">ปิด</button>
+<div id="message"></div>
 
-  </div>
+<button class="close" id="closeButton">ปิด</button>
+
+</div>
 </div>
 
 <script>
 
-  // ============================
-  // SUPABASE
-  // ============================
+const SUPABASE_URL =
+"https://jnkeffwgnjjebujrcprb.supabase.co";
 
-  const SUPABASE_URL = "https://jnkeffwgnjjebujrcprb.supabase.co";
+/*
+  สำคัญ:
+  ตรงนี้ให้เอา Publishable Key จากโค้ดเดิมของคุณ
+  มาใส่แทนข้อความด้านล่าง
+*/
+const SUPABASE_KEY =
+"sb_publishable_q0UFEgWWvBZLXPlEwLX01w_HhK47RtP";
 
-  // ใส่ Publishable Key ของคุณตรงนี้
-  const SUPABASE_KEY = "sb_publishable_q0UFEgWWvBZLXPlEwLX01w_HhK47RtP";
+const supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
 
-  const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+const loginButton =
+document.getElementById("loginButton");
 
+const loginModal =
+document.getElementById("loginModal");
 
-  // ============================
-  // LOGIN SYSTEM
-  // ============================
+const closeButton =
+document.getElementById("closeButton");
 
-  const loginButton = document.getElementById("loginButton");
-  const loginModal = document.getElementById("loginModal");
-  const closeButton = document.getElementById("closeButton");
-  const submitButton = document.getElementById("submitButton");
-  const switchMode = document.getElementById("switchMode");
+const submitButton =
+document.getElementById("submitButton");
 
-  const modalTitle = document.getElementById("modalTitle");
-  const message = document.getElementById("message");
+const switchMode =
+document.getElementById("switchMode");
 
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
+const forgotPassword =
+document.getElementById("forgotPassword");
 
-  let registerMode = false;
+const modalTitle =
+document.getElementById("modalTitle");
 
+const message =
+document.getElementById("message");
 
-  loginButton.onclick = function() {
-    loginModal.style.display = "flex";
-  };
+const emailInput =
+document.getElementById("email");
 
+const passwordInput =
+document.getElementById("password");
 
-  closeButton.onclick = function() {
-    loginModal.style.display = "none";
-    message.innerText = "";
-  };
+const resetBox =
+document.getElementById("resetBox");
 
+const newPassword =
+document.getElementById("newPassword");
 
-  switchMode.onclick = function() {
+const resetButton =
+document.getElementById("resetButton");
 
-    registerMode = !registerMode;
+let registerMode = false;
 
-    if (registerMode) {
+loginButton.onclick = async function(){
 
-      modalTitle.innerText = "สมัครสมาชิก";
-      submitButton.innerText = "สมัครสมาชิก";
+const {data} =
+await supabaseClient.auth.getUser();
 
-      switchMode.innerText =
-        "มีบัญชีแล้ว? เข้าสู่ระบบ";
+if(data.user){
 
-    } else {
+await supabaseClient.auth.signOut();
 
-      modalTitle.innerText = "เข้าสู่ระบบ";
-      submitButton.innerText = "เข้าสู่ระบบ";
+loginButton.innerText="เข้าสู่ระบบ";
 
-      switchMode.innerText =
-        "ยังไม่มีบัญชี? สมัครสมาชิก";
-    }
+return;
+}
 
-  };
+loginModal.style.display="flex";
 
+};
 
-  submitButton.onclick = async function() {
+closeButton.onclick=function(){
 
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
+loginModal.style.display="none";
+message.innerText="";
 
-    if (!email || !password) {
-      message.innerText = "กรุณากรอกอีเมลและรหัสผ่าน";
-      return;
-    }
+};
 
-    message.innerText = "กำลังดำเนินการ...";
+switchMode.onclick=function(){
 
+registerMode=!registerMode;
 
-    if (registerMode) {
+if(registerMode){
 
-      const { data, error } =
-        await supabaseClient.auth.signUp({
-          email: email,
-          password: password
-        });
+modalTitle.innerText="สมัครสมาชิก";
+submitButton.innerText="สมัครสมาชิก";
+switchMode.innerText="มีบัญชีแล้ว? เข้าสู่ระบบ";
 
-      if (error) {
+}else{
 
-        message.innerText = error.message;
+modalTitle.innerText="เข้าสู่ระบบ";
+submitButton.innerText="เข้าสู่ระบบ";
+switchMode.innerText="ยังไม่มีบัญชี? สมัครสมาชิก";
 
-      } else {
+}
 
-        message.innerText =
-          "สมัครสมาชิกสำเร็จ! กรุณาตรวจสอบอีเมลเพื่อยืนยันบัญชี";
+};
 
-      }
+submitButton.onclick=async function(){
 
-    } else {
+const email=emailInput.value.trim();
+const password=passwordInput.value;
 
-      const { data, error } =
-        await supabaseClient.auth.signInWithPassword({
-          email: email,
-          password: password
-        });
+if(!email||!password){
 
-      if (error) {
+message.innerText="กรุณากรอกอีเมลและรหัสผ่าน";
+return;
 
-        message.innerText = error.message;
+}
 
-      } else {
+message.innerText="กำลังดำเนินการ...";
 
-        message.innerText = "เข้าสู่ระบบสำเร็จ!";
+if(registerMode){
 
-        loginButton.innerText = "ออกจากระบบ";
+const {error}=await supabaseClient.auth.signUp({
+email:email,
+password:password
+});
 
-        setTimeout(function() {
-          loginModal.style.display = "none";
-        }, 1000);
+if(error){
 
-      }
+message.innerText=error.message;
 
-    }
+}else{
 
-  };
+message.innerText=
+"สมัครสมาชิกสำเร็จ! กรุณาตรวจสอบอีเมล";
 
+}
 
-  // ตรวจสอบว่ามีผู้ใช้เข้าสู่ระบบอยู่หรือไม่
+}else{
 
-  async function checkUser() {
+const {error}=await supabaseClient.auth.signInWithPassword({
+email:email,
+password:password
+});
 
-    const { data } =
-      await supabaseClient.auth.getUser();
+if(error){
 
-    if (data.user) {
+message.innerText=error.message;
 
-      loginButton.innerText = "ออกจากระบบ";
+}else{
 
-    }
+message.innerText="เข้าสู่ระบบสำเร็จ!";
 
-  }
+loginButton.innerText="ออกจากระบบ";
 
+setTimeout(function(){
 
-  loginButton.addEventListener("click", async function() {
+loginModal.style.display="none";
 
-    const { data } =
-      await supabaseClient.auth.getUser();
+},1000);
 
-    if (data.user) {
+}
 
-      await supabaseClient.auth.signOut();
+}
 
-      loginButton.innerText = "เข้าสู่ระบบ";
+};
 
-      alert("ออกจากระบบแล้ว");
+forgotPassword.onclick=async function(){
 
-    }
+const email=emailInput.value.trim();
 
-  });
+if(!email){
 
+message.innerText="กรุณากรอกอีเมลก่อน";
+return;
 
-  checkUser();
+}
+
+const {error} =
+await supabaseClient.auth.resetPasswordForEmail(
+email,
+{
+redirectTo:
+"https://s2ozgamer.github.io/PC2Deal/"
+}
+);
+
+if(error){
+
+message.innerText=error.message;
+
+}else{
+
+message.innerText=
+"ส่งลิงก์เปลี่ยนรหัสผ่านไปที่อีเมลแล้ว";
+
+}
+
+};
+
+supabaseClient.auth.onAuthStateChange(
+async function(event){
+
+if(event==="PASSWORD_RECOVERY"){
+
+loginModal.style.display="flex";
+
+modalTitle.innerText="ตั้งรหัสผ่านใหม่";
+
+emailInput.style.display="none";
+passwordInput.style.display="none";
+submitButton.style.display="none";
+switchMode.style.display="none";
+forgotPassword.style.display="none";
+
+resetBox.style.display="block";
+
+}
+
+});
+
+resetButton.onclick=async function(){
+
+const password=newPassword.value;
+
+if(password.length<6){
+
+message.innerText=
+"รหัสผ่านต้องมีอย่างน้อย 6 ตัว";
+
+return;
+
+}
+
+const {error} =
+await supabaseClient.auth.updateUser({
+password:password
+});
+
+if(error){
+
+message.innerText=error.message;
+
+}else{
+
+message.innerText=
+"เปลี่ยนรหัสผ่านสำเร็จแล้ว!";
+
+setTimeout(function(){
+
+loginModal.style.display="none";
+location.reload();
+
+},1500);
+
+}
+
+};
+
+async function checkUser(){
+
+const {data} =
+await supabaseClient.auth.getUser();
+
+if(data.user){
+
+loginButton.innerText="ออกจากระบบ";
+
+}
+
+}
+
+checkUser();
 
 </script>
 
 </body>
 </html>
+```

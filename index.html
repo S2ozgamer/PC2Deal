@@ -9,1026 +9,691 @@
 
 <style>
 *{
-box-sizing:border-box;
-margin:0;
-padding:0
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 body{
-font-family:Arial,sans-serif;
-background:#f5f6f8;
-color:#222
+  font-family:Arial,"Noto Sans Thai",sans-serif;
+  background:#f5f7fb;
+  color:#1f2937;
 }
 
-body.no-scroll{
-overflow:hidden
+button,
+input,
+textarea{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
 }
 
 header{
-background:#111827;
-color:white;
-padding:18px
-}
-
-.header{
-max-width:1100px;
-margin:auto;
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px
+  background:#111827;
+  color:white;
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  position:sticky;
+  top:0;
+  z-index:100;
 }
 
 .logo{
-font-size:25px;
-font-weight:bold
+  font-size:24px;
+  font-weight:800;
+  color:#60a5fa;
+  white-space:nowrap;
 }
 
-.header-actions{
-display:flex;
-align-items:center;
-gap:8px
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
 }
 
-.login{
-background:white;
-color:#111827;
-border:0;
-padding:9px 14px;
-border-radius:8px;
-cursor:pointer
+.header-btn{
+  border:0;
+  border-radius:9px;
+  padding:9px 12px;
+  background:#1f2937;
+  color:white;
+  font-size:14px;
 }
 
-.message-button,
-.order-button{
-position:relative;
-background:#2563eb;
-color:white;
-border:0;
-padding:9px 14px;
-border-radius:8px;
-cursor:pointer;
-font-weight:bold
+.header-btn:hover{
+  background:#374151;
 }
 
-.order-button{
-background:#059669
-}
-
-.message-badge,
-.order-badge{
-position:absolute;
-top:-7px;
-right:-7px;
-background:#ef4444;
-color:white;
-font-size:11px;
-min-width:20px;
-height:20px;
-padding:2px 5px;
-border-radius:20px;
-display:none;
-align-items:center;
-justify-content:center;
-border:2px solid #111827
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:20px;
+  height:20px;
+  padding:0 5px;
+  border-radius:99px;
+  background:#ef4444;
+  color:white;
+  font-size:11px;
+  font-weight:bold;
+  margin-left:4px;
 }
 
 .hero{
-background:#1f2937;
-color:white;
-text-align:center;
-padding:45px 20px
+  background:linear-gradient(135deg,#2563eb,#4f46e5);
+  color:white;
+  padding:48px 20px;
+  text-align:center;
 }
 
 .hero h1{
-font-size:32px;
-margin-bottom:10px
+  font-size:38px;
+  margin-bottom:10px;
 }
 
 .hero p{
-color:#d1d5db;
-margin-bottom:22px
+  opacity:.9;
+  margin-bottom:24px;
 }
 
-.search{
-max-width:600px;
-margin:auto;
-display:flex;
-gap:8px
+.search-box{
+  max-width:720px;
+  margin:auto;
+  display:flex;
+  gap:8px;
 }
 
-.search input{
-flex:1;
-padding:14px;
-border-radius:8px;
-border:0;
-font-size:16px
+.search-box input{
+  flex:1;
+  border:0;
+  border-radius:12px;
+  padding:15px;
+  font-size:16px;
+  outline:none;
 }
 
-.search button{
-padding:14px 20px;
-border:0;
-border-radius:8px;
-cursor:pointer;
-font-weight:bold
+.search-box button{
+  border:0;
+  border-radius:12px;
+  padding:0 20px;
+  background:#111827;
+  color:white;
+  font-weight:bold;
 }
 
 .container{
-max-width:1100px;
-margin:30px auto;
-padding:0 18px
+  max-width:1200px;
+  margin:30px auto;
+  padding:0 18px;
 }
 
-.top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:20px
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+  gap:10px;
 }
 
-.sell{
-background:#2563eb;
-color:white;
-border:0;
-padding:11px 16px;
-border-radius:8px;
-cursor:pointer;
-font-weight:bold
+.section-head h2{
+  font-size:24px;
 }
 
 .products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:18px
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:18px;
 }
 
-.card{
-background:white;
-border-radius:12px;
-overflow:hidden;
-box-shadow:0 2px 8px rgba(0,0,0,.08)
+.product-card{
+  background:white;
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+  transition:.2s;
 }
 
-.image{
-height:180px;
-background:#e5e7eb;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:50px;
-overflow:hidden
+.product-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 22px rgba(0,0,0,.12);
 }
 
-.image img{
-width:100%;
-height:100%;
-object-fit:cover
+.product-image{
+  width:100%;
+  height:190px;
+  object-fit:cover;
+  background:#e5e7eb;
 }
 
-.info{
-padding:15px
+.product-content{
+  padding:15px;
 }
 
-.info h3{
-margin-bottom:8px
+.product-title{
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:8px;
+  line-height:1.4;
 }
 
 .price{
-color:#2563eb;
-font-size:20px;
-font-weight:bold
+  font-size:22px;
+  color:#2563eb;
+  font-weight:bold;
+  margin-bottom:7px;
 }
 
 .location{
-color:#6b7280;
-font-size:14px;
-margin-top:6px
+  color:#6b7280;
+  font-size:13px;
+  margin-bottom:7px;
 }
 
-.description{
-color:#555;
-font-size:14px;
-margin-top:10px;
-line-height:1.5
+.seller{
+  font-size:13px;
+  color:#374151;
+  margin-bottom:10px;
 }
 
-.detail-button{
-width:100%;
-margin-top:12px;
-padding:11px;
-border:0;
-border-radius:8px;
-background:#111827;
-color:white;
-font-weight:bold;
-cursor:pointer
+.rating{
+  color:#f59e0b;
+  font-weight:bold;
 }
 
-.detail-button:hover{
-background:#2563eb
+.card-actions{
+  display:flex;
+  gap:7px;
+  margin-top:12px;
+}
+
+.btn{
+  border:0;
+  border-radius:9px;
+  padding:10px 13px;
+  font-weight:bold;
+}
+
+.btn-primary{
+  background:#2563eb;
+  color:white;
+}
+
+.btn-primary:hover{
+  background:#1d4ed8;
+}
+
+.btn-secondary{
+  background:#e5e7eb;
+  color:#111827;
+}
+
+.btn-success{
+  background:#16a34a;
+  color:white;
+}
+
+.btn-danger{
+  background:#dc2626;
+  color:white;
+}
+
+.btn-warning{
+  background:#f59e0b;
+  color:white;
 }
 
 .empty{
-text-align:center;
-padding:40px;
-color:#777;
-grid-column:1/-1
-}
-
-footer{
-margin-top:50px;
-padding:25px;
-background:#111827;
-color:#9ca3af;
-text-align:center
+  text-align:center;
+  color:#6b7280;
+  padding:50px 20px;
+  background:white;
+  border-radius:15px;
 }
 
 .modal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.65);
-justify-content:center;
-align-items:center;
-padding:20px;
-z-index:9999
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  z-index:500;
+}
+
+.modal.active{
+  display:flex;
 }
 
 .modal-box{
-background:white;
-width:100%;
-max-width:420px;
-padding:25px;
-border-radius:14px;
-max-height:90vh;
-overflow-y:auto
+  background:white;
+  width:100%;
+  max-width:620px;
+  max-height:92vh;
+  overflow:auto;
+  border-radius:16px;
+  padding:22px;
+  position:relative;
 }
 
-.modal-box h2{
-margin-bottom:18px
-}
-
-.modal-box input,
-.modal-box textarea{
-width:100%;
-padding:12px;
-margin-bottom:12px;
-border:1px solid #ddd;
-border-radius:8px;
-font-size:16px
-}
-
-.modal-box textarea{
-height:110px;
-resize:vertical
-}
-
-.modal-box button{
-width:100%;
-padding:12px;
-border:0;
-border-radius:8px;
-background:#2563eb;
-color:white;
-font-weight:bold;
-cursor:pointer;
-margin-top:5px
-}
-
-.modal-box button:disabled{
-opacity:.6;
-cursor:not-allowed
+.modal-box.large{
+  max-width:850px;
 }
 
 .close{
-background:#e5e7eb!important;
-color:#222!important
+  position:absolute;
+  right:15px;
+  top:12px;
+  border:0;
+  background:none;
+  font-size:28px;
+  color:#6b7280;
 }
 
-.switch{
-text-align:center;
-margin-top:15px;
-color:#2563eb;
-cursor:pointer
+.modal-title{
+  font-size:23px;
+  font-weight:bold;
+  margin-bottom:18px;
+  padding-right:35px;
 }
 
-#message,
-#sellMessage,
-#orderMessage{
-margin-top:12px;
-text-align:center;
-font-size:14px
+.form-group{
+  margin-bottom:14px;
 }
 
-.sell-label{
-font-size:14px;
-font-weight:bold;
-display:block;
-margin-bottom:6px
+.form-group label{
+  display:block;
+  margin-bottom:6px;
+  font-weight:bold;
 }
 
-.file-box{
-border:2px dashed #d1d5db;
-border-radius:10px;
-padding:18px;
-text-align:center;
-margin-bottom:12px;
-background:#f9fafb
+.form-group input,
+.form-group textarea,
+.form-group select{
+  width:100%;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  padding:11px;
+  outline:none;
+  font-size:15px;
 }
 
-.file-box input{
-border:0;
-padding:0;
-margin:10px 0 0;
-background:transparent
+.form-group textarea{
+  min-height:110px;
+  resize:vertical;
 }
 
-.preview{
-display:none;
-width:100%;
-height:180px;
-object-fit:cover;
-border-radius:10px;
-margin-top:10px
+.form-group input:focus,
+.form-group textarea:focus{
+  border-color:#2563eb;
 }
 
-/* DETAIL */
-
-#detailModal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.65);
-justify-content:center;
-align-items:center;
-padding:20px;
-z-index:10000
+.auth-switch{
+  text-align:center;
+  margin-top:14px;
+  color:#6b7280;
 }
 
-.detail-box{
-background:white;
-width:100%;
-max-width:650px;
-border-radius:16px;
-overflow:hidden;
-max-height:90vh;
-overflow-y:auto;
-box-shadow:0 10px 40px rgba(0,0,0,.3)
+.auth-switch button{
+  border:0;
+  background:none;
+  color:#2563eb;
+  font-weight:bold;
 }
 
 .detail-image{
-width:100%;
-height:320px;
-background:#e5e7eb;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:80px;
-overflow:hidden
-}
-
-.detail-image img{
-width:100%;
-height:100%;
-object-fit:cover;
-display:block
-}
-
-.detail-content{
-padding:25px
+  width:100%;
+  max-height:390px;
+  object-fit:contain;
+  border-radius:12px;
+  background:#f3f4f6;
+  margin-bottom:18px;
 }
 
 .detail-title{
-font-size:25px;
-font-weight:bold;
-margin-bottom:10px
+  font-size:27px;
+  font-weight:bold;
+  margin-bottom:8px;
 }
 
 .detail-price{
-font-size:25px;
-font-weight:bold;
-color:#2563eb;
-margin-bottom:8px
+  font-size:28px;
+  color:#2563eb;
+  font-weight:bold;
+  margin-bottom:12px;
 }
 
-.detail-location{
-color:#6b7280;
-margin-bottom:12px
-}
-
-.detail-seller{
-display:block;
-width:100%;
-padding:14px;
-margin:12px 0 20px;
-background:#f3f4f6;
-border-radius:10px;
-color:#111827;
-font-size:16px;
-font-weight:600;
-line-height:1.5
-}
-
-.detail-label{
-font-weight:bold;
-font-size:16px;
-margin-bottom:8px
+.detail-info{
+  background:#f9fafb;
+  padding:13px;
+  border-radius:10px;
+  margin-bottom:15px;
 }
 
 .detail-description{
-background:#f5f6f8;
-padding:15px;
-border-radius:10px;
-line-height:1.7;
-white-space:pre-wrap;
-min-height:80px;
-word-break:break-word
+  white-space:pre-wrap;
+  line-height:1.7;
+  margin-bottom:15px;
 }
 
-.detail-buy{
-display:block!important;
-width:100%!important;
-margin-top:20px!important;
-padding:14px!important;
-border:0!important;
-border-radius:10px!important;
-background:#059669!important;
-color:white!important;
-font-size:16px!important;
-font-weight:bold!important;
-cursor:pointer!important
+.detail-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
-.detail-contact{
-display:block!important;
-width:100%!important;
-margin-top:10px!important;
-padding:14px!important;
-border:0!important;
-border-radius:10px!important;
-background:#2563eb!important;
-color:white!important;
-font-size:16px!important;
-font-weight:bold!important;
-cursor:pointer!important
+.tabs{
+  display:flex;
+  gap:7px;
+  margin-bottom:18px;
+  border-bottom:1px solid #e5e7eb;
+  padding-bottom:8px;
 }
 
-.detail-close{
-display:block;
-width:100%;
-margin-top:10px;
-padding:13px;
-border:0;
-border-radius:8px;
-background:#e5e7eb!important;
-color:#222!important;
-font-size:16px;
-font-weight:bold;
-cursor:pointer
+.tab{
+  border:0;
+  background:#f3f4f6;
+  padding:10px 16px;
+  border-radius:9px;
+  font-weight:bold;
 }
 
-/* CHAT */
-
-#chatModal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.65);
-justify-content:center;
-align-items:center;
-padding:15px;
-z-index:11000
-}
-
-.chat-box{
-background:white;
-width:100%;
-max-width:550px;
-height:80vh;
-max-height:700px;
-border-radius:16px;
-overflow:hidden;
-display:flex;
-flex-direction:column;
-box-shadow:0 10px 40px rgba(0,0,0,.35)
-}
-
-.chat-header{
-background:#111827;
-color:white;
-padding:15px;
-display:flex;
-align-items:center;
-gap:12px
-}
-
-.chat-back{
-width:42px!important;
-height:42px!important;
-padding:0!important;
-margin:0!important;
-background:#374151!important;
-border:0!important;
-border-radius:8px!important;
-color:white!important;
-font-size:22px!important;
-flex-shrink:0
-}
-
-.chat-header-info{
-flex:1;
-min-width:0
-}
-
-.chat-title{
-font-size:17px;
-font-weight:bold;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis
-}
-
-.chat-subtitle{
-font-size:13px;
-color:#d1d5db;
-margin-top:4px
-}
-
-.chat-messages{
-flex:1;
-overflow-y:auto;
-padding:15px;
-background:#f3f4f6;
-display:flex;
-flex-direction:column;
-gap:10px
-}
-
-.chat-empty{
-text-align:center;
-color:#9ca3af;
-margin:auto;
-line-height:1.7
-}
-
-.message-row{
-display:flex;
-width:100%
-}
-
-.message-row.mine{
-justify-content:flex-end
-}
-
-.message-row.theirs{
-justify-content:flex-start
-}
-
-.message-bubble{
-max-width:78%;
-padding:10px 13px;
-border-radius:14px;
-line-height:1.5;
-word-break:break-word;
-white-space:pre-wrap
-}
-
-.mine .message-bubble{
-background:#2563eb;
-color:white;
-border-bottom-right-radius:4px
-}
-
-.theirs .message-bubble{
-background:white;
-color:#222;
-border-bottom-left-radius:4px;
-box-shadow:0 1px 3px rgba(0,0,0,.08)
-}
-
-.message-time{
-font-size:10px;
-opacity:.65;
-margin-top:4px;
-text-align:right
-}
-
-.chat-status{
-font-size:12px;
-color:#6b7280;
-padding:7px 15px;
-background:white;
-border-top:1px solid #e5e7eb
-}
-
-.chat-input-area{
-padding:12px;
-background:white;
-border-top:1px solid #e5e7eb;
-display:flex;
-gap:8px
-}
-
-.chat-input{
-flex:1!important;
-height:46px!important;
-margin:0!important;
-resize:none
-}
-
-.chat-send{
-width:75px!important;
-margin:0!important;
-padding:10px!important;
-flex-shrink:0
-}
-
-/* INBOX */
-
-#inboxModal,
-#orderModal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.65);
-justify-content:center;
-align-items:center;
-padding:15px;
-z-index:10500
-}
-
-.inbox-box,
-.order-box{
-background:white;
-width:100%;
-max-width:700px;
-height:80vh;
-max-height:750px;
-border-radius:16px;
-overflow:hidden;
-display:flex;
-flex-direction:column;
-box-shadow:0 10px 40px rgba(0,0,0,.35)
-}
-
-.inbox-header{
-background:#111827;
-color:white;
-padding:16px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:10px
-}
-
-.inbox-title{
-font-size:20px;
-font-weight:bold
-}
-
-.inbox-close{
-width:40px!important;
-height:40px!important;
-padding:0!important;
-margin:0!important;
-background:#374151!important;
-color:white!important;
-border:0!important;
-border-radius:8px!important;
-font-size:20px!important
-}
-
-.inbox-list{
-flex:1;
-overflow-y:auto;
-background:#f3f4f6
-}
-
-.inbox-loading{
-text-align:center;
-padding:50px 20px;
-color:#777
-}
-
-.inbox-empty{
-text-align:center;
-padding:60px 20px;
-color:#777;
-line-height:1.8
-}
-
-.conversation{
-background:white;
-padding:15px;
-border-bottom:1px solid #e5e7eb;
-cursor:pointer;
-transition:.15s;
-display:flex;
-gap:12px;
-align-items:center
-}
-
-.conversation:hover{
-background:#f9fafb
-}
-
-.conversation.unread{
-background:#eff6ff
-}
-
-.conversation-avatar{
-width:46px;
-height:46px;
-border-radius:50%;
-background:#111827;
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:20px;
-flex-shrink:0
-}
-
-.conversation-content{
-flex:1;
-min-width:0
-}
-
-.conversation-top{
-display:flex;
-justify-content:space-between;
-gap:10px;
-align-items:center
-}
-
-.conversation-name{
-font-weight:bold;
-font-size:16px;
-color:#111827;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis
-}
-
-.conversation-time{
-font-size:11px;
-color:#9ca3af;
-white-space:nowrap
-}
-
-.conversation-product{
-font-size:12px;
-color:#2563eb;
-margin-top:4px;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis
-}
-
-.conversation-message{
-font-size:13px;
-color:#6b7280;
-margin-top:5px;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis
-}
-
-.unread-dot{
-width:9px;
-height:9px;
-border-radius:50%;
-background:#2563eb;
-flex-shrink:0;
-display:none
-}
-
-.conversation.unread .unread-dot{
-display:block
-}
-
-/* ORDERS */
-
-.order-list{
-flex:1;
-overflow-y:auto;
-background:#f3f4f6;
-padding:15px
+.tab.active{
+  background:#2563eb;
+  color:white;
 }
 
 .order-card{
-background:white;
-border-radius:12px;
-padding:16px;
-margin-bottom:12px;
-box-shadow:0 1px 4px rgba(0,0,0,.08)
+  background:#f9fafb;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:15px;
+  margin-bottom:12px;
 }
 
-.order-top{
-display:flex;
-justify-content:space-between;
-gap:10px;
-align-items:flex-start;
-margin-bottom:10px
+.order-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
 }
 
 .order-title{
-font-size:17px;
-font-weight:bold
+  font-weight:bold;
+  font-size:17px;
 }
 
-.order-id{
-font-size:11px;
-color:#9ca3af;
-margin-top:4px
-}
-
-.order-price{
-font-size:20px;
-font-weight:bold;
-color:#2563eb;
-margin:8px 0
-}
-
-.order-person{
-font-size:13px;
-color:#555;
-line-height:1.6
-}
-
-.order-date{
-font-size:12px;
-color:#9ca3af;
-margin-top:8px
-}
-
-.order-status{
-display:inline-block;
-padding:6px 10px;
-border-radius:20px;
-font-size:12px;
-font-weight:bold;
-white-space:nowrap
+.status{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:bold;
 }
 
 .status-pending{
-background:#fef3c7;
-color:#92400e
+  background:#fef3c7;
+  color:#92400e;
 }
 
 .status-confirmed{
-background:#dbeafe;
-color:#1e40af
+  background:#dbeafe;
+  color:#1e40af;
 }
 
 .status-shipping{
-background:#e0e7ff;
-color:#3730a3
+  background:#ede9fe;
+  color:#5b21b6;
 }
 
 .status-shipped{
-background:#cffafe;
-color:#155e75
+  background:#cffafe;
+  color:#155e75;
 }
 
 .status-completed{
-background:#dcfce7;
-color:#166534
+  background:#dcfce7;
+  color:#166534;
 }
 
 .status-cancelled{
-background:#fee2e2;
-color:#991b1b
+  background:#fee2e2;
+  color:#991b1b;
 }
 
-.order-buttons{
-display:flex;
-gap:8px;
-margin-top:12px;
-flex-wrap:wrap
+.order-meta{
+  color:#6b7280;
+  font-size:13px;
+  line-height:1.7;
 }
 
-.order-buttons button{
-flex:1;
-min-width:120px;
-padding:10px;
-border:0;
-border-radius:8px;
-cursor:pointer;
-font-weight:bold;
-background:#2563eb;
-color:white
+.order-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:12px;
 }
 
-.order-buttons .green{
-background:#059669
+.review-box{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:12px;
+  margin-top:12px;
 }
 
-.order-buttons .red{
-background:#dc2626
+.review-item{
+  padding:11px 0;
+  border-bottom:1px solid #e5e7eb;
 }
 
-.order-buttons .gray{
-background:#6b7280
+.review-item:last-child{
+  border-bottom:0;
 }
 
-.order-tabs{
-display:flex;
-background:white;
-border-bottom:1px solid #e5e7eb
+.review-stars{
+  color:#f59e0b;
+  letter-spacing:1px;
 }
 
-.order-tab{
-flex:1;
-padding:13px;
-border:0;
-background:white;
-cursor:pointer;
-font-weight:bold;
-color:#6b7280
+.review-comment{
+  margin-top:5px;
+  line-height:1.5;
 }
 
-.order-tab.active{
-color:#2563eb;
-border-bottom:3px solid #2563eb
+.review-user{
+  font-size:12px;
+  color:#6b7280;
+  margin-top:4px;
 }
 
-.order-info-box{
-background:#f9fafb;
-padding:12px;
-border-radius:8px;
-margin-top:10px;
-font-size:13px;
-line-height:1.7
+.star-select{
+  display:flex;
+  gap:4px;
+  margin:10px 0 16px;
 }
 
-@media(max-width:600px){
-
-.hero h1{
-font-size:26px
+.star-btn{
+  border:0;
+  background:none;
+  font-size:34px;
+  color:#d1d5db;
+  padding:0;
 }
 
-.search{
-flex-direction:column
+.star-btn.selected{
+  color:#f59e0b;
 }
 
-.search button{
-width:100%
+.inbox-item{
+  background:#f9fafb;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:13px;
+  margin-bottom:9px;
+  cursor:pointer;
 }
 
-.top{
-gap:10px
+.inbox-item:hover{
+  background:#eff6ff;
 }
 
-.top h2{
-font-size:20px
+.inbox-title{
+  font-weight:bold;
 }
 
-.sell{
-white-space:nowrap
+.inbox-preview{
+  color:#6b7280;
+  font-size:13px;
+  margin-top:5px;
 }
 
-.detail-image{
-height:230px
+.chat-messages{
+  height:380px;
+  overflow:auto;
+  background:#f3f4f6;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:10px;
 }
 
-.detail-title{
-font-size:21px
+.message{
+  max-width:78%;
+  padding:9px 12px;
+  border-radius:12px;
+  margin-bottom:8px;
+  line-height:1.5;
+  word-break:break-word;
 }
 
-.chat-box,
-.inbox-box,
-.order-box{
-height:90vh;
-max-height:none
+.message.mine{
+  margin-left:auto;
+  background:#2563eb;
+  color:white;
 }
 
-.message-bubble{
-max-width:85%
+.message.other{
+  margin-right:auto;
+  background:white;
 }
 
-.header-actions{
-gap:5px
+.message-time{
+  font-size:10px;
+  opacity:.7;
+  margin-top:3px;
 }
 
-.login,
-.message-button,
-.order-button{
-padding:8px 9px
+.chat-input{
+  display:flex;
+  gap:7px;
 }
 
-.logo{
-font-size:21px
+.chat-input input{
+  flex:1;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  padding:11px;
 }
 
-.order-top{
-flex-direction:column
+.toast{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  background:#111827;
+  color:white;
+  padding:13px 16px;
+  border-radius:10px;
+  box-shadow:0 8px 25px rgba(0,0,0,.25);
+  display:none;
+  z-index:1000;
+  max-width:350px;
 }
 
-.order-buttons{
-flex-direction:column
+.toast.show{
+  display:block;
+  animation:fadein .2s;
 }
 
+@keyframes fadein{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.loading{
+  text-align:center;
+  padding:40px;
+  color:#6b7280;
+}
+
+@media(max-width:650px){
+  header{
+    padding:11px;
+  }
+
+  .logo{
+    font-size:20px;
+  }
+
+  .header-btn{
+    padding:7px 8px;
+    font-size:12px;
+  }
+
+  .hero{
+    padding:35px 14px;
+  }
+
+  .hero h1{
+    font-size:29px;
+  }
+
+  .search-box{
+    flex-direction:column;
+  }
+
+  .search-box button{
+    padding:12px;
+  }
+
+  .products{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+  }
+
+  .product-image{
+    height:140px;
+  }
+
+  .product-content{
+    padding:10px;
+  }
+
+  .product-title{
+    font-size:15px;
+  }
+
+  .price{
+    font-size:18px;
+  }
+
+  .card-actions{
+    flex-direction:column;
+  }
+
+  .btn{
+    width:100%;
+  }
+
+  .modal-box{
+    padding:17px;
+  }
 }
 </style>
 </head>
@@ -1036,4285 +701,2784 @@ flex-direction:column
 <body>
 
 <header>
-<div class="header">
+  <div class="logo">PC2Deal</div>
 
-<div class="logo">
-PC2Deal
-</div>
+  <div class="header-right">
+    <button id="orderButton" class="header-btn" style="display:none">
+      📦 ออเดอร์ <span id="orderBadge" class="badge" style="display:none">0</span>
+    </button>
 
-<div class="header-actions">
+    <button id="messageButton" class="header-btn" style="display:none">
+      💬 ข้อความ <span id="messageBadge" class="badge" style="display:none">0</span>
+    </button>
 
-<button
-class="order-button"
-id="orderButton"
-style="display:none"
->
-📦 ออเดอร์
-<span
-id="orderBadge"
-class="order-badge"
->0</span>
-</button>
+    <button id="sellButton" class="header-btn" style="display:none">
+      ➕ ลงขาย
+    </button>
 
-<button
-class="message-button"
-id="messageButton"
-style="display:none"
->
-💬 ข้อความ
-<span
-id="messageBadge"
-class="message-badge"
->0</span>
-</button>
-
-<button
-class="login"
-id="loginButton"
->
-เข้าสู่ระบบ
-</button>
-
-</div>
-</div>
+    <button id="authButton" class="header-btn">
+      เข้าสู่ระบบ
+    </button>
+  </div>
 </header>
 
-
 <section class="hero">
+  <h1>ตลาดซื้อขายคอมมือสอง</h1>
+  <p>ซื้อ ขาย แลกเปลี่ยน PC และอุปกรณ์คอมพิวเตอร์กับคนไทย</p>
 
-<h1>
-ตลาดซื้อขายคอมมือสอง
-</h1>
-
-<p>
-ซื้อขาย PC และอุปกรณ์คอมพิวเตอร์ง่าย ๆ ในที่เดียว
-</p>
-
-<div class="search">
-
-<input
-type="text"
-id="searchInput"
-placeholder="ค้นหา เช่น RTX 3060, i5, RAM..."
->
-
-<button id="searchButton">
-ค้นหา
-</button>
-
-</div>
-
+  <div class="search-box">
+    <input id="searchInput" placeholder="ค้นหา GTX 1650, i5, RAM, SSD...">
+    <button id="searchButton">🔎 ค้นหา</button>
+  </div>
 </section>
-
 
 <main class="container">
 
-<div class="top">
+  <div class="section-head">
+    <h2>🔥 สินค้าล่าสุด</h2>
+    <button class="btn btn-primary" id="refreshButton">รีเฟรช</button>
+  </div>
 
-<h2>
-สินค้าล่าสุด
-</h2>
-
-<button
-class="sell"
-id="sellButton"
->
-+ ลงขายสินค้า
-</button>
-
-</div>
-
-<div
-class="products"
-id="products"
->
-<div class="empty">
-กำลังโหลดสินค้า...
-</div>
-</div>
+  <div id="products" class="products">
+    <div class="loading">กำลังโหลดสินค้า...</div>
+  </div>
 
 </main>
 
+<!-- AUTH MODAL -->
+<div id="authModal" class="modal">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal('authModal')">×</button>
 
-<footer>
-PC2Deal © 2026 — ตลาดซื้อขายคอมพิวเตอร์มือสอง
-</footer>
+    <div class="modal-title" id="authTitle">เข้าสู่ระบบ</div>
 
+    <form id="authForm">
 
-<!-- LOGIN -->
+      <div class="form-group">
+        <label>อีเมล</label>
+        <input id="authEmail" type="email" required>
+      </div>
 
-<div
-class="modal"
-id="loginModal"
->
+      <div class="form-group">
+        <label>รหัสผ่าน</label>
+        <input id="authPassword" type="password" required minlength="6">
+      </div>
 
-<div class="modal-box">
+      <button class="btn btn-primary" style="width:100%" type="submit">
+        <span id="authSubmitText">เข้าสู่ระบบ</span>
+      </button>
 
-<h2 id="modalTitle">
-เข้าสู่ระบบ
-</h2>
+    </form>
 
-<input
-type="email"
-id="email"
-placeholder="อีเมล"
->
+    <div class="auth-switch">
+      <button id="toggleAuthMode">ยังไม่มีบัญชี? สมัครสมาชิก</button>
+    </div>
 
-<input
-type="password"
-id="password"
-placeholder="รหัสผ่าน"
->
+    <div class="auth-switch">
+      <button id="forgotPassword">ลืมรหัสผ่าน?</button>
+    </div>
 
-<button id="submitButton">
-เข้าสู่ระบบ
-</button>
-
-<div
-class="switch"
-id="switchMode"
->
-ยังไม่มีบัญชี? สมัครสมาชิก
+  </div>
 </div>
 
-<div
-class="switch"
-id="forgotPassword"
->
-ลืมรหัสผ่าน?
+<!-- SELL MODAL -->
+<div id="sellModal" class="modal">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal('sellModal')">×</button>
+
+    <div class="modal-title">ลงขายสินค้า</div>
+
+    <form id="sellForm">
+
+      <div class="form-group">
+        <label>ชื่อสินค้า</label>
+        <input id="sellTitle" required placeholder="เช่น GTX 1650 ASUS 4GB">
+      </div>
+
+      <div class="form-group">
+        <label>ราคา</label>
+        <input id="sellPrice" type="number" min="0" required>
+      </div>
+
+      <div class="form-group">
+        <label>จังหวัด / พื้นที่</label>
+        <input id="sellLocation" required placeholder="เช่น ชลบุรี">
+      </div>
+
+      <div class="form-group">
+        <label>รายละเอียด</label>
+        <textarea id="sellDescription" placeholder="รายละเอียดสินค้า สภาพ ประกัน ฯลฯ"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>รูปสินค้า</label>
+        <input id="sellImage" type="file" accept="image/*" required>
+      </div>
+
+      <button class="btn btn-primary" style="width:100%" type="submit">
+        ลงขายสินค้า
+      </button>
+
+    </form>
+  </div>
 </div>
-
-<div
-id="resetBox"
-style="display:none"
->
-
-<input
-type="password"
-id="newPassword"
-placeholder="รหัสผ่านใหม่"
->
-
-<button id="resetButton">
-เปลี่ยนรหัสผ่าน
-</button>
-
-</div>
-
-<div id="message"></div>
-
-<button
-class="close"
-id="closeButton"
->
-ปิด
-</button>
-
-</div>
-</div>
-
-
-<!-- SELL -->
-
-<div
-class="modal"
-id="sellModal"
->
-
-<div class="modal-box">
-
-<h2>
-ลงขายสินค้า
-</h2>
-
-<label class="sell-label">
-ชื่อสินค้า
-</label>
-
-<input
-type="text"
-id="productTitle"
-placeholder="เช่น RTX 3060 12GB"
->
-
-<label class="sell-label">
-ราคา
-</label>
-
-<input
-type="number"
-id="productPrice"
-placeholder="เช่น 7500"
->
-
-<label class="sell-label">
-จังหวัด / สถานที่
-</label>
-
-<input
-type="text"
-id="productLocation"
-placeholder="เช่น ชลบุรี"
->
-
-<label class="sell-label">
-รายละเอียดสินค้า
-</label>
-
-<textarea
-id="productDescription"
-placeholder="บอกรายละเอียดสินค้า เช่น สภาพ อายุการใช้งาน ประกัน..."
-></textarea>
-
-<label class="sell-label">
-รูปสินค้า
-</label>
-
-<div class="file-box">
-
-📷 เลือกรูปสินค้าจากเครื่อง
-
-<input
-type="file"
-id="productImage"
-accept="image/*"
->
-
-<img
-id="imagePreview"
-class="preview"
-alt="ตัวอย่างรูปสินค้า"
->
-
-</div>
-
-<div id="sellMessage"></div>
-
-<button id="publishButton">
-ลงขายสินค้า
-</button>
-
-<button
-class="close"
-id="closeSellButton"
->
-ยกเลิก
-</button>
-
-</div>
-</div>
-
 
 <!-- PRODUCT DETAIL -->
+<div id="detailModal" class="modal">
+  <div class="modal-box large">
+    <button class="close" onclick="closeModal('detailModal')">×</button>
 
-<div id="detailModal">
-
-<div class="detail-box">
-
-<div
-id="detailImage"
-class="detail-image"
->
-🖥️
+    <div id="productDetail"></div>
+  </div>
 </div>
-
-<div class="detail-content">
-
-<div
-id="detailTitle"
-class="detail-title"
-></div>
-
-<div
-id="detailPrice"
-class="detail-price"
-></div>
-
-<div
-id="detailLocation"
-class="detail-location"
-></div>
-
-<div
-id="detailSeller"
-class="detail-seller"
->
-👤 ผู้ขาย: กำลังโหลด...
-</div>
-
-<div class="detail-label">
-รายละเอียดสินค้า
-</div>
-
-<div
-id="detailDescription"
-class="detail-description"
->
-ผู้ขายไม่ได้ระบุรายละเอียดสินค้า
-</div>
-
-<button
-id="buyProductButton"
-class="detail-buy"
-type="button"
->
-🛒 ซื้อสินค้านี้
-</button>
-
-<button
-id="contactSellerButton"
-class="detail-contact"
-type="button"
->
-💬 ติดต่อผู้ขาย
-</button>
-
-<button
-class="detail-close"
-id="closeDetailButton"
-type="button"
->
-ปิด
-</button>
-
-</div>
-</div>
-</div>
-
 
 <!-- CREATE ORDER -->
+<div id="orderCreateModal" class="modal">
+  <div class="modal-box">
 
-<div
-class="modal"
-id="createOrderModal"
->
+    <button class="close" onclick="closeModal('orderCreateModal')">×</button>
 
-<div class="modal-box">
+    <div class="modal-title">🛒 สั่งซื้อสินค้า</div>
 
-<h2>
-🛒 สั่งซื้อสินค้า
-</h2>
+    <div id="createOrderProduct"></div>
 
-<div
-id="orderProductSummary"
-class="order-info-box"
->
-กำลังโหลด...
+    <form id="createOrderForm">
+
+      <div class="form-group">
+        <label>ชื่อผู้รับ</label>
+        <input id="buyerName" required>
+      </div>
+
+      <div class="form-group">
+        <label>เบอร์โทรศัพท์</label>
+        <input id="buyerPhone" required>
+      </div>
+
+      <div class="form-group">
+        <label>ที่อยู่จัดส่ง</label>
+        <textarea id="buyerAddress" required></textarea>
+      </div>
+
+      <button class="btn btn-success" style="width:100%" type="submit">
+        ยืนยันการสั่งซื้อ
+      </button>
+
+    </form>
+
+  </div>
 </div>
 
-<label class="sell-label">
-ชื่อผู้รับ
-</label>
+<!-- ORDER MODAL -->
+<div id="ordersModal" class="modal">
+  <div class="modal-box large">
 
-<input
-type="text"
-id="buyerName"
-placeholder="ชื่อ-นามสกุล"
->
+    <button class="close" onclick="closeModal('ordersModal')">×</button>
 
-<label class="sell-label">
-เบอร์โทรศัพท์
-</label>
+    <div class="modal-title">📦 ออเดอร์ของฉัน</div>
 
-<input
-type="tel"
-id="buyerPhone"
-placeholder="08xxxxxxxx"
->
+    <div class="tabs">
+      <button class="tab active" id="buyerTab">🛒 ซื้อ</button>
+      <button class="tab" id="sellerTab">🏪 ขาย</button>
+    </div>
 
-<label class="sell-label">
-ที่อยู่จัดส่ง
-</label>
+    <div id="ordersList"></div>
 
-<textarea
-id="buyerAddress"
-placeholder="บ้านเลขที่ ถนน ตำบล อำเภอ จังหวัด รหัสไปรษณีย์"
-></textarea>
-
-<div id="orderMessage"></div>
-
-<button id="confirmOrderButton">
-ยืนยันสั่งซื้อ
-</button>
-
-<button
-class="close"
-id="closeCreateOrderButton"
->
-ยกเลิก
-</button>
-
-</div>
+  </div>
 </div>
 
+<!-- REVIEW MODAL -->
+<div id="reviewModal" class="modal">
+  <div class="modal-box">
 
-<!-- ORDERS -->
+    <button class="close" onclick="closeModal('reviewModal')">×</button>
 
-<div id="orderModal">
+    <div class="modal-title">⭐ ให้คะแนนผู้ขาย</div>
 
-<div class="order-box">
+    <div id="reviewProductInfo"></div>
 
-<div class="inbox-header">
+    <div class="form-group">
+      <label>คะแนน</label>
 
-<div class="inbox-title">
-📦 คำสั่งซื้อ
+      <div class="star-select">
+        <button type="button" class="star-btn" data-star="1">★</button>
+        <button type="button" class="star-btn" data-star="2">★</button>
+        <button type="button" class="star-btn" data-star="3">★</button>
+        <button type="button" class="star-btn" data-star="4">★</button>
+        <button type="button" class="star-btn" data-star="5">★</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>รีวิว</label>
+      <textarea id="reviewComment" placeholder="บอกประสบการณ์การซื้อขายของคุณ..."></textarea>
+    </div>
+
+    <button id="submitReviewButton" class="btn btn-primary" style="width:100%">
+      ส่งรีวิว
+    </button>
+
+  </div>
 </div>
-
-<button
-id="orderCloseButton"
-class="inbox-close"
-type="button"
->
-×
-</button>
-
-</div>
-
-<div class="order-tabs">
-
-<button
-id="myOrdersTab"
-class="order-tab active"
->
-🛒 ซื้อ
-</button>
-
-<button
-id="sellingOrdersTab"
-class="order-tab"
->
-🏪 ขาย
-</button>
-
-</div>
-
-<div
-id="orderList"
-class="order-list"
->
-<div class="inbox-loading">
-กำลังโหลดออเดอร์...
-</div>
-</div>
-
-</div>
-</div>
-
 
 <!-- INBOX -->
+<div id="inboxModal" class="modal">
+  <div class="modal-box large">
 
-<div id="inboxModal">
+    <button class="close" onclick="closeModal('inboxModal')">×</button>
 
-<div class="inbox-box">
+    <div class="modal-title">💬 ข้อความ</div>
 
-<div class="inbox-header">
+    <div id="inboxList"></div>
 
-<div class="inbox-title">
-💬 กล่องข้อความ
+  </div>
 </div>
-
-<button
-id="inboxCloseButton"
-class="inbox-close"
-type="button"
->
-×
-</button>
-
-</div>
-
-<div
-id="inboxList"
-class="inbox-list"
->
-<div class="inbox-loading">
-กำลังโหลดข้อความ...
-</div>
-</div>
-
-</div>
-</div>
-
 
 <!-- CHAT -->
+<div id="chatModal" class="modal">
+  <div class="modal-box">
 
-<div id="chatModal">
+    <button class="close" onclick="closeModal('chatModal')">×</button>
 
-<div class="chat-box">
+    <div class="modal-title" id="chatTitle">💬 แชต</div>
 
-<div class="chat-header">
+    <div id="chatMessages" class="chat-messages"></div>
 
-<button
-id="chatBackButton"
-class="chat-back"
-type="button"
->
-←
-</button>
+    <div class="chat-input">
+      <input id="chatInput" placeholder="พิมพ์ข้อความ...">
+      <button id="sendMessageButton" class="btn btn-primary">
+        ส่ง
+      </button>
+    </div>
 
-<div class="chat-header-info">
-
-<div
-id="chatProductTitle"
-class="chat-title"
->
-แชท
+  </div>
 </div>
 
-<div
-id="chatSellerName"
-class="chat-subtitle"
->
-👤 ผู้ใช้ PC2Deal
-</div>
-
-</div>
-
-</div>
-
-<div
-id="chatMessages"
-class="chat-messages"
->
-
-<div class="chat-empty">
-ยังไม่มีข้อความ<br>
-เริ่มต้นการสนทนาได้เลย
-</div>
-
-</div>
-
-<div
-id="chatStatus"
-class="chat-status"
->
-พร้อมสนทนา
-</div>
-
-<div class="chat-input-area">
-
-<textarea
-id="chatInput"
-class="chat-input"
-placeholder="พิมพ์ข้อความ..."
-></textarea>
-
-<button
-id="chatSendButton"
-class="chat-send"
-type="button"
->
-ส่ง
-</button>
-
-</div>
-</div>
-</div>
-
+<div id="toast" class="toast"></div>
 
 <script>
+const SUPABASE_URL = "https://jnkeffwgnjjebujrcprb.supabase.co";
 
-/* =====================================================
-SUPABASE
-===================================================== */
+/*
+  ใช้ publishable key ตัวเดิมของโปรเจกต์
+*/
+const SUPABASE_KEY = "sb_publishable_q0UFEgWWvBZLXPlEwLX01w_HhK47RtP";
 
-const SUPABASE_URL =
-"https://jnkeffwgnjjebujrcprb.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_q0UFEgWWvBZLXPlEwLX01w_HhK47RtP";
-
-const supabaseClient =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
-
-/* =====================================================
-GLOBAL
-===================================================== */
+let currentUser = null;
+let currentUserId = null;
 
 let currentProduct = null;
-let currentChatPartner = null;
-let currentChatProduct = null;
-let currentUserId = null;
+let currentOrder = null;
+
+let authMode = "login";
+let orderMode = "buyer";
+
+let selectedRating = 0;
+
+let currentChatUserId = null;
+let currentChatProductId = null;
+
 let realtimeChannel = null;
+let orderRealtimeChannel = null;
 
-let knownIncomingMessageIds = new Set();
-let firstMessageCheckDone = false;
+let lastOrderStates = {};
+let knownMessageIds = new Set();
 
-let currentOrderTab = "buyer";
-
-
-/* =====================================================
-ELEMENTS
-===================================================== */
-
-const loginButton =
-document.getElementById("loginButton");
-
-const loginModal =
-document.getElementById("loginModal");
-
-const closeButton =
-document.getElementById("closeButton");
-
-const submitButton =
-document.getElementById("submitButton");
-
-const switchMode =
-document.getElementById("switchMode");
-
-const forgotPassword =
-document.getElementById("forgotPassword");
-
-const modalTitle =
-document.getElementById("modalTitle");
-
-const message =
-document.getElementById("message");
-
-const emailInput =
-document.getElementById("email");
-
-const passwordInput =
-document.getElementById("password");
-
-const resetBox =
-document.getElementById("resetBox");
-
-const newPassword =
-document.getElementById("newPassword");
-
-const resetButton =
-document.getElementById("resetButton");
-
-const messageButton =
-document.getElementById("messageButton");
-
-const messageBadge =
-document.getElementById("messageBadge");
-
-const orderButton =
-document.getElementById("orderButton");
-
-const orderBadge =
-document.getElementById("orderBadge");
-
-const inboxModal =
-document.getElementById("inboxModal");
-
-const inboxList =
-document.getElementById("inboxList");
-
-const inboxCloseButton =
-document.getElementById("inboxCloseButton");
-
-const chatModal =
-document.getElementById("chatModal");
-
-const chatMessages =
-document.getElementById("chatMessages");
-
-const chatInput =
-document.getElementById("chatInput");
-
-const chatSendButton =
-document.getElementById("chatSendButton");
-
-const chatBackButton =
-document.getElementById("chatBackButton");
-
-const chatProductTitle =
-document.getElementById("chatProductTitle");
-
-const chatSellerName =
-document.getElementById("chatSellerName");
-
-const chatStatus =
-document.getElementById("chatStatus");
-
-const orderModal =
-document.getElementById("orderModal");
-
-const orderList =
-document.getElementById("orderList");
-
-const myOrdersTab =
-document.getElementById("myOrdersTab");
-
-const sellingOrdersTab =
-document.getElementById("sellingOrdersTab");
-
-const createOrderModal =
-document.getElementById("createOrderModal");
-
-const orderProductSummary =
-document.getElementById("orderProductSummary");
-
-const buyerName =
-document.getElementById("buyerName");
-
-const buyerPhone =
-document.getElementById("buyerPhone");
-
-const buyerAddress =
-document.getElementById("buyerAddress");
-
-const orderMessage =
-document.getElementById("orderMessage");
-
-const confirmOrderButton =
-document.getElementById("confirmOrderButton");
-
-let registerMode = false;
+let pollingTimer = null;
 
 
-/* =====================================================
-LOGIN
-===================================================== */
+/* =========================
+   BASIC
+========================= */
 
-loginButton.onclick =
-async function(){
-
-const {data} =
-await supabaseClient.auth.getUser();
-
-if(data.user){
-
-await supabaseClient.auth.signOut();
-
-currentUserId = null;
-
-stopRealtimeMessages();
-
-loginButton.innerText =
-"เข้าสู่ระบบ";
-
-messageButton.style.display =
-"none";
-
-orderButton.style.display =
-"none";
-
-messageBadge.style.display =
-"none";
-
-orderBadge.style.display =
-"none";
-
-knownIncomingMessageIds.clear();
-
-return;
-
+function closeModal(id){
+  document.getElementById(id).classList.remove("active");
 }
 
-loginModal.style.display =
-"flex";
-
-};
-
-
-/* =====================================================
-CLOSE LOGIN
-===================================================== */
-
-closeButton.onclick =
-function(){
-
-loginModal.style.display =
-"none";
-
-message.innerText =
-"";
-
-};
-
-
-/* =====================================================
-SWITCH LOGIN REGISTER
-===================================================== */
-
-switchMode.onclick =
-function(){
-
-registerMode =
-!registerMode;
-
-if(registerMode){
-
-modalTitle.innerText =
-"สมัครสมาชิก";
-
-submitButton.innerText =
-"สมัครสมาชิก";
-
-switchMode.innerText =
-"มีบัญชีแล้ว? เข้าสู่ระบบ";
-
-}else{
-
-modalTitle.innerText =
-"เข้าสู่ระบบ";
-
-submitButton.innerText =
-"เข้าสู่ระบบ";
-
-switchMode.innerText =
-"ยังไม่มีบัญชี? สมัครสมาชิก";
-
+function openModal(id){
+  document.getElementById(id).classList.add("active");
 }
 
-};
+function showToast(message){
+  const toast = document.getElementById("toast");
 
+  toast.textContent = message;
+  toast.classList.add("show");
 
-/* =====================================================
-LOGIN / REGISTER
-===================================================== */
+  clearTimeout(window.toastTimer);
 
-submitButton.onclick =
-async function(){
-
-const email =
-emailInput.value.trim();
-
-const password =
-passwordInput.value;
-
-if(!email || !password){
-
-message.innerText =
-"กรุณากรอกอีเมลและรหัสผ่าน";
-
-return;
-
+  window.toastTimer = setTimeout(()=>{
+    toast.classList.remove("show");
+  },3500);
 }
 
-message.innerText =
-"กำลังดำเนินการ...";
+function escapeHTML(value){
+  if(value === null || value === undefined) return "";
 
-
-if(registerMode){
-
-const {data,error} =
-await supabaseClient.auth.signUp({
-email:email,
-password:password
-});
-
-if(error){
-
-message.innerText =
-error.message;
-
-}else{
-
-if(data.user){
-
-await supabaseClient
-.from("profiles")
-.upsert({
-id:data.user.id,
-display_name:"ผู้ใช้ PC2Deal"
-});
-
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
-message.innerText =
-"สมัครสมาชิกสำเร็จ! กรุณาตรวจสอบอีเมล";
-
+function formatPrice(price){
+  return Number(price || 0).toLocaleString("th-TH");
 }
 
-}else{
+function formatDate(date){
+  if(!date) return "";
 
-const {data,error} =
-await supabaseClient.auth.signInWithPassword({
-email:email,
-password:password
-});
-
-if(error){
-
-message.innerText =
-error.message;
-
-}else{
-
-currentUserId =
-data.user.id;
-
-message.innerText =
-"เข้าสู่ระบบสำเร็จ!";
-
-loginButton.innerText =
-"ออกจากระบบ";
-
-messageButton.style.display =
-"block";
-
-orderButton.style.display =
-"block";
-
-setTimeout(
-async function(){
-
-loginModal.style.display =
-"none";
-
-await initializeMessaging();
-
-await updateOrderBadge();
-
-loadProducts();
-
-},
-700
-);
-
+  return new Date(date).toLocaleString("th-TH",{
+    dateStyle:"medium",
+    timeStyle:"short"
+  });
 }
 
+function statusText(status){
+  const map = {
+    pending:"รอผู้ขายยืนยัน",
+    confirmed:"ผู้ขายยืนยันแล้ว",
+    shipping:"กำลังจัดส่ง",
+    shipped:"จัดส่งแล้ว",
+    completed:"ซื้อขายสำเร็จ",
+    cancelled:"ยกเลิก"
+  };
+
+  return map[status] || status;
 }
 
-};
-
-
-/* =====================================================
-FORGOT PASSWORD
-===================================================== */
-
-forgotPassword.onclick =
-async function(){
-
-const email =
-emailInput.value.trim();
-
-if(!email){
-
-message.innerText =
-"กรุณากรอกอีเมลก่อน";
-
-return;
-
+function statusClass(status){
+  return "status-" + status;
 }
 
-const {error} =
-await supabaseClient
-.auth
-.resetPasswordForEmail(
-email,
-{
-redirectTo:
-"https://s2ozgamer.github.io/PC2Deal/"
-}
-);
+function starsHTML(rating){
+  const r = Math.round(Number(rating || 0));
 
-if(error){
-
-message.innerText =
-error.message;
-
-}else{
-
-message.innerText =
-"ส่งลิงก์เปลี่ยนรหัสผ่านไปที่อีเมลแล้ว";
-
+  return "★".repeat(r) + "☆".repeat(5-r);
 }
 
-};
 
-
-/* =====================================================
-AUTH STATE
-===================================================== */
-
-supabaseClient.auth.onAuthStateChange(
-async function(event,session){
-
-if(event === "PASSWORD_RECOVERY"){
-
-loginModal.style.display =
-"flex";
-
-modalTitle.innerText =
-"ตั้งรหัสผ่านใหม่";
-
-emailInput.style.display =
-"none";
-
-passwordInput.style.display =
-"none";
-
-submitButton.style.display =
-"none";
-
-switchMode.style.display =
-"none";
-
-forgotPassword.style.display =
-"none";
-
-resetBox.style.display =
-"block";
-
-}
-
-if(
-session &&
-session.user &&
-event === "SIGNED_IN"
-){
-
-currentUserId =
-session.user.id;
-
-loginButton.innerText =
-"ออกจากระบบ";
-
-messageButton.style.display =
-"block";
-
-orderButton.style.display =
-"block";
-
-setTimeout(
-function(){
-
-initializeMessaging();
-updateOrderBadge();
-
-},
-300
-);
-
-}
-
-if(event === "SIGNED_OUT"){
-
-currentUserId = null;
-
-stopRealtimeMessages();
-
-messageButton.style.display =
-"none";
-
-orderButton.style.display =
-"none";
-
-messageBadge.style.display =
-"none";
-
-orderBadge.style.display =
-"none";
-
-knownIncomingMessageIds.clear();
-
-}
-
-}
-);
-
-
-/* =====================================================
-RESET PASSWORD
-===================================================== */
-
-resetButton.onclick =
-async function(){
-
-const password =
-newPassword.value;
-
-if(password.length < 6){
-
-message.innerText =
-"รหัสผ่านต้องมีอย่างน้อย 6 ตัว";
-
-return;
-
-}
-
-const {error} =
-await supabaseClient.auth.updateUser({
-password:password
-});
-
-if(error){
-
-message.innerText =
-error.message;
-
-}else{
-
-message.innerText =
-"เปลี่ยนรหัสผ่านสำเร็จแล้ว!";
-
-setTimeout(
-function(){
-
-loginModal.style.display =
-"none";
-
-location.reload();
-
-},
-1500
-);
-
-}
-
-};
-
-
-/* =====================================================
-CHECK USER
-===================================================== */
+/* =========================
+   AUTH
+========================= */
 
 async function checkUser(){
 
-const {data} =
-await supabaseClient.auth.getUser();
+  const {
+    data:{
+      user
+    }
+  } = await supabaseClient.auth.getUser();
 
-if(data.user){
+  currentUser = user || null;
+  currentUserId = user ? user.id : null;
 
-currentUserId =
-data.user.id;
+  updateAuthUI();
 
-loginButton.innerText =
-"ออกจากระบบ";
+  if(user){
 
-messageButton.style.display =
-"block";
+    await ensureProfile();
 
-orderButton.style.display =
-"block";
+    initializeMessaging();
+    initializeOrderRealtime();
 
-await initializeMessaging();
+    await updateMessageBadge();
+    await updateOrderBadge();
 
-await updateOrderBadge();
+  }else{
 
-}else{
+    stopRealtime();
 
-currentUserId = null;
-
-loginButton.innerText =
-"เข้าสู่ระบบ";
-
-messageButton.style.display =
-"none";
-
-orderButton.style.display =
-"none";
-
-}
-
-}
-
-
-/* =====================================================
-MESSAGING
-===================================================== */
-
-async function initializeMessaging(){
-
-const {data} =
-await supabaseClient.auth.getUser();
-
-if(!data.user){
-
-return;
-
-}
-
-currentUserId =
-data.user.id;
-
-await loadKnownIncomingMessages();
-
-firstMessageCheckDone = true;
-
-startRealtimeMessages();
-
-await updateMessageBadge();
-
-}
-
-
-/* =====================================================
-KNOWN MESSAGES
-===================================================== */
-
-async function loadKnownIncomingMessages(){
-
-if(!currentUserId){
-
-return;
-
-}
-
-const {data,error} =
-await supabaseClient
-.from("messages")
-.select("id")
-.eq("receiver_id",currentUserId);
-
-if(error){
-
-console.error(error);
-
-return;
-
-}
-
-knownIncomingMessageIds =
-new Set(
-(data || []).map(
-item => item.id
-)
-);
-
-if(data && data.length > 0){
-
-messageBadge.innerText =
-data.length > 99
-?
-"99+"
-:
-data.length;
-
-messageBadge.style.display =
-"flex";
-
-}
-
-}
-
-
-/* =====================================================
-REALTIME CHAT
-===================================================== */
-
-function startRealtimeMessages(){
-
-stopRealtimeMessages();
-
-if(!currentUserId){
-
-return;
-
-}
-
-realtimeChannel =
-supabaseClient
-.channel(
-"pc2deal-messages-" +
-currentUserId +
-"-" +
-Date.now()
-)
-.on(
-"postgres_changes",
-{
-event:"INSERT",
-schema:"public",
-table:"messages",
-filter:
-"receiver_id=eq." +
-currentUserId
-},
-async function(payload){
-
-const newMessage =
-payload.new;
-
-if(
-knownIncomingMessageIds.has(
-newMessage.id
-)
-){
-
-return;
-
-}
-
-knownIncomingMessageIds.add(
-newMessage.id
-);
-
-await updateMessageBadge();
-
-if(
-chatModal.style.display === "flex" &&
-currentChatPartner ===
-newMessage.sender_id &&
-(
-!currentChatProduct ||
-currentChatProduct.id ===
-newMessage.product_id
-)
-){
-
-await loadMessages();
-
-return;
-
-}
-
-let senderName =
-"ผู้ใช้ PC2Deal";
-
-try{
-
-const {data:profile} =
-await supabaseClient
-.from("profiles")
-.select("display_name")
-.eq("id",newMessage.sender_id)
-.maybeSingle();
-
-if(
-profile &&
-profile.display_name
-){
-
-senderName =
-profile.display_name;
-
-}
-
-}catch(error){}
-
-showNewMessageNotification(
-senderName,
-newMessage.message
-);
-
-if(
-inboxModal.style.display === "flex"
-){
-
-await loadInbox();
-
-}
-
-}
-)
-.subscribe(
-function(status){
-
-console.log(
-"Message realtime:",
-status
-);
-
-}
-);
-
-}
-
-
-/* =====================================================
-STOP REALTIME
-===================================================== */
-
-function stopRealtimeMessages(){
-
-if(realtimeChannel){
-
-supabaseClient.removeChannel(
-realtimeChannel
-);
-
-realtimeChannel = null;
-
-}
-
-}
-
-
-/* =====================================================
-NOTIFICATION
-===================================================== */
-
-function showNewMessageNotification(
-senderName,
-text
-){
-
-if(
-"Notification" in window &&
-Notification.permission === "granted"
-){
-
-try{
-
-new Notification(
-"PC2Deal - มีข้อความใหม่",
-{
-body:
-senderName +
-": " +
-text.substring(0,100)
-}
-);
-
-}catch(error){}
-
-}
-
-alert(
-"💬 มีข้อความใหม่!\n\n" +
-senderName +
-"\n\n" +
-text
-);
-
-}
-
-
-/* =====================================================
-REQUEST NOTIFICATION
-===================================================== */
-
-async function requestBrowserNotification(){
-
-if(
-!("Notification" in window)
-){
-
-return;
-
-}
-
-if(
-Notification.permission === "default"
-){
-
-try{
-
-await Notification.requestPermission();
-
-}catch(error){}
-
-}
-
-}
-
-
-/* =====================================================
-SELL
-===================================================== */
-
-const sellButton =
-document.getElementById("sellButton");
-
-const sellModal =
-document.getElementById("sellModal");
-
-const closeSellButton =
-document.getElementById("closeSellButton");
-
-const publishButton =
-document.getElementById("publishButton");
-
-const sellMessage =
-document.getElementById("sellMessage");
-
-const productImage =
-document.getElementById("productImage");
-
-const imagePreview =
-document.getElementById("imagePreview");
-
-
-productImage.addEventListener(
-"change",
-function(){
-
-const file =
-productImage.files[0];
-
-if(!file){
-
-imagePreview.style.display =
-"none";
-
-return;
-
-}
-
-if(!file.type.startsWith("image/")){
-
-sellMessage.innerText =
-"กรุณาเลือกไฟล์รูปภาพ";
-
-productImage.value =
-"";
-
-return;
-
-}
-
-const reader =
-new FileReader();
-
-reader.onload =
-function(event){
-
-imagePreview.src =
-event.target.result;
-
-imagePreview.style.display =
-"block";
-
-};
-
-reader.readAsDataURL(file);
-
-});
-
-
-sellButton.onclick =
-async function(){
-
-const {data} =
-await supabaseClient.auth.getUser();
-
-if(!data.user){
-
-loginModal.style.display =
-"flex";
-
-message.innerText =
-"กรุณาเข้าสู่ระบบก่อนลงขายสินค้า";
-
-return;
-
-}
-
-sellModal.style.display =
-"flex";
-
-};
-
-
-closeSellButton.onclick =
-function(){
-
-sellModal.style.display =
-"none";
-
-sellMessage.innerText =
-"";
-
-};
-
-
-/* =====================================================
-PUBLISH
-===================================================== */
-
-publishButton.onclick =
-async function(){
-
-const {data} =
-await supabaseClient.auth.getUser();
-
-const user =
-data.user;
-
-if(!user){
-
-sellMessage.innerText =
-"กรุณาเข้าสู่ระบบก่อน";
-
-return;
-
-}
-
-const title =
-document.getElementById("productTitle").value.trim();
-
-const price =
-document.getElementById("productPrice").value;
-
-const location =
-document.getElementById("productLocation").value.trim();
-
-const description =
-document.getElementById("productDescription").value.trim();
-
-const file =
-productImage.files[0];
-
-if(!title){
-
-sellMessage.innerText =
-"กรุณาใส่ชื่อสินค้า";
-
-return;
-
-}
-
-if(!price || Number(price) <= 0){
-
-sellMessage.innerText =
-"กรุณาใส่ราคาที่ถูกต้อง";
-
-return;
-
-}
-
-if(file){
-
-if(!file.type.startsWith("image/")){
-
-sellMessage.innerText =
-"ไฟล์ต้องเป็นรูปภาพเท่านั้น";
-
-return;
-
-}
-
-if(file.size > 5 * 1024 * 1024){
-
-sellMessage.innerText =
-"รูปต้องมีขนาดไม่เกิน 5MB";
-
-return;
-
-}
-
-}
-
-publishButton.disabled =
-true;
-
-publishButton.innerText =
-"กำลังลงขาย...";
-
-let image_url = "";
-
-if(file){
-
-sellMessage.innerText =
-"กำลังอัปโหลดรูป...";
-
-const extension =
-file.name.split(".").pop();
-
-const fileName =
-user.id +
-"/" +
-Date.now() +
-"-" +
-Math.random()
-.toString(36)
-.substring(2) +
-"." +
-extension;
-
-const {error:uploadError} =
-await supabaseClient
-.storage
-.from("product-images")
-.upload(
-fileName,
-file,
-{
-contentType:file.type,
-upsert:false
-}
-);
-
-if(uploadError){
-
-publishButton.disabled =
-false;
-
-publishButton.innerText =
-"ลงขายสินค้า";
-
-sellMessage.innerText =
-"อัปโหลดรูปไม่สำเร็จ: " +
-uploadError.message;
-
-return;
-
-}
-
-const {data:publicData} =
-supabaseClient
-.storage
-.from("product-images")
-.getPublicUrl(fileName);
-
-image_url =
-publicData.publicUrl;
-
-}
-
-sellMessage.innerText =
-"กำลังบันทึกสินค้า...";
-
-const {error} =
-await supabaseClient
-.from("products")
-.insert({
-user_id:user.id,
-title:title,
-price:Number(price),
-location:location,
-description:description,
-image_url:image_url,
-status:"active"
-});
-
-publishButton.disabled =
-false;
-
-publishButton.innerText =
-"ลงขายสินค้า";
-
-if(error){
-
-sellMessage.innerText =
-"เกิดข้อผิดพลาด: " +
-error.message;
-
-return;
-
-}
-
-sellMessage.innerText =
-"ลงขายสินค้าเรียบร้อยแล้ว!";
-
-document.getElementById("productTitle").value="";
-document.getElementById("productPrice").value="";
-document.getElementById("productLocation").value="";
-document.getElementById("productDescription").value="";
-productImage.value="";
-imagePreview.src="";
-imagePreview.style.display="none";
-
-setTimeout(
-function(){
-
-sellModal.style.display =
-"none";
-
-sellMessage.innerText =
-"";
-
-loadProducts();
-
-},
-1000
-);
-
-};
-
-
-/* =====================================================
-LOAD PRODUCTS
-===================================================== */
-
-async function loadProducts(
-searchText=""
-){
-
-const productsBox =
-document.getElementById("products");
-
-productsBox.innerHTML =
-'<div class="empty">กำลังโหลดสินค้า...</div>';
-
-let query =
-supabaseClient
-.from("products")
-.select("*")
-.eq("status","active")
-.order(
-"created_at",
-{ascending:false}
-);
-
-if(searchText){
-
-query =
-query.or(
-"title.ilike.%" +
-searchText +
-"%,description.ilike.%" +
-searchText +
-"%"
-);
-
+  }
 }
 
-const {data,error} =
-await query;
+function updateAuthUI(){
 
-if(error){
+  const authButton = document.getElementById("authButton");
+  const orderButton = document.getElementById("orderButton");
+  const messageButton = document.getElementById("messageButton");
+  const sellButton = document.getElementById("sellButton");
 
-productsBox.innerHTML =
-'<div class="empty">ไม่สามารถโหลดสินค้าได้</div>';
+  if(currentUser){
 
-return;
+    authButton.textContent = "ออกจากระบบ";
 
-}
-
-if(!data || data.length === 0){
-
-productsBox.innerHTML =
-'<div class="empty">ยังไม่มีสินค้าที่ลงขาย</div>';
-
-return;
-
-}
-
-productsBox.innerHTML = "";
-
-data.forEach(
-function(product){
-
-const card =
-document.createElement("div");
-
-card.className =
-"card";
-
-let imageHTML =
-'<div class="image">🖥️</div>';
-
-if(product.image_url){
-
-imageHTML =
-'<div class="image">' +
-'<img src="' +
-escapeHTML(product.image_url) +
-'" alt="สินค้า">' +
-'</div>';
-
-}
-
-card.innerHTML =
-imageHTML +
-'<div class="info">' +
-'<h3>' +
-escapeHTML(product.title) +
-'</h3>' +
-'<div class="price">' +
-Number(product.price).toLocaleString() +
-' บาท' +
-'</div>' +
-'<div class="location">' +
-'📍 ' +
-escapeHTML(product.location || "ไม่ระบุ") +
-'</div>' +
-(
-product.description
-?
-'<div class="description">' +
-escapeHTML(product.description) +
-'</div>'
-:
-""
-) +
-'<button class="detail-button" type="button">' +
-'🔎 ดูรายละเอียด' +
-'</button>' +
-'</div>';
-
-productsBox.appendChild(card);
-
-card.querySelector(".detail-button")
-.addEventListener(
-"click",
-function(){
-openProductDetail(product);
-}
-);
-
-});
-
-}
-
-
-/* =====================================================
-PRODUCT DETAIL
-===================================================== */
-
-async function openProductDetail(product){
-
-currentProduct =
-product;
-
-const detailModal =
-document.getElementById("detailModal");
-
-const detailImage =
-document.getElementById("detailImage");
-
-const detailTitle =
-document.getElementById("detailTitle");
-
-const detailPrice =
-document.getElementById("detailPrice");
-
-const detailLocation =
-document.getElementById("detailLocation");
-
-const detailSeller =
-document.getElementById("detailSeller");
-
-const detailDescription =
-document.getElementById("detailDescription");
-
-const buyButton =
-document.getElementById("buyProductButton");
-
-detailImage.innerHTML = "";
-
-if(product.image_url){
-
-const img =
-document.createElement("img");
-
-img.src =
-product.image_url;
-
-img.alt =
-product.title || "สินค้า";
-
-img.onerror =
-function(){
-detailImage.innerHTML = "🖥️";
-};
-
-detailImage.appendChild(img);
-
-}else{
-
-detailImage.innerHTML = "🖥️";
-
-}
-
-detailTitle.innerText =
-product.title || "ไม่ระบุชื่อสินค้า";
-
-detailPrice.innerText =
-Number(product.price || 0).toLocaleString() +
-" บาท";
-
-detailLocation.innerText =
-"📍 " +
-(product.location || "ไม่ระบุสถานที่");
-
-detailDescription.innerText =
-product.description ||
-"ผู้ขายไม่ได้ระบุรายละเอียดสินค้า";
-
-detailSeller.innerText =
-"👤 ผู้ขาย: กำลังโหลด...";
-
-detailModal.style.display =
-"flex";
-
-document.body.classList.add("no-scroll");
-
-const {data:userData} =
-await supabaseClient.auth.getUser();
-
-if(
-userData.user &&
-userData.user.id ===
-product.user_id
-){
-
-buyButton.innerText =
-"🏪 สินค้าของคุณ";
-
-buyButton.disabled =
-true;
-
-buyButton.style.opacity =
-".5";
-
-}else{
-
-buyButton.innerText =
-"🛒 ซื้อสินค้านี้";
-
-buyButton.disabled =
-false;
-
-buyButton.style.opacity =
-"1";
-
-}
-
-if(product.user_id){
-
-const {data:seller} =
-await supabaseClient
-.from("profiles")
-.select("display_name")
-.eq("id",product.user_id)
-.maybeSingle();
-
-detailSeller.innerText =
-"👤 ผู้ขาย: " +
-(
-seller &&
-seller.display_name
-?
-seller.display_name
-:
-"ผู้ขาย PC2Deal"
-);
-
-}
-
-}
-
-
-/* =====================================================
-BUY BUTTON
-===================================================== */
-
-document.getElementById(
-"buyProductButton"
-).onclick =
-async function(){
-
-if(!currentProduct){
-
-return;
-
-}
-
-const {data:userData} =
-await supabaseClient.auth.getUser();
-
-if(!userData.user){
-
-closeProductDetail();
-
-loginModal.style.display =
-"flex";
-
-message.innerText =
-"กรุณาเข้าสู่ระบบก่อนซื้อสินค้า";
-
-return;
-
-}
-
-if(
-userData.user.id ===
-currentProduct.user_id
-){
-
-alert(
-"ไม่สามารถซื้อสินค้าของตัวเองได้"
-);
-
-return;
-
-}
-
-orderProductSummary.innerHTML =
-"<b>" +
-escapeHTML(currentProduct.title) +
-"</b><br>" +
-"<span class='price'>" +
-Number(currentProduct.price).toLocaleString() +
-" บาท</span><br>" +
-"📍 " +
-escapeHTML(
-currentProduct.location ||
-"ไม่ระบุ"
-);
-
-buyerName.value = "";
-buyerPhone.value = "";
-buyerAddress.value = "";
-orderMessage.innerText = "";
-
-createOrderModal.style.display =
-"flex";
-
-};
-
-
-/* =====================================================
-CREATE ORDER
-===================================================== */
-
-confirmOrderButton.onclick =
-async function(){
-
-if(!currentProduct){
-
-return;
-
-}
-
-const {data:userData} =
-await supabaseClient.auth.getUser();
-
-if(!userData.user){
-
-orderMessage.innerText =
-"กรุณาเข้าสู่ระบบก่อน";
-
-return;
-
-}
-
-const name =
-buyerName.value.trim();
-
-const phone =
-buyerPhone.value.trim();
-
-const address =
-buyerAddress.value.trim();
-
-if(!name){
-
-orderMessage.innerText =
-"กรุณากรอกชื่อผู้รับ";
-
-return;
-
-}
-
-if(!phone){
-
-orderMessage.innerText =
-"กรุณากรอกเบอร์โทรศัพท์";
-
-return;
-
-}
-
-if(!address){
-
-orderMessage.innerText =
-"กรุณากรอกที่อยู่จัดส่ง";
+    orderButton.style.display = "inline-block";
+    messageButton.style.display = "inline-block";
+    sellButton.style.display = "inline-block";
 
-return;
+  }else{
 
-}
-
-confirmOrderButton.disabled =
-true;
-
-confirmOrderButton.innerText =
-"กำลังสร้างออเดอร์...";
-
-const {data,error} =
-await supabaseClient
-.from("orders")
-.insert({
-
-product_id:
-currentProduct.id,
-
-buyer_id:
-userData.user.id,
-
-seller_id:
-currentProduct.user_id,
-
-product_title:
-currentProduct.title,
-
-price:
-Number(currentProduct.price),
-
-buyer_name:
-name,
-
-buyer_phone:
-phone,
-
-buyer_address:
-address,
-
-status:
-"pending"
-
-})
-.select()
-.maybeSingle();
-
-confirmOrderButton.disabled =
-false;
-
-confirmOrderButton.innerText =
-"ยืนยันสั่งซื้อ";
-
-if(error){
-
-console.error(error);
-
-if(
-error.code === "23505"
-){
-
-orderMessage.innerText =
-"สินค้านี้มีออเดอร์อยู่แล้ว";
-
-}else{
-
-orderMessage.innerText =
-"สร้างออเดอร์ไม่สำเร็จ: " +
-error.message;
-
-}
-
-return;
-
-}
-
-orderMessage.innerText =
-"🎉 สั่งซื้อสำเร็จ!";
-
-setTimeout(
-async function(){
+    authButton.textContent = "เข้าสู่ระบบ";
 
-createOrderModal.style.display =
-"none";
+    orderButton.style.display = "none";
+    messageButton.style.display = "none";
+    sellButton.style.display = "none";
 
-document.getElementById(
-"detailModal"
-).style.display =
-"none";
-
-document.body.classList.remove(
-"no-scroll"
-);
-
-await updateOrderBadge();
-
-alert(
-"🎉 สั่งซื้อสำเร็จ!\n\n" +
-"รอผู้ขายยืนยันออเดอร์ได้เลย"
-);
-
-},
-800
-);
-
-};
-
-
-/* =====================================================
-CLOSE ORDER CREATE
-===================================================== */
-
-document.getElementById(
-"closeCreateOrderButton"
-).onclick =
-function(){
-
-createOrderModal.style.display =
-"none";
-
-};
-
-
-/* =====================================================
-CLOSE DETAIL
-===================================================== */
-
-function closeProductDetail(){
-
-document.getElementById(
-"detailModal"
-).style.display =
-"none";
-
-document.body.classList.remove(
-"no-scroll"
-);
-
+  }
 }
 
-document.getElementById(
-"closeDetailButton"
-).onclick =
-closeProductDetail;
+async function ensureProfile(){
 
-document.getElementById(
-"detailModal"
-).addEventListener(
-"click",
-function(event){
+  if(!currentUser) return;
 
-if(event.target === this){
+  const {
+    data
+  } = await supabaseClient
+    .from("profiles")
+    .select("id")
+    .eq("id",currentUser.id)
+    .maybeSingle();
 
-closeProductDetail();
+  if(!data){
 
-}
+    await supabaseClient
+      .from("profiles")
+      .insert({
+        id:currentUser.id,
+        display_name:"ผู้ใช้ PC2Deal"
+      });
 
+  }
 }
-);
-
-
-/* =====================================================
-CHAT FROM PRODUCT
-===================================================== */
-
-document.getElementById(
-"contactSellerButton"
-).onclick =
-openChat;
-
-async function openChat(){
-
-const {data:userData} =
-await supabaseClient.auth.getUser();
 
-if(!userData.user){
+async function login(){
 
-closeProductDetail();
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
 
-loginModal.style.display =
-"flex";
+  const {
+    error
+  } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
 
-message.innerText =
-"กรุณาเข้าสู่ระบบก่อนติดต่อผู้ขาย";
+  if(error){
 
-return;
+    alert(error.message);
+    return;
 
-}
-
-if(!currentProduct){
-
-return;
-
-}
-
-if(
-userData.user.id ===
-currentProduct.user_id
-){
+  }
 
-alert(
-"นี่คือสินค้าของคุณเอง\n\nให้เปิด 💬 ข้อความ เพื่อดูคนที่ทักเข้ามา"
-);
+  closeModal("authModal");
 
-return;
+  showToast("เข้าสู่ระบบสำเร็จ");
 
+  await checkUser();
 }
 
-currentChatPartner =
-currentProduct.user_id;
+async function register(){
 
-currentChatProduct =
-currentProduct;
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
 
-chatProductTitle.innerText =
-currentProduct.title ||
-"สินค้า";
+  const {
+    data,
+    error
+  } = await supabaseClient.auth.signUp({
+    email,
+    password
+  });
 
-chatSellerName.innerText =
-"👤 ผู้ขาย PC2Deal";
+  if(error){
 
-chatModal.style.display =
-"flex";
+    alert(error.message);
+    return;
 
-document.getElementById(
-"detailModal"
-).style.display =
-"none";
+  }
 
-document.body.classList.add(
-"no-scroll"
-);
+  if(data.session){
 
-const {data:seller} =
-await supabaseClient
-.from("profiles")
-.select("display_name")
-.eq("id",currentProduct.user_id)
-.maybeSingle();
+    showToast("สมัครสมาชิกสำเร็จ");
 
-if(
-seller &&
-seller.display_name
-){
+  }else{
 
-chatSellerName.innerText =
-"👤 " +
-seller.display_name;
-
-}
+    alert("สมัครสมาชิกสำเร็จ กรุณาตรวจสอบอีเมลเพื่อยืนยันบัญชี");
 
-await loadMessages();
+  }
 
-chatInput.focus();
+  closeModal("authModal");
 
+  await checkUser();
 }
 
+async function logout(){
 
-/* =====================================================
-OPEN CHAT FROM INBOX
-===================================================== */
+  stopRealtime();
 
-async function openInboxChat(
-conversation
-){
+  await supabaseClient.auth.signOut();
 
-currentChatPartner =
-conversation.otherUserId;
+  currentUser = null;
+  currentUserId = null;
 
-currentChatProduct =
-conversation.product;
+  updateAuthUI();
 
-chatProductTitle.innerText =
-conversation.product
-?
-conversation.product.title
-:
-"แชท";
-
-chatSellerName.innerText =
-"👤 " +
-conversation.otherName;
-
-inboxModal.style.display =
-"none";
-
-chatModal.style.display =
-"flex";
-
-document.body.classList.add(
-"no-scroll"
-);
-
-await loadMessages();
-
-chatInput.focus();
-
+  showToast("ออกจากระบบแล้ว");
 }
 
+async function resetPassword(){
 
-/* =====================================================
-LOAD MESSAGES
-===================================================== */
+  const email = prompt("กรอกอีเมลที่ใช้สมัคร");
 
-async function loadMessages(){
+  if(!email) return;
 
-const {data:userData} =
-await supabaseClient.auth.getUser();
+  const {
+    error
+  } = await supabaseClient.auth.resetPasswordForEmail(
+    email,
+    {
+      redirectTo:"https://s2ozgamer.github.io/PC2Deal/"
+    }
+  );
 
-if(
-!userData.user ||
-!currentChatPartner
-){
+  if(error){
 
-return;
+    alert(error.message);
 
-}
+  }else{
 
-let query =
-supabaseClient
-.from("messages")
-.select("*")
-.or(
-"and(sender_id.eq." +
-userData.user.id +
-",receiver_id.eq." +
-currentChatPartner +
-"),and(sender_id.eq." +
-currentChatPartner +
-",receiver_id.eq." +
-userData.user.id +
-")"
-);
-
-if(currentChatProduct){
-
-query =
-query.eq(
-"product_id",
-currentChatProduct.id
-);
+    alert("ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมลแล้ว");
 
+  }
 }
-
-const {data,error} =
-await query.order(
-"created_at",
-{ascending:true}
-);
-
-if(error){
-
-chatStatus.innerText =
-"โหลดข้อความไม่สำเร็จ";
 
-return;
 
-}
+/* =========================
+   PRODUCTS
+========================= */
 
-chatMessages.innerHTML = "";
+async function loadProducts(){
 
-if(!data || data.length === 0){
+  const container = document.getElementById("products");
 
-chatMessages.innerHTML = `
-<div class="chat-empty">
-ยังไม่มีข้อความ<br>
-เริ่มต้นการสนทนาได้เลย
-</div>
-`;
+  container.innerHTML = `<div class="loading">กำลังโหลดสินค้า...</div>`;
 
-chatStatus.innerText =
-"พร้อมสนทนา";
+  let query = supabaseClient
+    .from("products")
+    .select("*")
+    .eq("status","active")
+    .order("created_at",{ascending:false});
 
-return;
+  const search = document.getElementById("searchInput").value.trim();
 
-}
+  if(search){
 
-data.forEach(
-function(msg){
+    query = query.or(
+      `title.ilike.%${search}%,description.ilike.%${search}%`
+    );
 
-const row =
-document.createElement("div");
+  }
 
-const mine =
-msg.sender_id ===
-userData.user.id;
+  const {
+    data,
+    error
+  } = await query;
 
-row.className =
-"message-row " +
-(mine ? "mine" : "theirs");
+  if(error){
 
-const bubble =
-document.createElement("div");
+    console.error(error);
 
-bubble.className =
-"message-bubble";
+    container.innerHTML =
+      `<div class="empty">โหลดสินค้าไม่สำเร็จ</div>`;
 
-bubble.innerText =
-msg.message;
+    return;
 
-const time =
-document.createElement("div");
+  }
 
-time.className =
-"message-time";
+  if(!data || data.length === 0){
 
-time.innerText =
-new Date(
-msg.created_at
-).toLocaleTimeString(
-"th-TH",
-{
-hour:"2-digit",
-minute:"2-digit"
-}
-);
+    container.innerHTML =
+      `<div class="empty">ยังไม่มีสินค้าที่ตรงกับการค้นหา</div>`;
 
-bubble.appendChild(time);
+    return;
 
-row.appendChild(bubble);
+  }
 
-chatMessages.appendChild(row);
+  container.innerHTML = "";
 
-});
+  for(const product of data){
 
-chatMessages.scrollTop =
-chatMessages.scrollHeight;
+    const card = await createProductCard(product);
 
-chatStatus.innerText =
-"พร้อมสนทนา";
+    container.appendChild(card);
 
+  }
 }
-
 
-/* =====================================================
-SEND MESSAGE
-===================================================== */
+async function getSellerRating(userId){
 
-async function sendMessage(){
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("reviews")
+    .select("rating")
+    .eq("seller_id",userId);
 
-const text =
-chatInput.value.trim();
+  if(error || !data || data.length === 0){
 
-if(!text){
+    return {
+      average:0,
+      count:0
+    };
 
-return;
+  }
 
-}
-
-const {data:userData} =
-await supabaseClient.auth.getUser();
-
-if(
-!userData.user ||
-!currentChatPartner
-){
+  const total = data.reduce(
+    (sum,item)=>sum + Number(item.rating || 0),
+    0
+  );
 
-return;
-
+  return {
+    average:total / data.length,
+    count:data.length
+  };
 }
-
-chatSendButton.disabled =
-true;
-
-chatSendButton.innerText =
-"กำลังส่ง...";
-
-const {error} =
-await supabaseClient
-.from("messages")
-.insert({
 
-sender_id:
-userData.user.id,
+async function createProductCard(product){
 
-receiver_id:
-currentChatPartner,
+  const card = document.createElement("div");
 
-product_id:
-currentChatProduct
-?
-currentChatProduct.id
-:
-null,
+  card.className = "product-card";
 
-message:
-text
+  const rating = await getSellerRating(product.user_id);
 
-});
+  const image = product.image_url
+    ? escapeHTML(product.image_url)
+    : "https://placehold.co/600x400?text=PC2Deal";
 
-chatSendButton.disabled =
-false;
+  card.innerHTML = `
+    <img
+      class="product-image"
+      src="${image}"
+      onerror="this.src='https://placehold.co/600x400?text=PC2Deal'"
+    >
 
-chatSendButton.innerText =
-"ส่ง";
+    <div class="product-content">
 
-if(error){
+      <div class="product-title">
+        ${escapeHTML(product.title)}
+      </div>
 
-alert(
-"ส่งข้อความไม่สำเร็จ\n\n" +
-error.message
-);
+      <div class="price">
+        ฿${formatPrice(product.price)}
+      </div>
 
-return;
+      <div class="location">
+        📍 ${escapeHTML(product.location || "ไม่ระบุ")}
+      </div>
 
-}
-
-chatInput.value = "";
+      <div class="seller">
+        👤 กำลังโหลดชื่อผู้ขาย...
+      </div>
 
-await loadMessages();
+      ${
+        rating.count > 0
+        ?
+        `<div class="rating">
+          ${starsHTML(rating.average)}
+          ${rating.average.toFixed(1)}
+          (${rating.count} รีวิว)
+        </div>`
+        :
+        `<div class="seller">ยังไม่มีรีวิว</div>`
+      }
 
-chatInput.focus();
+      <div class="card-actions">
 
-}
+        <button class="btn btn-primary detail-btn">
+          ดูรายละเอียด
+        </button>
 
-chatSendButton.onclick =
-sendMessage;
+      </div>
 
-chatInput.addEventListener(
-"keydown",
-function(event){
+    </div>
+  `;
 
-if(
-event.key === "Enter" &&
-!event.shiftKey
-){
+  const sellerElement = card.querySelector(".seller");
 
-event.preventDefault();
+  const {
+    data:seller
+  } = await supabaseClient
+    .from("profiles")
+    .select("display_name")
+    .eq("id",product.user_id)
+    .maybeSingle();
 
-sendMessage();
+  sellerElement.textContent =
+    "👤 " + (seller?.display_name || "ผู้ขาย PC2Deal");
 
-}
+  card.querySelector(".detail-btn")
+    .addEventListener("click",()=>{
+      showProductDetail(product);
+    });
 
+  return card;
 }
-);
-
-
-/* =====================================================
-CHAT BACK
-===================================================== */
-
-chatBackButton.onclick =
-function(){
-
-chatModal.style.display =
-"none";
 
-document.body.classList.remove(
-"no-scroll"
-);
 
-openInbox();
+/* =========================
+   PRODUCT DETAIL
+========================= */
 
-};
+async function showProductDetail(product){
 
-chatModal.addEventListener(
-"click",
-function(event){
+  currentProduct = product;
 
-if(event.target === chatModal){
+  const container =
+    document.getElementById("productDetail");
 
-chatModal.style.display =
-"none";
+  container.innerHTML =
+    `<div class="loading">กำลังโหลด...</div>`;
 
-document.body.classList.remove(
-"no-scroll"
-);
+  openModal("detailModal");
 
-}
+  const rating = await getSellerRating(product.user_id);
 
-}
-);
+  const {
+    data:seller
+  } = await supabaseClient
+    .from("profiles")
+    .select("display_name")
+    .eq("id",product.user_id)
+    .maybeSingle();
 
+  const {
+    data:reviews
+  } = await supabaseClient
+    .from("reviews")
+    .select(`
+      rating,
+      comment,
+      created_at,
+      reviewer_id
+    `)
+    .eq("seller_id",product.user_id)
+    .order("created_at",{ascending:false})
+    .limit(10);
 
-/* =====================================================
-INBOX
-===================================================== */
+  const image = product.image_url
+    ? escapeHTML(product.image_url)
+    : "https://placehold.co/800x500?text=PC2Deal";
 
-messageButton.onclick =
-async function(){
+  let reviewHTML = "";
 
-requestBrowserNotification();
+  if(reviews && reviews.length){
 
-await openInbox();
+    reviewHTML = `
+      <div class="review-box">
+        <h3>⭐ รีวิวผู้ขาย</h3>
 
-};
+        ${
+          reviews.map(review=>`
+            <div class="review-item">
 
-async function openInbox(){
+              <div class="review-stars">
+                ${starsHTML(review.rating)}
+              </div>
 
-const {data:userData} =
-await supabaseClient.auth.getUser();
+              <div class="review-comment">
+                ${escapeHTML(review.comment || "ไม่ได้เขียนความคิดเห็น")}
+              </div>
 
-if(!userData.user){
+              <div class="review-user">
+                ${formatDate(review.created_at)}
+              </div>
 
-return;
+            </div>
+          `).join("")
+        }
 
-}
+      </div>
+    `;
 
-inboxModal.style.display =
-"flex";
+  }else{
 
-document.body.classList.add(
-"no-scroll"
-);
+    reviewHTML = `
+      <div class="review-box">
+        <strong>⭐ ยังไม่มีรีวิว</strong>
+      </div>
+    `;
 
-await loadInbox();
+  }
 
-}
+  const isOwner =
+    currentUserId &&
+    currentUserId === product.user_id;
 
-inboxCloseButton.onclick =
-function(){
+  container.innerHTML = `
 
-inboxModal.style.display =
-"none";
+    <img
+      class="detail-image"
+      src="${image}"
+      onerror="this.src='https://placehold.co/800x500?text=PC2Deal'"
+    >
 
-document.body.classList.remove(
-"no-scroll"
-);
+    <div class="detail-title">
+      ${escapeHTML(product.title)}
+    </div>
 
-};
+    <div class="detail-price">
+      ฿${formatPrice(product.price)}
+    </div>
 
-inboxModal.addEventListener(
-"click",
-function(event){
+    <div class="detail-info">
 
-if(event.target === inboxModal){
+      <div>
+        📍 ${escapeHTML(product.location || "ไม่ระบุ")}
+      </div>
 
-inboxModal.style.display =
-"none";
+      <div style="margin-top:6px">
+        👤 ${escapeHTML(seller?.display_name || "ผู้ขาย PC2Deal")}
+      </div>
 
-document.body.classList.remove(
-"no-scroll"
-);
+      <div style="margin-top:6px">
+        ${
+          rating.count
+          ?
+          `⭐ ${rating.average.toFixed(1)} / 5 (${rating.count} รีวิว)`
+          :
+          `⭐ ยังไม่มีรีวิว`
+        }
+      </div>
 
-}
+    </div>
 
-}
-);
+    <div class="detail-description">
+      ${escapeHTML(product.description || "ไม่มีรายละเอียด")}
+    </div>
 
+    <div class="detail-actions">
 
-/* =====================================================
-LOAD INBOX
-===================================================== */
+      ${
+        !isOwner
+        ?
+        `
+        <button id="buyProductButton" class="btn btn-success">
+          🛒 ซื้อสินค้า
+        </button>
 
-async function loadInbox(){
+        <button id="contactSellerButton" class="btn btn-primary">
+          💬 ติดต่อผู้ขาย
+        </button>
+        `
+        :
+        `
+        <button class="btn btn-secondary" disabled>
+          สินค้าของคุณ
+        </button>
+        `
+      }
 
-const {data:userData} =
-await supabaseClient.auth.getUser();
+    </div>
 
-if(!userData.user){
+    ${reviewHTML}
+  `;
 
-return;
+  if(!isOwner){
 
-}
+    document
+      .getElementById("buyProductButton")
+      ?.addEventListener("click",()=>{
+        openCreateOrder(product);
+      });
 
-inboxList.innerHTML =
-`
-<div class="inbox-loading">
-กำลังโหลดข้อความ...
-</div>
-`;
-
-const {data:messagesData,error} =
-await supabaseClient
-.from("messages")
-.select("*")
-.or(
-"sender_id.eq." +
-userData.user.id +
-",receiver_id.eq." +
-userData.user.id
-)
-.order(
-"created_at",
-{ascending:false}
-);
-
-if(error){
-
-inboxList.innerHTML =
-`
-<div class="inbox-empty">
-ไม่สามารถโหลดข้อความได้
-</div>
-`;
-
-return;
+    document
+      .getElementById("contactSellerButton")
+      ?.addEventListener("click",()=>{
+        openChat(
+          product.user_id,
+          product.id,
+          product.title
+        );
+      });
 
+  }
 }
 
-if(
-!messagesData ||
-messagesData.length === 0
-){
-
-inboxList.innerHTML =
-`
-<div class="inbox-empty">
-📭 ยังไม่มีข้อความ<br><br>
-เมื่อลูกค้าทักเข้ามา<br>
-ข้อความจะแสดงที่นี่
-</div>
-`;
-
-return;
 
-}
+/* =========================
+   SELL
+========================= */
 
-const conversations =
-new Map();
-
-messagesData.forEach(
-function(msg){
-
-const otherUserId =
-msg.sender_id ===
-userData.user.id
-?
-msg.receiver_id
-:
-msg.sender_id;
-
-const productKey =
-msg.product_id ||
-"no-product";
-
-const key =
-otherUserId +
-"_" +
-productKey;
-
-if(!conversations.has(key)){
-
-conversations.set(
-key,
-{
-otherUserId:otherUserId,
-productId:msg.product_id,
-lastMessage:msg,
-unread:
-msg.receiver_id ===
-userData.user.id
-}
-);
+async function sellProduct(event){
 
-}
+  event.preventDefault();
 
-});
+  if(!currentUser){
 
-const conversationArray =
-Array.from(
-conversations.values()
-);
+    alert("กรุณาเข้าสู่ระบบก่อน");
+    return;
 
-for(
-const conversation
-of conversationArray
-){
+  }
 
-const {data:profile} =
-await supabaseClient
-.from("profiles")
-.select("display_name")
-.eq("id",conversation.otherUserId)
-.maybeSingle();
+  const title =
+    document.getElementById("sellTitle").value.trim();
 
-conversation.otherName =
-profile &&
-profile.display_name
-?
-profile.display_name
-:
-"ผู้ใช้ PC2Deal";
+  const price =
+    Number(document.getElementById("sellPrice").value);
 
-if(conversation.productId){
+  const location =
+    document.getElementById("sellLocation").value.trim();
 
-const {data:product} =
-await supabaseClient
-.from("products")
-.select("*")
-.eq("id",conversation.productId)
-.maybeSingle();
+  const description =
+    document.getElementById("sellDescription").value.trim();
 
-conversation.product =
-product || null;
+  const file =
+    document.getElementById("sellImage").files[0];
 
-}else{
+  if(!file){
 
-conversation.product = null;
+    alert("กรุณาเลือกรูปสินค้า");
+    return;
 
-}
+  }
 
-}
+  try{
 
-inboxList.innerHTML = "";
-
-conversationArray.forEach(
-function(conversation){
-
-const item =
-document.createElement("div");
-
-item.className =
-"conversation " +
-(
-conversation.unread
-?
-"unread"
-:
-""
-);
-
-item.innerHTML = `
-<div class="conversation-avatar">
-👤
-</div>
-
-<div class="conversation-content">
-
-<div class="conversation-top">
-
-<div class="conversation-name">
-${escapeHTML(conversation.otherName)}
-</div>
-
-<div class="conversation-time">
-${formatMessageTime(conversation.lastMessage.created_at)}
-</div>
-
-</div>
-
-<div class="conversation-product">
-${
-conversation.product
-?
-"🖥️ " +
-escapeHTML(conversation.product.title)
-:
-"💬 การสนทนา"
-}
-</div>
+    showToast("กำลังอัปโหลดรูป...");
 
-<div class="conversation-message">
-${escapeHTML(conversation.lastMessage.message)}
-</div>
+    const ext =
+      file.name.split(".").pop();
 
-</div>
+    const filename =
+      `${currentUser.id}/${Date.now()}.${ext}`;
 
-<div class="unread-dot"></div>
-`;
+    const {
+      error:uploadError
+    } = await supabaseClient
+      .storage
+      .from("product-images")
+      .upload(filename,file,{
+        upsert:false
+      });
 
-item.onclick =
-function(){
+    if(uploadError) throw uploadError;
 
-openInboxChat(conversation);
+    const {
+      data:publicData
+    } = supabaseClient
+      .storage
+      .from("product-images")
+      .getPublicUrl(filename);
 
-};
+    const imageUrl =
+      publicData.publicUrl;
 
-inboxList.appendChild(item);
+    const {
+      error
+    } = await supabaseClient
+      .from("products")
+      .insert({
+        user_id:currentUser.id,
+        title,
+        price,
+        location,
+        description,
+        image_url:imageUrl,
+        status:"active"
+      });
 
-});
+    if(error) throw error;
 
-}
+    document.getElementById("sellForm").reset();
 
+    closeModal("sellModal");
 
-/* =====================================================
-MESSAGE BADGE
-===================================================== */
+    showToast("ลงขายสินค้าเรียบร้อย");
 
-async function updateMessageBadge(){
+    await loadProducts();
 
-if(!currentUserId){
+  }catch(error){
 
-messageBadge.style.display =
-"none";
+    console.error(error);
 
-return;
+    alert("ลงขายไม่สำเร็จ: " + error.message);
 
+  }
 }
-
-const {data,error} =
-await supabaseClient
-.from("messages")
-.select("id")
-.eq("receiver_id",currentUserId);
 
-if(error){
 
-return;
+/* =========================
+   CREATE ORDER
+========================= */
 
-}
+function openCreateOrder(product){
 
-const count =
-data
-?
-data.length
-:
-0;
+  if(!currentUser){
 
-if(count > 0){
+    closeModal("detailModal");
 
-messageBadge.innerText =
-count > 99
-?
-"99+"
-:
-count;
+    openModal("authModal");
 
-messageBadge.style.display =
-"flex";
+    return;
 
-}else{
+  }
 
-messageBadge.style.display =
-"none";
+  if(product.user_id === currentUser.id){
 
-}
+    alert("ไม่สามารถซื้อสินค้าของตัวเองได้");
+    return;
 
-}
+  }
 
+  currentProduct = product;
 
-/* =====================================================
-ORDERS
-===================================================== */
+  document.getElementById("createOrderProduct").innerHTML = `
+    <div class="order-card">
 
-orderButton.onclick =
-async function(){
+      <div class="order-title">
+        ${escapeHTML(product.title)}
+      </div>
 
-const {data:userData} =
-await supabaseClient.auth.getUser();
+      <div class="price">
+        ฿${formatPrice(product.price)}
+      </div>
 
-if(!userData.user){
+    </div>
+  `;
 
-loginModal.style.display =
-"flex";
+  document.getElementById("buyerName").value = "";
+  document.getElementById("buyerPhone").value = "";
+  document.getElementById("buyerAddress").value = "";
 
-return;
+  closeModal("detailModal");
 
+  openModal("orderCreateModal");
 }
-
-orderModal.style.display =
-"flex";
-
-document.body.classList.add(
-"no-scroll"
-);
-
-currentOrderTab =
-"buyer";
-
-setOrderTab();
 
-await loadOrders();
+async function createOrder(event){
 
-};
+  event.preventDefault();
 
+  if(!currentUser || !currentProduct){
 
-/* =====================================================
-ORDER TABS
-===================================================== */
+    alert("ข้อมูลไม่ครบ");
+    return;
 
-myOrdersTab.onclick =
-async function(){
+  }
 
-currentOrderTab =
-"buyer";
+  const name =
+    document.getElementById("buyerName").value.trim();
 
-setOrderTab();
+  const phone =
+    document.getElementById("buyerPhone").value.trim();
 
-await loadOrders();
+  const address =
+    document.getElementById("buyerAddress").value.trim();
 
-};
+  if(!name || !phone || !address){
 
-sellingOrdersTab.onclick =
-async function(){
+    alert("กรุณากรอกข้อมูลให้ครบ");
+    return;
 
-currentOrderTab =
-"seller";
+  }
 
-setOrderTab();
+  const {
+    error
+  } = await supabaseClient
+    .from("orders")
+    .insert({
+      product_id:currentProduct.id,
+      buyer_id:currentUser.id,
+      seller_id:currentProduct.user_id,
+      product_title:currentProduct.title,
+      price:Number(currentProduct.price),
+      buyer_name:name,
+      buyer_phone:phone,
+      buyer_address:address,
+      status:"pending"
+    });
 
-await loadOrders();
+  if(error){
 
-};
+    console.error(error);
 
-function setOrderTab(){
+    alert("สร้างออเดอร์ไม่สำเร็จ: " + error.message);
+    return;
 
-if(currentOrderTab === "buyer"){
+  }
 
-myOrdersTab.classList.add("active");
-sellingOrdersTab.classList.remove("active");
+  closeModal("orderCreateModal");
 
-}else{
+  showToast("🛒 สั่งซื้อสำเร็จ รอผู้ขายยืนยัน");
 
-sellingOrdersTab.classList.add("active");
-myOrdersTab.classList.remove("active");
-
-}
-
+  await updateOrderBadge();
 }
-
 
-/* =====================================================
-CLOSE ORDER
-===================================================== */
 
-document.getElementById(
-"orderCloseButton"
-).onclick =
-function(){
+/* =========================
+   ORDERS
+========================= */
 
-orderModal.style.display =
-"none";
+async function openOrders(){
 
-document.body.classList.remove(
-"no-scroll"
-);
+  if(!currentUser){
 
-};
+    openModal("authModal");
+    return;
 
-orderModal.addEventListener(
-"click",
-function(event){
+  }
 
-if(event.target === orderModal){
+  orderMode = "buyer";
 
-orderModal.style.display =
-"none";
+  document.getElementById("buyerTab").classList.add("active");
+  document.getElementById("sellerTab").classList.remove("active");
 
-document.body.classList.remove(
-"no-scroll"
-);
+  openModal("ordersModal");
 
+  await loadOrders();
 }
-
-}
-);
-
-
-/* =====================================================
-LOAD ORDERS
-===================================================== */
 
 async function loadOrders(){
 
-const {data:userData} =
-await supabaseClient.auth.getUser();
+  if(!currentUser) return;
 
-if(!userData.user){
+  const container =
+    document.getElementById("ordersList");
 
-return;
+  container.innerHTML =
+    `<div class="loading">กำลังโหลดออเดอร์...</div>`;
 
+  let query =
+    supabaseClient
+      .from("orders")
+      .select("*")
+      .order("created_at",{ascending:false});
+
+  if(orderMode === "buyer"){
+
+    query = query.eq(
+      "buyer_id",
+      currentUser.id
+    );
+
+  }else{
+
+    query = query.eq(
+      "seller_id",
+      currentUser.id
+    );
+
+  }
+
+  const {
+    data,
+    error
+  } = await query;
+
+  if(error){
+
+    console.error(error);
+
+    container.innerHTML =
+      `<div class="empty">
+        โหลดออเดอร์ไม่สำเร็จ<br>
+        ${escapeHTML(error.message)}
+      </div>`;
+
+    return;
+
+  }
+
+  if(!data || data.length === 0){
+
+    container.innerHTML =
+      `<div class="empty">
+        ${
+          orderMode === "buyer"
+          ? "ยังไม่มีประวัติการซื้อ"
+          : "ยังไม่มีประวัติการขาย"
+        }
+      </div>`;
+
+    return;
+
+  }
+
+  container.innerHTML = "";
+
+  for(const order of data){
+
+    const card =
+      await renderOrderCard(order);
+
+    container.appendChild(card);
+
+  }
 }
 
-orderList.innerHTML =
-`
-<div class="inbox-loading">
-กำลังโหลดออเดอร์...
-</div>
-`;
+async function hasReview(orderId){
 
-let query =
-supabaseClient
-.from("orders")
-.select("*")
-.order(
-"created_at",
-{ascending:false}
-);
+  if(!currentUser) return false;
 
-if(currentOrderTab === "buyer"){
+  const {
+    data
+  } = await supabaseClient
+    .from("reviews")
+    .select("id")
+    .eq("order_id",orderId)
+    .eq("reviewer_id",currentUser.id)
+    .maybeSingle();
 
-query =
-query.eq(
-"buyer_id",
-userData.user.id
-);
-
-}else{
-
-query =
-query.eq(
-"seller_id",
-userData.user.id
-);
-
+  return !!data;
 }
 
-const {data,error} =
-await query;
+async function renderOrderCard(order){
 
-if(error){
+  const card =
+    document.createElement("div");
 
-console.error(error);
+  card.className = "order-card";
 
-orderList.innerHTML =
-`
-<div class="inbox-empty">
-ไม่สามารถโหลดออเดอร์ได้<br><br>
-${escapeHTML(error.message)}
-</div>
-`;
+  let reviewButton = "";
 
-return;
+  if(
+    orderMode === "buyer" &&
+    order.status === "completed"
+  ){
 
-}
+    const alreadyReviewed =
+      await hasReview(order.id);
 
-if(!data || data.length === 0){
+    if(alreadyReviewed){
 
-orderList.innerHTML =
-`
-<div class="inbox-empty">
-${
-currentOrderTab === "buyer"
-?
-"🛒 ยังไม่มีรายการสั่งซื้อ"
-:
-"🏪 ยังไม่มีลูกค้าสั่งสินค้า"
-}
-</div>
-`;
+      reviewButton = `
+        <button class="btn btn-secondary" disabled>
+          ⭐ รีวิวแล้ว
+        </button>
+      `;
 
-return;
+    }else{
 
-}
+      reviewButton = `
+        <button class="btn btn-warning review-btn">
+          ⭐ ให้คะแนนผู้ขาย
+        </button>
+      `;
 
-orderList.innerHTML = "";
+    }
+  }
 
-data.forEach(
-function(order){
+  let actions = "";
 
-renderOrderCard(order);
+  if(orderMode === "seller"){
 
-});
+    if(order.status === "pending"){
 
-}
+      actions = `
+        <button class="btn btn-success confirm-btn">
+          ✅ ยืนยันออเดอร์
+        </button>
 
+        <button class="btn btn-danger cancel-btn">
+          ❌ ยกเลิก
+        </button>
+      `;
 
-/* =====================================================
-RENDER ORDER
-===================================================== */
+    }else if(order.status === "confirmed"){
 
-function renderOrderCard(order){
+      actions = `
+        <button class="btn btn-primary shipping-btn">
+          🚚 ส่งสินค้า
+        </button>
 
-const card =
-document.createElement("div");
+        <button class="btn btn-danger cancel-btn">
+          ❌ ยกเลิก
+        </button>
+      `;
 
-card.className =
-"order-card";
+    }else if(order.status === "shipping"){
 
-const statusText =
-getOrderStatusText(
-order.status
-);
+      actions = `
+        <button class="btn btn-primary shipped-btn">
+          📦 แจ้งจัดส่งแล้ว
+        </button>
+      `;
 
-const statusClass =
-"status-" +
-order.status;
+    }
 
-const roleText =
-currentOrderTab === "buyer"
-?
-"🏪 ผู้ขาย"
-:
-"🛒 ผู้ซื้อ";
+  }else{
 
-const personName =
-currentOrderTab === "buyer"
-?
-"ผู้ขาย"
-:
-"ผู้ซื้อ";
+    if(order.status === "pending"){
 
-const displayPerson =
-currentOrderTab === "buyer"
-?
-order.seller_id
-:
-order.buyer_name || "ไม่ระบุ";
+      actions = `
+        <button class="btn btn-danger cancel-btn">
+          ❌ ยกเลิกออเดอร์
+        </button>
+      `;
 
-card.innerHTML = `
-
-<div class="order-top">
-
-<div>
-
-<div class="order-title">
-${escapeHTML(order.product_title)}
-</div>
-
-<div class="order-id">
-Order #${escapeHTML(order.id.substring(0,8))}
-</div>
-
-</div>
-
-<div class="order-status ${statusClass}">
-${statusText}
-</div>
-
-</div>
-
-<div class="order-price">
-${Number(order.price).toLocaleString()} บาท
-</div>
-
-<div class="order-person">
-${roleText}: ${escapeHTML(displayPerson)}
-</div>
-
-${
-currentOrderTab === "seller"
-?
-`
-<div class="order-info-box">
-👤 ${escapeHTML(order.buyer_name || "ไม่ระบุ")}<br>
-📞 ${escapeHTML(order.buyer_phone || "ไม่ระบุ")}<br>
-📍 ${escapeHTML(order.buyer_address || "ไม่ระบุ")}
-</div>
-`
-:
-""
-}
-
-<div class="order-date">
-สั่งซื้อเมื่อ:
-${new Date(order.created_at).toLocaleString("th-TH")}
-</div>
-
-<div
-class="order-buttons"
-id="buttons-${order.id}"
->
-</div>
-`;
-
-orderList.appendChild(card);
-
-renderOrderButtons(
-order,
-card.querySelector(
-"#buttons-" + order.id
-)
-);
-
-}
-
-
-/* =====================================================
-ORDER BUTTONS
-===================================================== */
-
-function renderOrderButtons(
-order,
-container
-){
-
-container.innerHTML = "";
-
-if(currentOrderTab === "seller"){
-
-if(order.status === "pending"){
-
-addOrderButton(
-container,
-"✅ ยืนยันออเดอร์",
-"green",
-function(){
-changeOrderStatus(
-order.id,
-"confirmed"
-);
-}
-);
-
-addOrderButton(
-container,
-"❌ ยกเลิก",
-"red",
-function(){
-changeOrderStatus(
-order.id,
-"cancelled"
-);
-}
-);
-
-}
-
-else if(order.status === "confirmed"){
-
-addOrderButton(
-container,
-"📦 เริ่มจัดส่ง",
-"green",
-function(){
-changeOrderStatus(
-order.id,
-"shipping"
-);
-}
-);
-
-addOrderButton(
-container,
-"❌ ยกเลิก",
-"red",
-function(){
-changeOrderStatus(
-order.id,
-"cancelled"
-);
-}
-);
-
-}
-
-else if(order.status === "shipping"){
-
-addOrderButton(
-container,
-"🚚 จัดส่งแล้ว",
-"green",
-function(){
-changeOrderStatus(
-order.id,
-"shipped"
-);
-}
-);
-
-}
-
-}
-
-else{
-
-if(order.status === "pending"){
-
-addOrderButton(
-container,
-"❌ ยกเลิกคำสั่งซื้อ",
-"red",
-function(){
-changeOrderStatus(
-order.id,
-"cancelled"
-);
-}
-);
-
-}
-
-if(order.status === "shipped"){
-
-addOrderButton(
-container,
-"✅ ได้รับสินค้าแล้ว",
-"green",
-function(){
-changeOrderStatus(
-order.id,
-"completed"
-);
-}
-);
-
-}
-
-}
+    }else if(order.status === "shipped"){
 
+      actions = `
+        <button class="btn btn-success completed-btn">
+          ✅ ได้รับสินค้าแล้ว
+        </button>
+      `;
+
+    }
+
+  }
+
+  card.innerHTML = `
+
+    <div class="order-head">
+
+      <div class="order-title">
+        ${escapeHTML(order.product_title)}
+      </div>
+
+      <span class="status ${statusClass(order.status)}">
+        ${statusText(order.status)}
+      </span>
+
+    </div>
+
+    <div class="price">
+      ฿${formatPrice(order.price)}
+    </div>
+
+    <div class="order-meta">
+
+      📅 ${formatDate(order.created_at)}
+
+      <br>
+
+      ${
+        orderMode === "buyer"
+        ?
+        "🏪 ผู้ขาย: กำลังโหลด..."
+        :
+        "🛒 ผู้ซื้อ: " + escapeHTML(order.buyer_name || "-")
+      }
+
+      ${
+        orderMode === "seller"
+        ?
+        `
+        <br>
+        📞 ${escapeHTML(order.buyer_phone || "-")}
+
+        <br>
+        📍 ${escapeHTML(order.buyer_address || "-")}
+        `
+        :
+        ""
+      }
+
+    </div>
+
+    <div class="order-actions">
+      ${actions}
+      ${reviewButton}
+    </div>
+  `;
+
+  if(orderMode === "buyer"){
+
+    const sellerLine =
+      card.querySelector(".order-meta");
+
+    const {
+      data:seller
+    } = await supabaseClient
+      .from("profiles")
+      .select("display_name")
+      .eq("id",order.seller_id)
+      .maybeSingle();
+
+    sellerLine.innerHTML =
+      sellerLine.innerHTML.replace(
+        "🏪 ผู้ขาย: กำลังโหลด...",
+        "🏪 ผู้ขาย: " +
+        escapeHTML(
+          seller?.display_name ||
+          "ผู้ขาย PC2Deal"
+        )
+      );
+
+  }
+
+  card
+    .querySelector(".confirm-btn")
+    ?.addEventListener("click",()=>{
+      changeOrderStatus(
+        order,
+        "confirmed"
+      );
+    });
+
+  card
+    .querySelector(".shipping-btn")
+    ?.addEventListener("click",()=>{
+      changeOrderStatus(
+        order,
+        "shipping"
+      );
+    });
+
+  card
+    .querySelector(".shipped-btn")
+    ?.addEventListener("click",()=>{
+      changeOrderStatus(
+        order,
+        "shipped"
+      );
+    });
+
+  card
+    .querySelector(".completed-btn")
+    ?.addEventListener("click",()=>{
+      changeOrderStatus(
+        order,
+        "completed"
+      );
+    });
+
+  card
+    .querySelector(".cancel-btn")
+    ?.addEventListener("click",()=>{
+      changeOrderStatus(
+        order,
+        "cancelled"
+      );
+    });
+
+  card
+    .querySelector(".review-btn")
+    ?.addEventListener("click",()=>{
+      openReview(order);
+    });
+
+  return card;
 }
 
 
-function addOrderButton(
-container,
-text,
-className,
-callback
-){
+/* =========================
+   ORDER STATUS
+========================= */
 
-const button =
-document.createElement("button");
+async function changeOrderStatus(order,newStatus){
 
-button.innerText =
-text;
+  if(!currentUser) return;
 
-button.className =
-className;
+  if(
+    orderMode === "seller" &&
+    order.seller_id !== currentUser.id
+  ){
 
-button.onclick =
-callback;
+    alert("ไม่มีสิทธิ์");
+    return;
 
-container.appendChild(button);
+  }
+
+  if(
+    orderMode === "buyer" &&
+    order.buyer_id !== currentUser.id
+  ){
+
+    alert("ไม่มีสิทธิ์");
+    return;
+
+  }
+
+  const confirmText = {
+    confirmed:"ยืนยันออเดอร์นี้หรือไม่?",
+    shipping:"ยืนยันว่าจะส่งสินค้าให้ออเดอร์นี้หรือไม่?",
+    shipped:"ยืนยันว่าได้จัดส่งสินค้าแล้วหรือไม่?",
+    completed:"ยืนยันว่าได้รับสินค้าและซื้อขายสำเร็จแล้วหรือไม่?",
+    cancelled:"ต้องการยกเลิกออเดอร์นี้หรือไม่?"
+  };
+
+  if(!confirm(confirmText[newStatus] || "ยืนยันการเปลี่ยนสถานะ?")){
+    return;
+  }
+
+  const {
+    error
+  } = await supabaseClient
+    .from("orders")
+    .update({
+      status:newStatus,
+      updated_at:new Date().toISOString()
+    })
+    .eq("id",order.id);
+
+  if(error){
+
+    console.error(error);
+
+    alert(
+      "เปลี่ยนสถานะไม่สำเร็จ: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+  /*
+    เปลี่ยนสถานะสินค้า
+  */
+
+  if(newStatus === "confirmed"){
+
+    await supabaseClient
+      .from("products")
+      .update({
+        status:"reserved"
+      })
+      .eq("id",order.product_id);
+
+  }
+
+  if(newStatus === "cancelled"){
+
+    await supabaseClient
+      .from("products")
+      .update({
+        status:"active"
+      })
+      .eq("id",order.product_id);
+
+  }
+
+  if(newStatus === "completed"){
+
+    await supabaseClient
+      .from("products")
+      .update({
+        status:"sold"
+      })
+      .eq("id",order.product_id);
+
+  }
+
+  showToast(
+    "เปลี่ยนสถานะเป็น " +
+    statusText(newStatus)
+  );
+
+  await loadOrders();
+  await updateOrderBadge();
+}
+
+
+/* =========================
+   REVIEWS
+========================= */
+
+function openReview(order){
+
+  currentOrder = order;
+  selectedRating = 0;
+
+  document.getElementById("reviewComment").value = "";
+
+  document
+    .querySelectorAll(".star-btn")
+    .forEach(btn=>{
+      btn.classList.remove("selected");
+    });
+
+  document.getElementById("reviewProductInfo").innerHTML = `
+    <div class="order-card">
+
+      <strong>
+        ${escapeHTML(order.product_title)}
+      </strong>
+
+      <div style="margin-top:5px">
+        ฿${formatPrice(order.price)}
+      </div>
+
+    </div>
+  `;
+
+  openModal("reviewModal");
+}
+
+function selectRating(value){
+
+  selectedRating = Number(value);
+
+  document
+    .querySelectorAll(".star-btn")
+    .forEach(btn=>{
+
+      const star =
+        Number(btn.dataset.star);
+
+      btn.classList.toggle(
+        "selected",
+        star <= selectedRating
+      );
+
+    });
+}
+
+async function submitReview(){
+
+  if(!currentUser || !currentOrder){
+
+    alert("ข้อมูลไม่ครบ");
+    return;
+
+  }
+
+  if(currentOrder.status !== "completed"){
+
+    alert("สามารถรีวิวได้หลังซื้อขายสำเร็จเท่านั้น");
+    return;
+
+  }
+
+  if(currentOrder.buyer_id !== currentUser.id){
+
+    alert("เฉพาะผู้ซื้อเท่านั้นที่รีวิวได้");
+    return;
+
+  }
+
+  if(selectedRating < 1 || selectedRating > 5){
+
+    alert("กรุณาเลือกคะแนน 1–5 ดาว");
+    return;
+
+  }
+
+  const comment =
+    document.getElementById("reviewComment")
+      .value
+      .trim();
+
+  const {
+    error
+  } = await supabaseClient
+    .from("reviews")
+    .insert({
+      order_id:currentOrder.id,
+      reviewer_id:currentUser.id,
+      seller_id:currentOrder.seller_id,
+      rating:selectedRating,
+      comment:comment || null
+    });
+
+  if(error){
+
+    console.error(error);
+
+    if(
+      error.code === "23505"
+    ){
+
+      alert("ออเดอร์นี้รีวิวไปแล้ว");
+
+    }else{
+
+      alert(
+        "ส่งรีวิวไม่สำเร็จ: " +
+        error.message
+      );
+
+    }
+
+    return;
+
+  }
+
+  closeModal("reviewModal");
+
+  showToast("⭐ ขอบคุณสำหรับรีวิว");
+
+  await loadOrders();
+
+  if(currentProduct){
+
+    await showProductDetail(currentProduct);
+
+  }
+}
+
+
+/* =========================
+   CHAT
+========================= */
+
+function initializeMessaging(){
+
+  if(!currentUser) return;
+
+  if(realtimeChannel){
+
+    supabaseClient
+      .removeChannel(realtimeChannel);
+
+  }
+
+  realtimeChannel =
+    supabaseClient
+      .channel("messages-" + currentUser.id)
+      .on(
+        "postgres_changes",
+        {
+          event:"INSERT",
+          schema:"public",
+          table:"messages",
+          filter:`receiver_id=eq.${currentUser.id}`
+        },
+        async payload=>{
+
+          const message =
+            payload.new;
+
+          if(
+            message.sender_id === currentUser.id
+          ){
+
+            return;
+
+          }
+
+          if(
+            knownMessageIds.has(message.id)
+          ){
+
+            return;
+
+          }
+
+          knownMessageIds.add(message.id);
+
+          notifyUser(
+            "💬 มีข้อความใหม่",
+            message.message
+          );
+
+          await updateMessageBadge();
+
+          if(
+            currentChatUserId ===
+            message.sender_id
+          ){
+
+            await loadChatMessages();
+
+          }
+
+        }
+      )
+      .subscribe();
+}
+
+function stopRealtime(){
+
+  if(realtimeChannel){
+
+    supabaseClient
+      .removeChannel(realtimeChannel);
+
+    realtimeChannel = null;
+
+  }
+
+  if(orderRealtimeChannel){
+
+    supabaseClient
+      .removeChannel(orderRealtimeChannel);
+
+    orderRealtimeChannel = null;
+
+  }
+}
+
+async function openInbox(){
+
+  if(!currentUser){
+
+    openModal("authModal");
+    return;
+
+  }
+
+  openModal("inboxModal");
+
+  await loadInbox();
+
+}
+
+async function loadInbox(){
+
+  const container =
+    document.getElementById("inboxList");
+
+  container.innerHTML =
+    `<div class="loading">กำลังโหลด...</div>`;
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("messages")
+    .select("*")
+    .or(
+      `sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`
+    )
+    .order("created_at",{ascending:false});
+
+  if(error){
+
+    container.innerHTML =
+      `<div class="empty">โหลดข้อความไม่สำเร็จ</div>`;
+
+    return;
+
+  }
+
+  if(!data || data.length === 0){
+
+    container.innerHTML =
+      `<div class="empty">ยังไม่มีข้อความ</div>`;
+
+    return;
+
+  }
+
+  const groups = {};
+
+  for(const msg of data){
+
+    const otherUser =
+      msg.sender_id === currentUser.id
+      ? msg.receiver_id
+      : msg.sender_id;
+
+    const key =
+      otherUser + "|" + (msg.product_id || "");
+
+    if(!groups[key]){
+
+      groups[key] = {
+        otherUser,
+        productId:msg.product_id,
+        message:msg
+      };
+
+    }
+
+  }
+
+  container.innerHTML = "";
+
+  for(const key of Object.keys(groups)){
+
+    const item =
+      groups[key];
+
+    let productTitle = "สินค้า";
+
+    if(item.productId){
+
+      const {
+        data:product
+      } = await supabaseClient
+        .from("products")
+        .select("title")
+        .eq("id",item.productId)
+        .maybeSingle();
+
+      if(product){
+
+        productTitle =
+          product.title;
+
+      }
+
+    }
+
+    const {
+      data:profile
+    } = await supabaseClient
+      .from("profiles")
+      .select("display_name")
+      .eq("id",item.otherUser)
+      .maybeSingle();
+
+    const div =
+      document.createElement("div");
+
+    div.className = "inbox-item";
+
+    div.innerHTML = `
+
+      <div class="inbox-title">
+        💬 ${escapeHTML(
+          profile?.display_name ||
+          "ผู้ใช้ PC2Deal"
+        )}
+      </div>
+
+      <div class="inbox-preview">
+        📦 ${escapeHTML(productTitle)}
+      </div>
+
+      <div class="inbox-preview">
+        ${escapeHTML(item.message.message)}
+      </div>
+
+    `;
+
+    div.addEventListener("click",()=>{
+
+      openChat(
+        item.otherUser,
+        item.productId,
+        productTitle
+      );
+
+    });
+
+    container.appendChild(div);
+
+  }
+
+}
+
+function openChat(userId,productId,productTitle){
+
+  if(!currentUser){
+
+    openModal("authModal");
+    return;
+
+  }
+
+  currentChatUserId = userId;
+  currentChatProductId = productId;
+
+  document.getElementById("chatTitle").textContent =
+    "💬 " + (productTitle || "แชต");
+
+  closeModal("inboxModal");
+  closeModal("detailModal");
+
+  openModal("chatModal");
+
+  loadChatMessages();
+
+}
+
+async function loadChatMessages(){
+
+  if(
+    !currentUser ||
+    !currentChatUserId
+  ){
+
+    return;
+
+  }
+
+  let query =
+    supabaseClient
+      .from("messages")
+      .select("*")
+      .or(
+        `and(sender_id.eq.${currentUser.id},receiver_id.eq.${currentChatUserId}),and(sender_id.eq.${currentChatUserId},receiver_id.eq.${currentUser.id})`
+      )
+      .order("created_at",{ascending:true});
+
+  if(currentChatProductId){
+
+    query = query.eq(
+      "product_id",
+      currentChatProductId
+    );
+
+  }
+
+  const {
+    data,
+    error
+  } = await query;
+
+  const container =
+    document.getElementById("chatMessages");
+
+  if(error){
+
+    container.innerHTML =
+      `<div class="empty">โหลดแชตไม่สำเร็จ</div>`;
+
+    return;
+
+  }
+
+  container.innerHTML = "";
+
+  for(const msg of data || []){
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "message " +
+      (
+        msg.sender_id === currentUser.id
+        ? "mine"
+        : "other"
+      );
+
+    div.innerHTML = `
+      <div>
+        ${escapeHTML(msg.message)}
+      </div>
+
+      <div class="message-time">
+        ${formatDate(msg.created_at)}
+      </div>
+    `;
+
+    container.appendChild(div);
+
+  }
+
+  container.scrollTop =
+    container.scrollHeight;
+}
+
+async function sendMessage(){
+
+  if(
+    !currentUser ||
+    !currentChatUserId
+  ){
+
+    return;
+
+  }
+
+  const input =
+    document.getElementById("chatInput");
+
+  const message =
+    input.value.trim();
+
+  if(!message) return;
+
+  const {
+    error
+  } = await supabaseClient
+    .from("messages")
+    .insert({
+      sender_id:currentUser.id,
+      receiver_id:currentChatUserId,
+      product_id:currentChatProductId || null,
+      message
+    });
+
+  if(error){
+
+    alert(
+      "ส่งข้อความไม่สำเร็จ: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+  input.value = "";
+
+  await loadChatMessages();
 
 }
 
 
-/* =====================================================
-CHANGE ORDER STATUS
-===================================================== */
+/* =========================
+   MESSAGE BADGE
+========================= */
 
-async function changeOrderStatus(
-orderId,
-newStatus
-){
+async function updateMessageBadge(){
 
-let confirmText =
-"";
+  if(!currentUser){
 
-if(newStatus === "confirmed"){
+    return;
 
-confirmText =
-"ยืนยันรับออเดอร์นี้ใช่ไหม?";
+  }
 
-}
+  const {
+    count,
+    error
+  } = await supabaseClient
+    .from("messages")
+    .select("id",{count:"exact",head:true})
+    .eq("receiver_id",currentUser.id);
 
-if(newStatus === "shipping"){
+  if(error) return;
 
-confirmText =
-"ยืนยันว่าเริ่มจัดส่งสินค้าแล้วใช่ไหม?";
+  const badge =
+    document.getElementById("messageBadge");
 
-}
+  if(count > 0){
 
-if(newStatus === "shipped"){
+    badge.textContent = count > 99 ? "99+" : count;
+    badge.style.display = "inline-flex";
 
-confirmText =
-"ยืนยันว่าจัดส่งสินค้าแล้วใช่ไหม?";
+  }else{
 
-}
+    badge.style.display = "none";
 
-if(newStatus === "completed"){
-
-confirmText =
-"ยืนยันว่าได้รับสินค้าแล้วใช่ไหม?";
+  }
 
 }
-
-if(newStatus === "cancelled"){
-
-confirmText =
-"ยืนยันยกเลิกออเดอร์นี้ใช่ไหม?";
-
-}
-
-if(
-confirmText &&
-!confirm(confirmText)
-){
-
-return;
-
-}
-
-const {data:userData} =
-await supabaseClient.auth.getUser();
-
-if(!userData.user){
-
-return;
-
-}
-
-const {data:order,error:findError} =
-await supabaseClient
-.from("orders")
-.select("*")
-.eq("id",orderId)
-.maybeSingle();
-
-if(findError || !order){
-
-alert(
-"ไม่พบออเดอร์"
-);
-
-return;
-
-}
-
-if(
-order.buyer_id !== userData.user.id &&
-order.seller_id !== userData.user.id
-){
-
-alert(
-"คุณไม่มีสิทธิ์แก้ไขออเดอร์นี้"
-);
-
-return;
-
-}
-
-
-/*
-ตรวจสอบสิทธิ์การเปลี่ยนสถานะ
-*/
-
-if(
-userData.user.id === order.seller_id
-){
-
-const sellerAllowed =
-(
-order.status === "pending" &&
-(
-newStatus === "confirmed" ||
-newStatus === "cancelled"
-)
-)
-||
-(
-order.status === "confirmed" &&
-(
-newStatus === "shipping" ||
-newStatus === "cancelled"
-)
-)
-||
-(
-order.status === "shipping" &&
-newStatus === "shipped"
-);
-
-if(!sellerAllowed){
-
-alert(
-"ไม่สามารถเปลี่ยนสถานะนี้ได้"
-);
-
-return;
-
-}
-
-}else{
-
-const buyerAllowed =
-(
-order.status === "pending" &&
-newStatus === "cancelled"
-)
-||
-(
-order.status === "shipped" &&
-newStatus === "completed"
-);
-
-if(!buyerAllowed){
-
-alert(
-"ไม่สามารถเปลี่ยนสถานะนี้ได้"
-);
-
-return;
-
-}
-
-}
-
-
-/*
-เปลี่ยนสถานะ
-*/
-
-const {error} =
-await supabaseClient
-.from("orders")
-.update({
-status:newStatus,
-updated_at:new Date().toISOString()
-})
-.eq("id",orderId);
-
-if(error){
-
-alert(
-"เปลี่ยนสถานะไม่สำเร็จ\n\n" +
-error.message
-);
-
-return;
-
-}
-
-
-/*
-เปลี่ยนสถานะสินค้า
-*/
-
-if(newStatus === "completed"){
-
-await supabaseClient
-.from("products")
-.update({
-status:"sold"
-})
-.eq(
-"id",
-order.product_id
-);
-
-}
-
-if(newStatus === "cancelled"){
-
-await supabaseClient
-.from("products")
-.update({
-status:"active"
-})
-.eq(
-"id",
-order.product_id
-);
-
-}
-
-if(newStatus === "confirmed"){
-
-await supabaseClient
-.from("products")
-.update({
-status:"reserved"
-})
-.eq(
-"id",
-order.product_id
-);
-
-}
-
-await loadOrders();
-
-await updateOrderBadge();
-
-loadProducts();
-
-alert(
-"อัปเดตสถานะเรียบร้อยแล้ว"
-);
-
-}
-
-
-/* =====================================================
-ORDER BADGE
-===================================================== */
-
-async function updateOrderBadge(){
-
-if(!currentUserId){
-
-orderBadge.style.display =
-"none";
-
-return;
-
-}
-
-const {data,error} =
-await supabaseClient
-.from("orders")
-.select("id,status")
-.eq(
-"seller_id",
-currentUserId
-)
-.eq(
-"status",
-"pending"
-);
-
-if(error){
-
-console.error(error);
-
-return;
-
-}
-
-const count =
-data
-?
-data.length
-:
-0;
-
-if(count > 0){
-
-orderBadge.innerText =
-count > 99
-?
-"99+"
-:
-count;
-
-orderBadge.style.display =
-"flex";
-
-}else{
-
-orderBadge.style.display =
-"none";
-
-}
-
-}
-
-
-/* =====================================================
-ORDER STATUS TEXT
-===================================================== */
-
-function getOrderStatusText(
-status
-){
-
-const map = {
-
-pending:
-"⏳ รอผู้ขายยืนยัน",
-
-confirmed:
-"✅ ยืนยันแล้ว",
-
-shipping:
-"📦 กำลังจัดส่ง",
-
-shipped:
-"🚚 จัดส่งแล้ว",
-
-completed:
-"🎉 ซื้อขายสำเร็จ",
-
-cancelled:
-"❌ ยกเลิก"
-
-};
-
-return map[status] ||
-status;
-
-}
-
-
-/* =====================================================
-POLLING
-===================================================== */
 
 async function checkForNewMessages(){
 
-if(!currentUserId){
+  if(!currentUser) return;
 
-return;
-
-}
-
-const {data,error} =
-await supabaseClient
-.from("messages")
-.select(
-"id,sender_id,receiver_id,product_id,message,created_at"
-)
-.eq(
-"receiver_id",
-currentUserId
-)
-.order(
-"created_at",
-{ascending:false}
-)
-.limit(100);
-
-if(error || !data){
-
-return;
-
-}
-
-if(!firstMessageCheckDone){
-
-data.forEach(
-msg =>
-knownIncomingMessageIds.add(
-msg.id
-)
-);
-
-firstMessageCheckDone =
-true;
-
-return;
-
-}
-
-const newMessages =
-data.filter(
-msg =>
-!knownIncomingMessageIds.has(
-msg.id
-)
-);
-
-data.forEach(
-msg =>
-knownIncomingMessageIds.add(
-msg.id
-)
-);
-
-if(!newMessages.length){
-
-return;
-
-}
-
-await updateMessageBadge();
-
-for(
-const msg of newMessages
-){
-
-let senderName =
-"ผู้ใช้ PC2Deal";
-
-const {data:profile} =
-await supabaseClient
-.from("profiles")
-.select("display_name")
-.eq("id",msg.sender_id)
-.maybeSingle();
-
-if(
-profile &&
-profile.display_name
-){
-
-senderName =
-profile.display_name;
-
-}
-
-showNewMessageNotification(
-senderName,
-msg.message
-);
-
-}
-
-if(
-inboxModal.style.display === "flex"
-){
-
-await loadInbox();
-
-}
+  await updateMessageBadge();
 
 }
 
 
-/* =====================================================
-FORMAT TIME
-===================================================== */
+/* =========================
+   ORDER REALTIME
+========================= */
 
-function formatMessageTime(
-dateString
-){
+function initializeOrderRealtime(){
 
-const date =
-new Date(dateString);
+  if(!currentUser) return;
 
-const now =
-new Date();
+  if(orderRealtimeChannel){
 
-const diff =
-now - date;
+    supabaseClient
+      .removeChannel(orderRealtimeChannel);
 
-if(diff < 60000){
+  }
 
-return "เมื่อสักครู่";
+  orderRealtimeChannel =
+    supabaseClient
+      .channel("orders-" + currentUser.id)
 
-}
+      .on(
+        "postgres_changes",
+        {
+          event:"INSERT",
+          schema:"public",
+          table:"orders",
+          filter:`seller_id=eq.${currentUser.id}`
+        },
+        payload=>{
 
-if(diff < 3600000){
+          const order =
+            payload.new;
 
-return Math.floor(
-diff / 60000
-) +
-" นาทีที่แล้ว";
+          if(order.status === "pending"){
 
-}
+            notifyUser(
+              "📦 มีออเดอร์ใหม่",
+              order.product_title
+            );
 
-if(
-date.toDateString() ===
-now.toDateString()
-){
+            updateOrderBadge();
 
-return date.toLocaleTimeString(
-"th-TH",
-{
-hour:"2-digit",
-minute:"2-digit"
-}
-);
+          }
 
-}
+        }
+      )
 
-return date.toLocaleDateString(
-"th-TH",
-{
-day:"numeric",
-month:"short"
-}
-);
+      .on(
+        "postgres_changes",
+        {
+          event:"UPDATE",
+          schema:"public",
+          table:"orders"
+        },
+        payload=>{
 
-}
+          const oldOrder =
+            payload.old;
 
+          const order =
+            payload.new;
 
-/* =====================================================
-ESC
-===================================================== */
+          const isBuyer =
+            order.buyer_id === currentUser.id;
 
-document.addEventListener(
-"keydown",
-function(event){
+          const isSeller =
+            order.seller_id === currentUser.id;
 
-if(event.key !== "Escape"){
+          if(!isBuyer && !isSeller){
 
-return;
+            return;
 
-}
+          }
 
-if(
-chatModal.style.display === "flex"
-){
+          if(
+            oldOrder.status ===
+            order.status
+          ){
 
-chatModal.style.display =
-"none";
+            return;
 
-document.body.classList.remove(
-"no-scroll"
-);
+          }
 
-return;
+          const isSellerSide =
+            isSeller;
 
-}
+          let text = "";
 
-if(
-inboxModal.style.display === "flex"
-){
+          if(order.status === "confirmed"){
 
-inboxModal.style.display =
-"none";
+            text =
+              isSellerSide
+              ? "คุณยืนยันออเดอร์แล้ว"
+              : "ผู้ขายยืนยันออเดอร์แล้ว";
 
-document.body.classList.remove(
-"no-scroll"
-);
+          }else if(order.status === "shipping"){
 
-return;
+            text =
+              isSellerSide
+              ? "กำลังเตรียมจัดส่งสินค้า"
+              : "ผู้ขายกำลังจัดส่งสินค้า";
 
-}
+          }else if(order.status === "shipped"){
 
-if(
-orderModal.style.display === "flex"
-){
+            text =
+              isSellerSide
+              ? "แจ้งจัดส่งสินค้าแล้ว"
+              : "ผู้ขายจัดส่งสินค้าแล้ว";
 
-orderModal.style.display =
-"none";
+          }else if(order.status === "completed"){
 
-document.body.classList.remove(
-"no-scroll"
-);
+            text =
+              isSellerSide
+              ? "ออเดอร์ซื้อขายสำเร็จแล้ว"
+              : "ซื้อขายสำเร็จแล้ว ⭐";
 
-return;
+          }else if(order.status === "cancelled"){
 
-}
+            text = "ออเดอร์ถูกยกเลิก";
 
-if(
-createOrderModal.style.display === "flex"
-){
+          }
 
-createOrderModal.style.display =
-"none";
+          if(text){
 
-return;
+            notifyUser(
+              "📦 อัปเดตออเดอร์",
+              text + "\n" +
+              order.product_title
+            );
 
-}
+          }
 
-if(
-document.getElementById(
-"detailModal"
-).style.display === "flex"
-){
+          updateOrderBadge();
 
-closeProductDetail();
+          if(
+            document
+              .getElementById("ordersModal")
+              .classList.contains("active")
+          ){
 
-}
+            loadOrders();
 
-}
-);
+          }
 
+        }
+      )
 
-/* =====================================================
-AUTO REFRESH
-===================================================== */
-
-setInterval(
-async function(){
-
-if(
-chatModal.style.display === "flex"
-){
-
-await loadMessages();
+      .subscribe();
 
 }
 
-if(currentUserId){
 
-await checkForNewMessages();
+/* =========================
+   ORDER BADGE
+========================= */
 
-await updateMessageBadge();
+async function updateOrderBadge(){
 
-await updateOrderBadge();
+  if(!currentUser){
 
-}
+    return;
 
-if(
-inboxModal.style.display === "flex"
-){
+  }
 
-await loadInbox();
+  /*
+    ฝั่งผู้ขาย:
+    นับออเดอร์ที่รอยืนยัน
 
-}
+    ฝั่งผู้ซื้อ:
+    นับออเดอร์ที่ยังต้องดำเนินการ
+  */
 
-if(
-orderModal.style.display === "flex"
-){
+  const {
+    data:sellerOrders
+  } = await supabaseClient
+    .from("orders")
+    .select("id,status")
+    .eq("seller_id",currentUser.id)
+    .eq("status","pending");
 
-await loadOrders();
+  const {
+    data:buyerOrders
+  } = await supabaseClient
+    .from("orders")
+    .select("id,status")
+    .eq("buyer_id",currentUser.id)
+    .in(
+      "status",
+      ["confirmed","shipped"]
+    );
 
-}
+  const count =
+    (sellerOrders?.length || 0) +
+    (buyerOrders?.length || 0);
 
-},
-3000
-);
+  const badge =
+    document.getElementById("orderBadge");
 
+  if(count > 0){
 
-/* =====================================================
-SEARCH
-===================================================== */
+    badge.textContent =
+      count > 99 ? "99+" : count;
 
-const searchInput =
-document.getElementById(
-"searchInput"
-);
+    badge.style.display =
+      "inline-flex";
 
-const searchButton =
-document.getElementById(
-"searchButton"
-);
+  }else{
 
-searchButton.onclick =
-function(){
+    badge.style.display =
+      "none";
 
-loadProducts(
-searchInput.value.trim()
-);
-
-};
-
-searchInput.addEventListener(
-"keydown",
-function(event){
-
-if(event.key === "Enter"){
-
-loadProducts(
-searchInput.value.trim()
-);
-
-}
-
-}
-);
-
-
-/* =====================================================
-SECURITY
-===================================================== */
-
-function escapeHTML(text){
-
-const div =
-document.createElement("div");
-
-div.textContent =
-text || "";
-
-return div.innerHTML;
+  }
 
 }
 
 
-/* =====================================================
-START
-===================================================== */
+/* =========================
+   NOTIFICATIONS
+========================= */
 
-checkUser();
+function notifyUser(title,message){
 
-loadProducts();
+  showToast(
+    title + "\n" + message
+  );
+
+  if(
+    "Notification" in window
+  ){
+
+    if(
+      Notification.permission === "granted"
+    ){
+
+      try{
+
+        new Notification(
+          title,
+          {
+            body:message,
+            icon:"https://placehold.co/128x128?text=PC2"
+          }
+        );
+
+      }catch(e){}
+
+    }else if(
+      Notification.permission === "default"
+    ){
+
+      Notification
+        .requestPermission()
+        .catch(()=>{});
+
+    }
+
+  }
+
+  /*
+    alert เป็น fallback สำรอง
+    แต่ไม่ยิง alert ทุกครั้งเพื่อไม่รบกวนเกินไป
+  */
+}
+
+
+/* =========================
+   POLLING
+========================= */
+
+function startPolling(){
+
+  if(pollingTimer){
+
+    clearInterval(pollingTimer);
+
+  }
+
+  pollingTimer =
+    setInterval(async()=>{
+
+      if(!currentUser) return;
+
+      await checkForNewMessages();
+
+      await updateOrderBadge();
+
+      if(
+        document
+          .getElementById("ordersModal")
+          .classList.contains("active")
+      ){
+
+        await loadOrders();
+
+      }
+
+      if(
+        document
+          .getElementById("chatModal")
+          .classList.contains("active")
+      ){
+
+        await loadChatMessages();
+
+      }
+
+    },3000);
+
+}
+
+
+/* =========================
+   EVENTS
+========================= */
+
+document
+  .getElementById("authButton")
+  .addEventListener("click",async()=>{
+
+    if(currentUser){
+
+      await logout();
+
+    }else{
+
+      openModal("authModal");
+
+    }
+
+  });
+
+document
+  .getElementById("orderButton")
+  .addEventListener("click",openOrders);
+
+document
+  .getElementById("messageButton")
+  .addEventListener("click",openInbox);
+
+document
+  .getElementById("sellButton")
+  .addEventListener("click",()=>{
+
+    if(!currentUser){
+
+      openModal("authModal");
+      return;
+
+    }
+
+    openModal("sellModal");
+
+  });
+
+document
+  .getElementById("searchButton")
+  .addEventListener("click",loadProducts);
+
+document
+  .getElementById("searchInput")
+  .addEventListener("keydown",event=>{
+
+    if(event.key === "Enter"){
+
+      loadProducts();
+
+    }
+
+  });
+
+document
+  .getElementById("refreshButton")
+  .addEventListener("click",loadProducts);
+
+document
+  .getElementById("authForm")
+  .addEventListener("submit",async event=>{
+
+    event.preventDefault();
+
+    if(authMode === "login"){
+
+      await login();
+
+    }else{
+
+      await register();
+
+    }
+
+  });
+
+document
+  .getElementById("toggleAuthMode")
+  .addEventListener("click",()=>{
+
+    if(authMode === "login"){
+
+      authMode = "register";
+
+      document
+        .getElementById("authTitle")
+        .textContent =
+        "สมัครสมาชิก";
+
+      document
+        .getElementById("authSubmitText")
+        .textContent =
+        "สมัครสมาชิก";
+
+      document
+        .getElementById("toggleAuthMode")
+        .textContent =
+        "มีบัญชีแล้ว? เข้าสู่ระบบ";
+
+    }else{
+
+      authMode = "login";
+
+      document
+        .getElementById("authTitle")
+        .textContent =
+        "เข้าสู่ระบบ";
+
+      document
+        .getElementById("authSubmitText")
+        .textContent =
+        "เข้าสู่ระบบ";
+
+      document
+        .getElementById("toggleAuthMode")
+        .textContent =
+        "ยังไม่มีบัญชี? สมัครสมาชิก";
+
+    }
+
+  });
+
+document
+  .getElementById("forgotPassword")
+  .addEventListener("click",resetPassword);
+
+document
+  .getElementById("sellForm")
+  .addEventListener("submit",sellProduct);
+
+document
+  .getElementById("createOrderForm")
+  .addEventListener("submit",createOrder);
+
+document
+  .getElementById("buyerTab")
+  .addEventListener("click",async()=>{
+
+    orderMode = "buyer";
+
+    document
+      .getElementById("buyerTab")
+      .classList.add("active");
+
+    document
+      .getElementById("sellerTab")
+      .classList.remove("active");
+
+    await loadOrders();
+
+  });
+
+document
+  .getElementById("sellerTab")
+  .addEventListener("click",async()=>{
+
+    orderMode = "seller";
+
+    document
+      .getElementById("sellerTab")
+      .classList.add("active");
+
+    document
+      .getElementById("buyerTab")
+      .classList.remove("active");
+
+    await loadOrders();
+
+  });
+
+document
+  .querySelectorAll(".star-btn")
+  .forEach(btn=>{
+
+    btn.addEventListener("click",()=>{
+
+      selectRating(
+        btn.dataset.star
+      );
+
+    });
+
+  });
+
+document
+  .getElementById("submitReviewButton")
+  .addEventListener(
+    "click",
+    submitReview
+  );
+
+document
+  .getElementById("sendMessageButton")
+  .addEventListener(
+    "click",
+    sendMessage
+  );
+
+document
+  .getElementById("chatInput")
+  .addEventListener("keydown",event=>{
+
+    if(
+      event.key === "Enter" &&
+      !event.shiftKey
+    ){
+
+      event.preventDefault();
+
+      sendMessage();
+
+    }
+
+  });
+
+
+/* =========================
+   MODAL CLICK OUTSIDE
+========================= */
+
+document
+  .querySelectorAll(".modal")
+  .forEach(modal=>{
+
+    modal.addEventListener("click",event=>{
+
+      if(event.target === modal){
+
+        modal.classList.remove("active");
+
+      }
+
+    });
+
+  });
+
+
+/* =========================
+   ESC
+========================= */
+
+document.addEventListener("keydown",event=>{
+
+  if(event.key === "Escape"){
+
+    document
+      .querySelectorAll(".modal.active")
+      .forEach(modal=>{
+        modal.classList.remove("active");
+      });
+
+  }
+
+});
+
+
+/* =========================
+   AUTH STATE
+========================= */
+
+supabaseClient
+  .auth
+  .onAuthStateChange(
+    async(event,session)=>{
+
+      currentUser =
+        session?.user || null;
+
+      currentUserId =
+        session?.user?.id || null;
+
+      updateAuthUI();
+
+      if(currentUser){
+
+        /*
+          หน่วงเล็กน้อยเพื่อไม่ให้ auth event
+          ชนกับ session initialization
+        */
+
+        setTimeout(async()=>{
+
+          await ensureProfile();
+
+          initializeMessaging();
+          initializeOrderRealtime();
+
+          await updateMessageBadge();
+          await updateOrderBadge();
+
+        },100);
+
+      }else{
+
+        stopRealtime();
+
+      }
+
+    }
+  );
+
+
+/* =========================
+   START
+========================= */
+
+(async function(){
+
+  await checkUser();
+
+  await loadProducts();
+
+  startPolling();
+
+})();
 
 </script>
 

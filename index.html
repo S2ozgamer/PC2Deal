@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -396,7 +395,18 @@ margin-bottom:8px
 
 .detail-location{
 color:#6b7280;
-margin-bottom:20px
+margin-bottom:10px
+}
+
+/* SELLER */
+
+.detail-seller{
+color:#374151;
+font-size:15px;
+margin-bottom:20px;
+padding:10px 12px;
+background:#f3f4f6;
+border-radius:8px
 }
 
 .detail-label{
@@ -415,10 +425,36 @@ min-height:80px;
 word-break:break-word
 }
 
-.detail-close{
+/* CONTACT SELLER */
+
+.detail-contact{
+width:100%;
 margin-top:20px;
+padding:13px;
+border:0;
+border-radius:8px;
+background:#2563eb;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer
+}
+
+.detail-contact:hover{
+background:#1d4ed8
+}
+
+.detail-close{
+width:100%;
+margin-top:10px;
+padding:13px;
+border:0;
+border-radius:8px;
 background:#e5e7eb!important;
-color:#222!important
+color:#222!important;
+font-size:16px;
+font-weight:bold;
+cursor:pointer
 }
 
 /* =========================
@@ -724,12 +760,20 @@ PRODUCT DETAIL MODAL
 <div id="detailLocation" class="detail-location">
 </div>
 
+<div id="detailSeller" class="detail-seller">
+👤 กำลังโหลดข้อมูลผู้ขาย...
+</div>
+
 <div class="detail-label">
 รายละเอียดสินค้า
 </div>
 
 <div id="detailDescription" class="detail-description">
 </div>
+
+<button id="contactSellerButton" class="detail-contact">
+💬 ติดต่อผู้ขาย
+</button>
 
 <button class="detail-close" id="closeDetailButton">
 ปิด
@@ -1614,9 +1658,7 @@ product.description
 productsBox.appendChild(card);
 
 
-/* =========================
-DETAIL BUTTON
-========================= */
+/* DETAIL BUTTON */
 
 const detailButton =
 card.querySelector(".detail-button");
@@ -1644,7 +1686,7 @@ openProductDetail(product);
 OPEN PRODUCT DETAIL
 ========================= */
 
-function openProductDetail(product){
+async function openProductDetail(product){
 
 const detailModal =
 document.getElementById(
@@ -1671,10 +1713,26 @@ document.getElementById(
 "detailLocation"
 );
 
+const detailSeller =
+document.getElementById(
+"detailSeller"
+);
+
+const contactSellerButton =
+document.getElementById(
+"contactSellerButton"
+);
+
 const detailDescription =
 document.getElementById(
 "detailDescription"
 );
+
+
+/* SAVE CURRENT PRODUCT */
+
+currentProduct =
+product;
 
 
 /* IMAGE */
@@ -1692,10 +1750,8 @@ img.src =
 product.image_url;
 
 img.alt =
-escapeHTML(
 product.title ||
-"สินค้า"
-);
+"สินค้า";
 
 detailImage.appendChild(img);
 
@@ -1734,6 +1790,12 @@ product.location ||
 );
 
 
+/* SELLER LOADING */
+
+detailSeller.innerText =
+"👤 กำลังโหลดข้อมูลผู้ขาย...";
+
+
 /* DESCRIPTION */
 
 detailDescription.innerText =
@@ -1741,7 +1803,7 @@ product.description ||
 "ผู้ขายไม่ได้ระบุรายละเอียดสินค้า";
 
 
-/* SHOW MODAL */
+/* SHOW MODAL FIRST */
 
 detailModal.style.display =
 "flex";
@@ -1749,7 +1811,106 @@ detailModal.style.display =
 document.body.style.overflow =
 "hidden";
 
+
+/* LOAD SELLER */
+
+if(product.user_id){
+
+const {data:seller,error:sellerError} =
+await supabaseClient
+.from("profiles")
+.select("display_name")
+.eq("id",product.user_id)
+.maybeSingle();
+
+
+if(sellerError){
+
+console.error(
+"โหลดข้อมูลผู้ขายไม่สำเร็จ:",
+sellerError
+);
+
+detailSeller.innerText =
+"👤 ผู้ขาย: ผู้ขาย PC2Deal";
+
+}else{
+
+detailSeller.innerText =
+"👤 ผู้ขาย: " +
+(
+seller?.display_name ||
+"ผู้ขาย PC2Deal"
+);
+
 }
+
+}else{
+
+detailSeller.innerText =
+"👤 ผู้ขาย: ผู้ขาย PC2Deal";
+
+}
+
+
+/* CONTACT BUTTON */
+
+contactSellerButton.onclick =
+async function(){
+
+const {data} =
+await supabaseClient.auth.getUser();
+
+
+if(!data.user){
+
+closeProductDetail();
+
+loginModal.style.display =
+"flex";
+
+message.innerText =
+"กรุณาเข้าสู่ระบบก่อนติดต่อผู้ขาย";
+
+return;
+
+}
+
+
+/* PREVENT CONTACTING YOURSELF */
+
+if(
+currentProduct &&
+data.user.id ===
+currentProduct.user_id
+){
+
+alert(
+"นี่คือสินค้าของคุณเอง"
+);
+
+return;
+
+}
+
+
+/* TEMPORARY */
+
+alert(
+"💬 ระบบแชทกำลังเตรียมเปิดใช้งาน\n\nขั้นต่อไปเราจะทำระบบแชทระหว่างผู้ซื้อกับผู้ขาย"
+);
+
+};
+
+}
+
+
+/* =========================
+CURRENT PRODUCT
+========================= */
+
+let currentProduct =
+null;
 
 
 /* =========================
@@ -1911,4 +2072,3 @@ loadProducts();
 
 </body>
 </html>
-```

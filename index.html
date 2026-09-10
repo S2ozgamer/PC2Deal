@@ -10,42 +10,283 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f5f6f8;color:#222}
-header{background:#111827;color:white;padding:18px}
-.header{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:25px;font-weight:bold}
-.login{background:white;color:#111827;border:0;padding:9px 14px;border-radius:8px;cursor:pointer}
-.hero{background:#1f2937;color:white;text-align:center;padding:45px 20px}
-.hero h1{font-size:32px;margin-bottom:10px}
-.hero p{color:#d1d5db;margin-bottom:22px}
-.search{max-width:600px;margin:auto;display:flex;gap:8px}
-.search input{flex:1;padding:14px;border-radius:8px;border:0;font-size:16px}
-.search button{padding:14px 20px;border:0;border-radius:8px;cursor:pointer;font-weight:bold}
-.container{max-width:1100px;margin:30px auto;padding:0 18px}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.sell{background:#2563eb;color:white;border:0;padding:11px 16px;border-radius:8px;cursor:pointer;font-weight:bold}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.card{background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.image{height:150px;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:50px}
-.info{padding:15px}
-.info h3{margin-bottom:8px}
-.price{color:#2563eb;font-size:20px;font-weight:bold}
-.location{color:#6b7280;font-size:14px;margin-top:6px}
-footer{margin-top:50px;padding:25px;background:#111827;color:#9ca3af;text-align:center}
 
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);justify-content:center;align-items:center;padding:20px;z-index:999}
-.modal-box{background:white;width:100%;max-width:400px;padding:25px;border-radius:14px}
-.modal-box h2{margin-bottom:18px}
-.modal-box input{width:100%;padding:12px;margin-bottom:12px;border:1px solid #ddd;border-radius:8px;font-size:16px}
-.modal-box button{width:100%;padding:12px;border:0;border-radius:8px;background:#2563eb;color:white;font-weight:bold;cursor:pointer;margin-top:5px}
-.close{background:#e5e7eb!important;color:#222!important}
-.switch{text-align:center;margin-top:15px;color:#2563eb;cursor:pointer}
-#message{margin-top:12px;text-align:center;font-size:14px}
+body{
+font-family:Arial,sans-serif;
+background:#f5f6f8;
+color:#222
+}
+
+header{
+background:#111827;
+color:white;
+padding:18px
+}
+
+.header{
+max-width:1100px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center
+}
+
+.logo{
+font-size:25px;
+font-weight:bold
+}
+
+.login{
+background:white;
+color:#111827;
+border:0;
+padding:9px 14px;
+border-radius:8px;
+cursor:pointer
+}
+
+.hero{
+background:#1f2937;
+color:white;
+text-align:center;
+padding:45px 20px
+}
+
+.hero h1{
+font-size:32px;
+margin-bottom:10px
+}
+
+.hero p{
+color:#d1d5db;
+margin-bottom:22px
+}
+
+.search{
+max-width:600px;
+margin:auto;
+display:flex;
+gap:8px
+}
+
+.search input{
+flex:1;
+padding:14px;
+border-radius:8px;
+border:0;
+font-size:16px
+}
+
+.search button{
+padding:14px 20px;
+border:0;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold
+}
+
+.container{
+max-width:1100px;
+margin:30px auto;
+padding:0 18px
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px
+}
+
+.sell{
+background:#2563eb;
+color:white;
+border:0;
+padding:11px 16px;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px
+}
+
+.card{
+background:white;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 2px 8px rgba(0,0,0,.08)
+}
+
+.image{
+height:180px;
+background:#e5e7eb;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:50px;
+overflow:hidden
+}
+
+.image img{
+width:100%;
+height:100%;
+object-fit:cover
+}
+
+.info{
+padding:15px
+}
+
+.info h3{
+margin-bottom:8px
+}
+
+.price{
+color:#2563eb;
+font-size:20px;
+font-weight:bold
+}
+
+.location{
+color:#6b7280;
+font-size:14px;
+margin-top:6px
+}
+
+.description{
+color:#555;
+font-size:14px;
+margin-top:10px;
+line-height:1.5
+}
+
+.empty{
+text-align:center;
+padding:40px;
+color:#777;
+grid-column:1/-1
+}
+
+footer{
+margin-top:50px;
+padding:25px;
+background:#111827;
+color:#9ca3af;
+text-align:center
+}
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.6);
+justify-content:center;
+align-items:center;
+padding:20px;
+z-index:999
+}
+
+.modal-box{
+background:white;
+width:100%;
+max-width:420px;
+padding:25px;
+border-radius:14px;
+max-height:90vh;
+overflow-y:auto
+}
+
+.modal-box h2{
+margin-bottom:18px
+}
+
+.modal-box input,
+.modal-box textarea{
+width:100%;
+padding:12px;
+margin-bottom:12px;
+border:1px solid #ddd;
+border-radius:8px;
+font-size:16px
+}
+
+.modal-box textarea{
+height:110px;
+resize:vertical
+}
+
+.modal-box button{
+width:100%;
+padding:12px;
+border:0;
+border-radius:8px;
+background:#2563eb;
+color:white;
+font-weight:bold;
+cursor:pointer;
+margin-top:5px
+}
+
+.close{
+background:#e5e7eb!important;
+color:#222!important
+}
+
+.switch{
+text-align:center;
+margin-top:15px;
+color:#2563eb;
+cursor:pointer
+}
+
+#message,
+#sellMessage{
+margin-top:12px;
+text-align:center;
+font-size:14px
+}
+
+.sell-modal{
+display:none
+}
+
+.sell-label{
+font-size:14px;
+font-weight:bold;
+display:block;
+margin-bottom:6px
+}
 
 @media(max-width:600px){
-.hero h1{font-size:26px}
-.search{flex-direction:column}
-.search button{width:100%}
+
+.hero h1{
+font-size:26px
+}
+
+.search{
+flex-direction:column
+}
+
+.search button{
+width:100%
+}
+
+.top{
+gap:10px
+}
+
+.top h2{
+font-size:20px
+}
+
+.sell{
+white-space:nowrap
+}
+
 }
 </style>
 </head>
@@ -53,81 +294,106 @@ footer{margin-top:50px;padding:25px;background:#111827;color:#9ca3af;text-align:
 <body>
 
 <header>
+
 <div class="header">
-<div class="logo">PC2Deal</div>
-<button class="login" id="loginButton">เข้าสู่ระบบ</button>
+
+<div class="logo">
+PC2Deal
 </div>
+
+<button class="login" id="loginButton">
+เข้าสู่ระบบ
+</button>
+
+</div>
+
 </header>
 
+
 <section class="hero">
-<h1>ตลาดซื้อขายคอมมือสอง</h1>
-<p>ซื้อขาย PC และอุปกรณ์คอมพิวเตอร์ง่าย ๆ ในที่เดียว</p>
+
+<h1>
+ตลาดซื้อขายคอมมือสอง
+</h1>
+
+<p>
+ซื้อขาย PC และอุปกรณ์คอมพิวเตอร์ง่าย ๆ ในที่เดียว
+</p>
+
 <div class="search">
-<input type="text" placeholder="ค้นหา เช่น RTX 3060, i5, RAM...">
-<button>ค้นหา</button>
+
+<input
+type="text"
+id="searchInput"
+placeholder="ค้นหา เช่น RTX 3060, i5, RAM..."
+>
+
+<button id="searchButton">
+ค้นหา
+</button>
+
 </div>
+
 </section>
 
+
 <main class="container">
+
 <div class="top">
-<h2>สินค้าล่าสุด</h2>
-<button class="sell">+ ลงขายสินค้า</button>
+
+<h2>
+สินค้าล่าสุด
+</h2>
+
+<button class="sell" id="sellButton">
++ ลงขายสินค้า
+</button>
+
 </div>
 
-<div class="products">
 
-<div class="card">
-<div class="image">🖥️</div>
-<div class="info">
-<h3>Gaming PC i5 + RTX 3060</h3>
-<div class="price">15,900 บาท</div>
-<div class="location">📍 กรุงเทพฯ</div>
-</div>
-</div>
+<div class="products" id="products">
 
-<div class="card">
-<div class="image">🎮</div>
-<div class="info">
-<h3>RTX 3060 12GB</h3>
-<div class="price">7,500 บาท</div>
-<div class="location">📍 นครนายก</div>
-</div>
-</div>
-
-<div class="card">
-<div class="image">💾</div>
-<div class="info">
-<h3>RAM DDR4 16GB</h3>
-<div class="price">1,200 บาท</div>
-<div class="location">📍 ปทุมธานี</div>
-</div>
-</div>
-
-<div class="card">
-<div class="image">⚙️</div>
-<div class="info">
-<h3>Intel Core i5-12400F</h3>
-<div class="price">3,900 บาท</div>
-<div class="location">📍 ชลบุรี</div>
-</div>
+<div class="empty">
+กำลังโหลดสินค้า...
 </div>
 
 </div>
+
 </main>
+
 
 <footer>
 PC2Deal © 2026 — ตลาดซื้อขายคอมพิวเตอร์มือสอง
 </footer>
 
+
+
+<!-- LOGIN MODAL -->
+
 <div class="modal" id="loginModal">
+
 <div class="modal-box">
 
-<h2 id="modalTitle">เข้าสู่ระบบ</h2>
+<h2 id="modalTitle">
+เข้าสู่ระบบ
+</h2>
 
-<input type="email" id="email" placeholder="อีเมล">
-<input type="password" id="password" placeholder="รหัสผ่าน">
+<input
+type="email"
+id="email"
+placeholder="อีเมล"
+>
 
-<button id="submitButton">เข้าสู่ระบบ</button>
+<input
+type="password"
+id="password"
+placeholder="รหัสผ่าน"
+>
+
+<button id="submitButton">
+เข้าสู่ระบบ
+</button>
 
 <div class="switch" id="switchMode">
 ยังไม่มีบัญชี? สมัครสมาชิก
@@ -138,27 +404,111 @@ PC2Deal © 2026 — ตลาดซื้อขายคอมพิวเตอ
 </div>
 
 <div id="resetBox" style="display:none">
-<input type="password" id="newPassword" placeholder="รหัสผ่านใหม่">
-<button id="resetButton">เปลี่ยนรหัสผ่าน</button>
+
+<input
+type="password"
+id="newPassword"
+placeholder="รหัสผ่านใหม่"
+>
+
+<button id="resetButton">
+เปลี่ยนรหัสผ่าน
+</button>
+
 </div>
 
 <div id="message"></div>
 
-<button class="close" id="closeButton">ปิด</button>
+<button class="close" id="closeButton">
+ปิด
+</button>
 
 </div>
+
 </div>
+
+
+
+<!-- SELL MODAL -->
+
+<div class="modal" id="sellModal">
+
+<div class="modal-box">
+
+<h2>
+ลงขายสินค้า
+</h2>
+
+<label class="sell-label">
+ชื่อสินค้า
+</label>
+
+<input
+type="text"
+id="productTitle"
+placeholder="เช่น RTX 3060 12GB"
+>
+
+<label class="sell-label">
+ราคา
+</label>
+
+<input
+type="number"
+id="productPrice"
+placeholder="เช่น 7500"
+>
+
+<label class="sell-label">
+จังหวัด / สถานที่
+</label>
+
+<input
+type="text"
+id="productLocation"
+placeholder="เช่น ชลบุรี"
+>
+
+<label class="sell-label">
+รายละเอียดสินค้า
+</label>
+
+<textarea
+id="productDescription"
+placeholder="บอกรายละเอียดสินค้า เช่น สภาพ อายุการใช้งาน ประกัน..."
+></textarea>
+
+<label class="sell-label">
+ลิงก์รูปสินค้า
+</label>
+
+<input
+type="text"
+id="productImage"
+placeholder="ใส่ลิงก์รูปภาพ (ถ้ามี)"
+>
+
+<div id="sellMessage"></div>
+
+<button id="publishButton">
+ลงขายสินค้า
+</button>
+
+<button class="close" id="closeSellButton">
+ยกเลิก
+</button>
+
+</div>
+
+</div>
+
+
 
 <script>
 
 const SUPABASE_URL =
 "https://jnkeffwgnjjebujrcprb.supabase.co";
 
-/*
-  สำคัญ:
-  ตรงนี้ให้เอา Publishable Key จากโค้ดเดิมของคุณ
-  มาใส่แทนข้อความด้านล่าง
-*/
 const SUPABASE_KEY =
 "sb_publishable_q0UFEgWWvBZLXPlEwLX01w_HhK47RtP";
 
@@ -167,6 +517,12 @@ window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
+
+
+
+/* =========================
+   LOGIN SYSTEM
+========================= */
 
 const loginButton =
 document.getElementById("loginButton");
@@ -209,6 +565,7 @@ document.getElementById("resetButton");
 
 let registerMode = false;
 
+
 loginButton.onclick = async function(){
 
 const {data} =
@@ -221,18 +578,22 @@ await supabaseClient.auth.signOut();
 loginButton.innerText="เข้าสู่ระบบ";
 
 return;
+
 }
 
 loginModal.style.display="flex";
 
 };
 
+
 closeButton.onclick=function(){
 
 loginModal.style.display="none";
+
 message.innerText="";
 
 };
+
 
 switchMode.onclick=function(){
 
@@ -241,43 +602,59 @@ registerMode=!registerMode;
 if(registerMode){
 
 modalTitle.innerText="สมัครสมาชิก";
+
 submitButton.innerText="สมัครสมาชิก";
-switchMode.innerText="มีบัญชีแล้ว? เข้าสู่ระบบ";
+
+switchMode.innerText=
+"มีบัญชีแล้ว? เข้าสู่ระบบ";
 
 }else{
 
 modalTitle.innerText="เข้าสู่ระบบ";
+
 submitButton.innerText="เข้าสู่ระบบ";
-switchMode.innerText="ยังไม่มีบัญชี? สมัครสมาชิก";
+
+switchMode.innerText=
+"ยังไม่มีบัญชี? สมัครสมาชิก";
 
 }
 
 };
 
+
 submitButton.onclick=async function(){
 
-const email=emailInput.value.trim();
-const password=passwordInput.value;
+const email=
+emailInput.value.trim();
+
+const password=
+passwordInput.value;
 
 if(!email||!password){
 
-message.innerText="กรุณากรอกอีเมลและรหัสผ่าน";
+message.innerText=
+"กรุณากรอกอีเมลและรหัสผ่าน";
+
 return;
 
 }
 
-message.innerText="กำลังดำเนินการ...";
+message.innerText=
+"กำลังดำเนินการ...";
+
 
 if(registerMode){
 
-const {error}=await supabaseClient.auth.signUp({
+const {error}=
+await supabaseClient.auth.signUp({
 email:email,
 password:password
 });
 
 if(error){
 
-message.innerText=error.message;
+message.innerText=
+error.message;
 
 }else{
 
@@ -288,24 +665,30 @@ message.innerText=
 
 }else{
 
-const {error}=await supabaseClient.auth.signInWithPassword({
+const {error}=
+await supabaseClient.auth.signInWithPassword({
 email:email,
 password:password
 });
 
 if(error){
 
-message.innerText=error.message;
+message.innerText=
+error.message;
 
 }else{
 
-message.innerText="เข้าสู่ระบบสำเร็จ!";
+message.innerText=
+"เข้าสู่ระบบสำเร็จ!";
 
-loginButton.innerText="ออกจากระบบ";
+loginButton.innerText=
+"ออกจากระบบ";
 
 setTimeout(function(){
 
 loginModal.style.display="none";
+
+loadProducts();
 
 },1000);
 
@@ -315,13 +698,18 @@ loginModal.style.display="none";
 
 };
 
+
+
 forgotPassword.onclick=async function(){
 
-const email=emailInput.value.trim();
+const email=
+emailInput.value.trim();
 
 if(!email){
 
-message.innerText="กรุณากรอกอีเมลก่อน";
+message.innerText=
+"กรุณากรอกอีเมลก่อน";
+
 return;
 
 }
@@ -337,7 +725,8 @@ redirectTo:
 
 if(error){
 
-message.innerText=error.message;
+message.innerText=
+error.message;
 
 }else{
 
@@ -348,6 +737,8 @@ message.innerText=
 
 };
 
+
+
 supabaseClient.auth.onAuthStateChange(
 async function(event){
 
@@ -355,12 +746,17 @@ if(event==="PASSWORD_RECOVERY"){
 
 loginModal.style.display="flex";
 
-modalTitle.innerText="ตั้งรหัสผ่านใหม่";
+modalTitle.innerText=
+"ตั้งรหัสผ่านใหม่";
 
 emailInput.style.display="none";
+
 passwordInput.style.display="none";
+
 submitButton.style.display="none";
+
 switchMode.style.display="none";
+
 forgotPassword.style.display="none";
 
 resetBox.style.display="block";
@@ -369,9 +765,12 @@ resetBox.style.display="block";
 
 });
 
+
+
 resetButton.onclick=async function(){
 
-const password=newPassword.value;
+const password=
+newPassword.value;
 
 if(password.length<6){
 
@@ -389,7 +788,8 @@ password:password
 
 if(error){
 
-message.innerText=error.message;
+message.innerText=
+error.message;
 
 }else{
 
@@ -399,6 +799,7 @@ message.innerText=
 setTimeout(function(){
 
 loginModal.style.display="none";
+
 location.reload();
 
 },1500);
@@ -407,6 +808,8 @@ location.reload();
 
 };
 
+
+
 async function checkUser(){
 
 const {data} =
@@ -414,13 +817,373 @@ await supabaseClient.auth.getUser();
 
 if(data.user){
 
-loginButton.innerText="ออกจากระบบ";
+loginButton.innerText=
+"ออกจากระบบ";
 
 }
 
 }
+
+
+
+/* =========================
+   SELL PRODUCT
+========================= */
+
+const sellButton =
+document.getElementById("sellButton");
+
+const sellModal =
+document.getElementById("sellModal");
+
+const closeSellButton =
+document.getElementById("closeSellButton");
+
+const publishButton =
+document.getElementById("publishButton");
+
+const sellMessage =
+document.getElementById("sellMessage");
+
+
+sellButton.onclick=async function(){
+
+const {data} =
+await supabaseClient.auth.getUser();
+
+if(!data.user){
+
+loginModal.style.display="flex";
+
+message.innerText=
+"กรุณาเข้าสู่ระบบก่อนลงขายสินค้า";
+
+return;
+
+}
+
+sellModal.style.display="flex";
+
+};
+
+
+closeSellButton.onclick=function(){
+
+sellModal.style.display="none";
+
+sellMessage.innerText="";
+
+};
+
+
+
+publishButton.onclick=async function(){
+
+const {data} =
+await supabaseClient.auth.getUser();
+
+const user=data.user;
+
+if(!user){
+
+sellMessage.innerText=
+"กรุณาเข้าสู่ระบบก่อน";
+
+return;
+
+}
+
+
+const title =
+document.getElementById("productTitle")
+.value.trim();
+
+const price =
+document.getElementById("productPrice")
+.value;
+
+const location =
+document.getElementById("productLocation")
+.value.trim();
+
+const description =
+document.getElementById("productDescription")
+.value.trim();
+
+const image_url =
+document.getElementById("productImage")
+.value.trim();
+
+
+if(!title){
+
+sellMessage.innerText=
+"กรุณาใส่ชื่อสินค้า";
+
+return;
+
+}
+
+if(!price){
+
+sellMessage.innerText=
+"กรุณาใส่ราคา";
+
+return;
+
+}
+
+
+publishButton.disabled=true;
+
+publishButton.innerText=
+"กำลังลงขาย...";
+
+
+const {error} =
+await supabaseClient
+.from("products")
+.insert({
+
+user_id:user.id,
+
+title:title,
+
+price:Number(price),
+
+location:location,
+
+description:description,
+
+image_url:image_url
+
+});
+
+
+publishButton.disabled=false;
+
+publishButton.innerText=
+"ลงขายสินค้า";
+
+
+if(error){
+
+console.error(error);
+
+sellMessage.innerText=
+"เกิดข้อผิดพลาด: "+error.message;
+
+return;
+
+}
+
+
+sellMessage.innerText=
+"ลงขายสินค้าเรียบร้อยแล้ว!";
+
+
+document.getElementById("productTitle").value="";
+document.getElementById("productPrice").value="";
+document.getElementById("productLocation").value="";
+document.getElementById("productDescription").value="";
+document.getElementById("productImage").value="";
+
+
+setTimeout(function(){
+
+sellModal.style.display="none";
+
+sellMessage.innerText="";
+
+loadProducts();
+
+},1000);
+
+};
+
+
+
+/* =========================
+   LOAD PRODUCTS
+========================= */
+
+async function loadProducts(searchText=""){
+
+const productsBox =
+document.getElementById("products");
+
+productsBox.innerHTML=
+'<div class="empty">กำลังโหลดสินค้า...</div>';
+
+
+let query =
+supabaseClient
+.from("products")
+.select("*")
+.eq("status","active")
+.order("created_at",{ascending:false});
+
+
+if(searchText){
+
+query =
+query.or(
+"title.ilike.%"+searchText+"%,description.ilike.%"+searchText+"%"
+);
+
+}
+
+
+const {data,error} =
+await query;
+
+
+if(error){
+
+console.error(error);
+
+productsBox.innerHTML=
+'<div class="empty">ไม่สามารถโหลดสินค้าได้</div>';
+
+return;
+
+}
+
+
+if(!data || data.length===0){
+
+productsBox.innerHTML=
+'<div class="empty">ยังไม่มีสินค้าที่ลงขาย</div>';
+
+return;
+
+}
+
+
+productsBox.innerHTML="";
+
+
+data.forEach(function(product){
+
+const card =
+document.createElement("div");
+
+card.className="card";
+
+
+let imageHTML=
+'<div class="image">🖥️</div>';
+
+
+if(product.image_url){
+
+imageHTML=
+'<div class="image">'+
+'<img src="'+
+escapeHTML(product.image_url)+
+'" alt="สินค้า">'+
+'</div>';
+
+}
+
+
+card.innerHTML=
+
+imageHTML+
+
+'<div class="info">'+
+
+'<h3>'+
+escapeHTML(product.title)+
+'</h3>'+
+
+'<div class="price">'+
+Number(product.price).toLocaleString()+
+' บาท</div>'+
+
+'<div class="location">📍 '+
+escapeHTML(product.location || "ไม่ระบุ")+
+'</div>'+
+
+(product.description ?
+'<div class="description">'+
+escapeHTML(product.description)+
+'</div>'
+:
+"")+
+
+'</div>';
+
+
+productsBox.appendChild(card);
+
+});
+
+}
+
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHTML(text){
+
+const div =
+document.createElement("div");
+
+div.textContent=
+text || "";
+
+return div.innerHTML;
+
+}
+
+
+
+/* =========================
+   SEARCH
+========================= */
+
+const searchInput =
+document.getElementById("searchInput");
+
+const searchButton =
+document.getElementById("searchButton");
+
+
+searchButton.onclick=function(){
+
+loadProducts(
+searchInput.value.trim()
+);
+
+};
+
+
+searchInput.addEventListener(
+"keydown",
+function(event){
+
+if(event.key==="Enter"){
+
+loadProducts(
+searchInput.value.trim()
+);
+
+}
+
+});
+
+
+
+/* =========================
+   START
+========================= */
 
 checkUser();
+
+loadProducts();
 
 </script>
 

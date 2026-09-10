@@ -8,7 +8,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 *{
 box-sizing:border-box;
 margin:0;
@@ -19,6 +18,10 @@ body{
 font-family:Arial,sans-serif;
 background:#f5f6f8;
 color:#222
+}
+
+body.no-scroll{
+overflow:hidden
 }
 
 header{
@@ -56,7 +59,8 @@ border-radius:8px;
 cursor:pointer
 }
 
-.message-button{
+.message-button,
+.order-button{
 position:relative;
 background:#2563eb;
 color:white;
@@ -67,7 +71,12 @@ cursor:pointer;
 font-weight:bold
 }
 
-.message-badge{
+.order-button{
+background:#059669
+}
+
+.message-badge,
+.order-badge{
 position:absolute;
 top:-7px;
 right:-7px;
@@ -304,7 +313,8 @@ cursor:pointer
 }
 
 #message,
-#sellMessage{
+#sellMessage,
+#orderMessage{
 margin-top:12px;
 text-align:center;
 font-size:14px
@@ -435,10 +445,24 @@ min-height:80px;
 word-break:break-word
 }
 
-.detail-contact{
+.detail-buy{
 display:block!important;
 width:100%!important;
 margin-top:20px!important;
+padding:14px!important;
+border:0!important;
+border-radius:10px!important;
+background:#059669!important;
+color:white!important;
+font-size:16px!important;
+font-weight:bold!important;
+cursor:pointer!important
+}
+
+.detail-contact{
+display:block!important;
+width:100%!important;
+margin-top:10px!important;
 padding:14px!important;
 border:0!important;
 border-radius:10px!important;
@@ -446,12 +470,7 @@ background:#2563eb!important;
 color:white!important;
 font-size:16px!important;
 font-weight:bold!important;
-cursor:pointer!important;
-text-align:center!important
-}
-
-.detail-contact:hover{
-background:#1d4ed8!important
+cursor:pointer!important
 }
 
 .detail-close{
@@ -468,9 +487,7 @@ font-weight:bold;
 cursor:pointer
 }
 
-/* =========================
-CHAT
-========================= */
+/* CHAT */
 
 #chatModal{
 display:none;
@@ -626,11 +643,10 @@ padding:10px!important;
 flex-shrink:0
 }
 
-/* =========================
-INBOX
-========================= */
+/* INBOX */
 
-#inboxModal{
+#inboxModal,
+#orderModal{
 display:none;
 position:fixed;
 inset:0;
@@ -641,12 +657,13 @@ padding:15px;
 z-index:10500
 }
 
-.inbox-box{
+.inbox-box,
+.order-box{
 background:white;
 width:100%;
-max-width:650px;
+max-width:700px;
 height:80vh;
-max-height:700px;
+max-height:750px;
 border-radius:16px;
 overflow:hidden;
 display:flex;
@@ -790,6 +807,161 @@ display:none
 display:block
 }
 
+/* ORDERS */
+
+.order-list{
+flex:1;
+overflow-y:auto;
+background:#f3f4f6;
+padding:15px
+}
+
+.order-card{
+background:white;
+border-radius:12px;
+padding:16px;
+margin-bottom:12px;
+box-shadow:0 1px 4px rgba(0,0,0,.08)
+}
+
+.order-top{
+display:flex;
+justify-content:space-between;
+gap:10px;
+align-items:flex-start;
+margin-bottom:10px
+}
+
+.order-title{
+font-size:17px;
+font-weight:bold
+}
+
+.order-id{
+font-size:11px;
+color:#9ca3af;
+margin-top:4px
+}
+
+.order-price{
+font-size:20px;
+font-weight:bold;
+color:#2563eb;
+margin:8px 0
+}
+
+.order-person{
+font-size:13px;
+color:#555;
+line-height:1.6
+}
+
+.order-date{
+font-size:12px;
+color:#9ca3af;
+margin-top:8px
+}
+
+.order-status{
+display:inline-block;
+padding:6px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:bold;
+white-space:nowrap
+}
+
+.status-pending{
+background:#fef3c7;
+color:#92400e
+}
+
+.status-confirmed{
+background:#dbeafe;
+color:#1e40af
+}
+
+.status-shipping{
+background:#e0e7ff;
+color:#3730a3
+}
+
+.status-shipped{
+background:#cffafe;
+color:#155e75
+}
+
+.status-completed{
+background:#dcfce7;
+color:#166534
+}
+
+.status-cancelled{
+background:#fee2e2;
+color:#991b1b
+}
+
+.order-buttons{
+display:flex;
+gap:8px;
+margin-top:12px;
+flex-wrap:wrap
+}
+
+.order-buttons button{
+flex:1;
+min-width:120px;
+padding:10px;
+border:0;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+background:#2563eb;
+color:white
+}
+
+.order-buttons .green{
+background:#059669
+}
+
+.order-buttons .red{
+background:#dc2626
+}
+
+.order-buttons .gray{
+background:#6b7280
+}
+
+.order-tabs{
+display:flex;
+background:white;
+border-bottom:1px solid #e5e7eb
+}
+
+.order-tab{
+flex:1;
+padding:13px;
+border:0;
+background:white;
+cursor:pointer;
+font-weight:bold;
+color:#6b7280
+}
+
+.order-tab.active{
+color:#2563eb;
+border-bottom:3px solid #2563eb
+}
+
+.order-info-box{
+background:#f9fafb;
+padding:12px;
+border-radius:8px;
+margin-top:10px;
+font-size:13px;
+line-height:1.7
+}
+
 @media(max-width:600px){
 
 .hero h1{
@@ -824,12 +996,9 @@ height:230px
 font-size:21px
 }
 
-.chat-box{
-height:90vh;
-max-height:none
-}
-
-.inbox-box{
+.chat-box,
+.inbox-box,
+.order-box{
 height:90vh;
 max-height:none
 }
@@ -842,27 +1011,31 @@ max-width:85%
 gap:5px
 }
 
-.login{
-padding:8px 10px
-}
-
-.message-button{
-padding:8px 10px
+.login,
+.message-button,
+.order-button{
+padding:8px 9px
 }
 
 .logo{
 font-size:21px
 }
 
+.order-top{
+flex-direction:column
 }
 
+.order-buttons{
+flex-direction:column
+}
+
+}
 </style>
 </head>
 
 <body>
 
 <header>
-
 <div class="header">
 
 <div class="logo">
@@ -870,6 +1043,18 @@ PC2Deal
 </div>
 
 <div class="header-actions">
+
+<button
+class="order-button"
+id="orderButton"
+style="display:none"
+>
+📦 ออเดอร์
+<span
+id="orderBadge"
+class="order-badge"
+>0</span>
+</button>
 
 <button
 class="message-button"
@@ -880,9 +1065,7 @@ style="display:none"
 <span
 id="messageBadge"
 class="message-badge"
->
-0
-</span>
+>0</span>
 </button>
 
 <button
@@ -893,9 +1076,7 @@ id="loginButton"
 </button>
 
 </div>
-
 </div>
-
 </header>
 
 
@@ -947,11 +1128,9 @@ id="sellButton"
 class="products"
 id="products"
 >
-
 <div class="empty">
 กำลังโหลดสินค้า...
 </div>
-
 </div>
 
 </main>
@@ -1032,7 +1211,6 @@ id="closeButton"
 </button>
 
 </div>
-
 </div>
 
 
@@ -1124,7 +1302,6 @@ id="closeSellButton"
 </button>
 
 </div>
-
 </div>
 
 
@@ -1177,6 +1354,14 @@ class="detail-description"
 </div>
 
 <button
+id="buyProductButton"
+class="detail-buy"
+type="button"
+>
+🛒 ซื้อสินค้านี้
+</button>
+
+<button
 id="contactSellerButton"
 class="detail-contact"
 type="button"
@@ -1193,9 +1378,126 @@ type="button"
 </button>
 
 </div>
+</div>
+</div>
+
+
+<!-- CREATE ORDER -->
+
+<div
+class="modal"
+id="createOrderModal"
+>
+
+<div class="modal-box">
+
+<h2>
+🛒 สั่งซื้อสินค้า
+</h2>
+
+<div
+id="orderProductSummary"
+class="order-info-box"
+>
+กำลังโหลด...
+</div>
+
+<label class="sell-label">
+ชื่อผู้รับ
+</label>
+
+<input
+type="text"
+id="buyerName"
+placeholder="ชื่อ-นามสกุล"
+>
+
+<label class="sell-label">
+เบอร์โทรศัพท์
+</label>
+
+<input
+type="tel"
+id="buyerPhone"
+placeholder="08xxxxxxxx"
+>
+
+<label class="sell-label">
+ที่อยู่จัดส่ง
+</label>
+
+<textarea
+id="buyerAddress"
+placeholder="บ้านเลขที่ ถนน ตำบล อำเภอ จังหวัด รหัสไปรษณีย์"
+></textarea>
+
+<div id="orderMessage"></div>
+
+<button id="confirmOrderButton">
+ยืนยันสั่งซื้อ
+</button>
+
+<button
+class="close"
+id="closeCreateOrderButton"
+>
+ยกเลิก
+</button>
+
+</div>
+</div>
+
+
+<!-- ORDERS -->
+
+<div id="orderModal">
+
+<div class="order-box">
+
+<div class="inbox-header">
+
+<div class="inbox-title">
+📦 คำสั่งซื้อ
+</div>
+
+<button
+id="orderCloseButton"
+class="inbox-close"
+type="button"
+>
+×
+</button>
 
 </div>
 
+<div class="order-tabs">
+
+<button
+id="myOrdersTab"
+class="order-tab active"
+>
+🛒 ซื้อ
+</button>
+
+<button
+id="sellingOrdersTab"
+class="order-tab"
+>
+🏪 ขาย
+</button>
+
+</div>
+
+<div
+id="orderList"
+class="order-list"
+>
+<div class="inbox-loading">
+กำลังโหลดออเดอร์...
+</div>
+</div>
+
+</div>
 </div>
 
 
@@ -1225,15 +1527,12 @@ type="button"
 id="inboxList"
 class="inbox-list"
 >
-
 <div class="inbox-loading">
 กำลังโหลดข้อความ...
 </div>
-
 </div>
 
 </div>
-
 </div>
 
 
@@ -1309,9 +1608,7 @@ type="button"
 </button>
 
 </div>
-
 </div>
-
 </div>
 
 
@@ -1339,20 +1636,15 @@ GLOBAL
 ===================================================== */
 
 let currentProduct = null;
-
 let currentChatPartner = null;
-
 let currentChatProduct = null;
-
 let currentUserId = null;
-
 let realtimeChannel = null;
 
-let knownIncomingMessageIds =
-new Set();
+let knownIncomingMessageIds = new Set();
+let firstMessageCheckDone = false;
 
-let firstMessageCheckDone =
-false;
+let currentOrderTab = "buyer";
 
 
 /* =====================================================
@@ -1404,6 +1696,12 @@ document.getElementById("messageButton");
 const messageBadge =
 document.getElementById("messageBadge");
 
+const orderButton =
+document.getElementById("orderButton");
+
+const orderBadge =
+document.getElementById("orderBadge");
+
 const inboxModal =
 document.getElementById("inboxModal");
 
@@ -1437,26 +1735,55 @@ document.getElementById("chatSellerName");
 const chatStatus =
 document.getElementById("chatStatus");
 
+const orderModal =
+document.getElementById("orderModal");
+
+const orderList =
+document.getElementById("orderList");
+
+const myOrdersTab =
+document.getElementById("myOrdersTab");
+
+const sellingOrdersTab =
+document.getElementById("sellingOrdersTab");
+
+const createOrderModal =
+document.getElementById("createOrderModal");
+
+const orderProductSummary =
+document.getElementById("orderProductSummary");
+
+const buyerName =
+document.getElementById("buyerName");
+
+const buyerPhone =
+document.getElementById("buyerPhone");
+
+const buyerAddress =
+document.getElementById("buyerAddress");
+
+const orderMessage =
+document.getElementById("orderMessage");
+
+const confirmOrderButton =
+document.getElementById("confirmOrderButton");
+
 let registerMode = false;
 
 
 /* =====================================================
-LOGIN BUTTON
+LOGIN
 ===================================================== */
 
 loginButton.onclick =
 async function(){
 
 const {data} =
-await supabaseClient
-.auth
-.getUser();
+await supabaseClient.auth.getUser();
 
 if(data.user){
 
-await supabaseClient
-.auth
-.signOut();
+await supabaseClient.auth.signOut();
 
 currentUserId = null;
 
@@ -1468,7 +1795,13 @@ loginButton.innerText =
 messageButton.style.display =
 "none";
 
+orderButton.style.display =
+"none";
+
 messageBadge.style.display =
+"none";
+
+orderBadge.style.display =
 "none";
 
 knownIncomingMessageIds.clear();
@@ -1500,7 +1833,7 @@ message.innerText =
 
 
 /* =====================================================
-SWITCH LOGIN / REGISTER
+SWITCH LOGIN REGISTER
 ===================================================== */
 
 switchMode.onclick =
@@ -1565,9 +1898,7 @@ message.innerText =
 if(registerMode){
 
 const {data,error} =
-await supabaseClient
-.auth
-.signUp({
+await supabaseClient.auth.signUp({
 email:email,
 password:password
 });
@@ -1598,9 +1929,7 @@ message.innerText =
 }else{
 
 const {data,error} =
-await supabaseClient
-.auth
-.signInWithPassword({
+await supabaseClient.auth.signInWithPassword({
 email:email,
 password:password
 });
@@ -1624,6 +1953,9 @@ loginButton.innerText =
 messageButton.style.display =
 "block";
 
+orderButton.style.display =
+"block";
+
 setTimeout(
 async function(){
 
@@ -1632,10 +1964,12 @@ loginModal.style.display =
 
 await initializeMessaging();
 
+await updateOrderBadge();
+
 loadProducts();
 
 },
-800
+700
 );
 
 }
@@ -1691,7 +2025,7 @@ message.innerText =
 
 
 /* =====================================================
-PASSWORD RECOVERY
+AUTH STATE
 ===================================================== */
 
 supabaseClient.auth.onAuthStateChange(
@@ -1740,10 +2074,14 @@ loginButton.innerText =
 messageButton.style.display =
 "block";
 
+orderButton.style.display =
+"block";
+
 setTimeout(
 function(){
 
 initializeMessaging();
+updateOrderBadge();
 
 },
 300
@@ -1760,7 +2098,13 @@ stopRealtimeMessages();
 messageButton.style.display =
 "none";
 
+orderButton.style.display =
+"none";
+
 messageBadge.style.display =
+"none";
+
+orderBadge.style.display =
 "none";
 
 knownIncomingMessageIds.clear();
@@ -1791,9 +2135,7 @@ return;
 }
 
 const {error} =
-await supabaseClient
-.auth
-.updateUser({
+await supabaseClient.auth.updateUser({
 password:password
 });
 
@@ -1831,9 +2173,7 @@ CHECK USER
 async function checkUser(){
 
 const {data} =
-await supabaseClient
-.auth
-.getUser();
+await supabaseClient.auth.getUser();
 
 if(data.user){
 
@@ -1846,7 +2186,12 @@ loginButton.innerText =
 messageButton.style.display =
 "block";
 
+orderButton.style.display =
+"block";
+
 await initializeMessaging();
+
+await updateOrderBadge();
 
 }else{
 
@@ -1858,21 +2203,22 @@ loginButton.innerText =
 messageButton.style.display =
 "none";
 
+orderButton.style.display =
+"none";
+
 }
 
 }
 
 
 /* =====================================================
-MESSAGING INITIALIZE
+MESSAGING
 ===================================================== */
 
 async function initializeMessaging(){
 
 const {data} =
-await supabaseClient
-.auth
-.getUser();
+await supabaseClient.auth.getUser();
 
 if(!data.user){
 
@@ -1883,27 +2229,11 @@ return;
 currentUserId =
 data.user.id;
 
-
-/*
-โหลดข้อความเก่าก่อน
-เพื่อไม่ให้ข้อความเก่าถูกแจ้งเตือนว่าเป็นข้อความใหม่
-*/
-
 await loadKnownIncomingMessages();
 
 firstMessageCheckDone = true;
 
-
-/*
-เปิด Realtime
-*/
-
 startRealtimeMessages();
-
-
-/*
-อัปเดต badge
-*/
 
 await updateMessageBadge();
 
@@ -1911,7 +2241,7 @@ await updateMessageBadge();
 
 
 /* =====================================================
-LOAD KNOWN INCOMING
+KNOWN MESSAGES
 ===================================================== */
 
 async function loadKnownIncomingMessages(){
@@ -1926,17 +2256,11 @@ const {data,error} =
 await supabaseClient
 .from("messages")
 .select("id")
-.eq(
-"receiver_id",
-currentUserId
-);
+.eq("receiver_id",currentUserId);
 
 if(error){
 
-console.error(
-"โหลดข้อความเดิมไม่สำเร็จ:",
-error
-);
+console.error(error);
 
 return;
 
@@ -1945,31 +2269,18 @@ return;
 knownIncomingMessageIds =
 new Set(
 (data || []).map(
-function(item){
-return item.id;
-}
+item => item.id
 )
 );
 
-
-/*
-ถ้ามีข้อความเดิม
-แสดงจำนวนใน badge
-*/
-
-if(data){
-
-const count =
-data.length;
-
-if(count > 0){
+if(data && data.length > 0){
 
 messageBadge.innerText =
-count > 99
+data.length > 99
 ?
 "99+"
 :
-count;
+data.length;
 
 messageBadge.style.display =
 "flex";
@@ -1978,11 +2289,9 @@ messageBadge.style.display =
 
 }
 
-}
-
 
 /* =====================================================
-REALTIME
+REALTIME CHAT
 ===================================================== */
 
 function startRealtimeMessages(){
@@ -2015,18 +2324,8 @@ currentUserId
 },
 async function(payload){
 
-console.log(
-"ข้อความใหม่:",
-payload.new
-);
-
 const newMessage =
 payload.new;
-
-
-/*
-กันข้อความซ้ำ
-*/
 
 if(
 knownIncomingMessageIds.has(
@@ -2042,18 +2341,7 @@ knownIncomingMessageIds.add(
 newMessage.id
 );
 
-
-/*
-แสดง badge
-*/
-
 await updateMessageBadge();
-
-
-/*
-ถ้ากำลังเปิดแชทเดียวกับคนส่ง
-ให้โหลดข้อความทันที
-*/
 
 if(
 chatModal.style.display === "flex" &&
@@ -2072,11 +2360,6 @@ return;
 
 }
 
-
-/*
-แจ้งเตือน
-*/
-
 let senderName =
 "ผู้ใช้ PC2Deal";
 
@@ -2086,10 +2369,7 @@ const {data:profile} =
 await supabaseClient
 .from("profiles")
 .select("display_name")
-.eq(
-"id",
-newMessage.sender_id
-)
+.eq("id",newMessage.sender_id)
 .maybeSingle();
 
 if(
@@ -2102,23 +2382,12 @@ profile.display_name;
 
 }
 
-}catch(error){
-
-console.error(error);
-
-}
-
+}catch(error){}
 
 showNewMessageNotification(
 senderName,
 newMessage.message
 );
-
-
-/*
-ถ้า Inbox เปิดอยู่
-รีเฟรชทันที
-*/
 
 if(
 inboxModal.style.display === "flex"
@@ -2138,30 +2407,6 @@ console.log(
 status
 );
 
-if(status === "SUBSCRIBED"){
-
-console.log(
-"PC2Deal realtime พร้อมใช้งาน"
-);
-
-}
-
-if(status === "CHANNEL_ERROR"){
-
-console.warn(
-"Realtime มีปัญหา จะใช้ระบบตรวจทุก 3 วินาทีแทน"
-);
-
-}
-
-if(status === "TIMED_OUT"){
-
-console.warn(
-"Realtime timeout"
-);
-
-}
-
 }
 );
 
@@ -2176,8 +2421,7 @@ function stopRealtimeMessages(){
 
 if(realtimeChannel){
 
-supabaseClient
-.removeChannel(
+supabaseClient.removeChannel(
 realtimeChannel
 );
 
@@ -2189,17 +2433,13 @@ realtimeChannel = null;
 
 
 /* =====================================================
-NEW MESSAGE NOTIFICATION
+NOTIFICATION
 ===================================================== */
 
 function showNewMessageNotification(
 senderName,
 text
 ){
-
-/*
-ถ้า browser อนุญาต notification
-*/
 
 if(
 "Notification" in window &&
@@ -2214,23 +2454,13 @@ new Notification(
 body:
 senderName +
 ": " +
-text.substring(0,100),
-icon:""
+text.substring(0,100)
 }
 );
 
-}catch(error){
-
-console.error(error);
+}catch(error){}
 
 }
-
-}
-
-
-/*
-แจ้งเตือนแบบ popup ในเว็บ
-*/
 
 alert(
 "💬 มีข้อความใหม่!\n\n" +
@@ -2257,19 +2487,14 @@ return;
 }
 
 if(
-Notification.permission ===
-"default"
+Notification.permission === "default"
 ){
 
 try{
 
 await Notification.requestPermission();
 
-}catch(error){
-
-console.error(error);
-
-}
+}catch(error){}
 
 }
 
@@ -2277,7 +2502,7 @@ console.error(error);
 
 
 /* =====================================================
-SELL PRODUCT
+SELL
 ===================================================== */
 
 const sellButton =
@@ -2346,19 +2571,14 @@ imagePreview.style.display =
 
 reader.readAsDataURL(file);
 
-}
-);
+});
 
-
-/* SELL BUTTON */
 
 sellButton.onclick =
 async function(){
 
 const {data} =
-await supabaseClient
-.auth
-.getUser();
+await supabaseClient.auth.getUser();
 
 if(!data.user){
 
@@ -2378,8 +2598,6 @@ sellModal.style.display =
 };
 
 
-/* CLOSE SELL */
-
 closeSellButton.onclick =
 function(){
 
@@ -2393,16 +2611,14 @@ sellMessage.innerText =
 
 
 /* =====================================================
-PUBLISH PRODUCT
+PUBLISH
 ===================================================== */
 
 publishButton.onclick =
 async function(){
 
 const {data} =
-await supabaseClient
-.auth
-.getUser();
+await supabaseClient.auth.getUser();
 
 const user =
 data.user;
@@ -2417,27 +2633,19 @@ return;
 }
 
 const title =
-document.getElementById("productTitle")
-.value
-.trim();
+document.getElementById("productTitle").value.trim();
 
 const price =
-document.getElementById("productPrice")
-.value;
+document.getElementById("productPrice").value;
 
 const location =
-document.getElementById("productLocation")
-.value
-.trim();
+document.getElementById("productLocation").value.trim();
 
 const description =
-document.getElementById("productDescription")
-.value
-.trim();
+document.getElementById("productDescription").value.trim();
 
 const file =
 productImage.files[0];
-
 
 if(!title){
 
@@ -2448,10 +2656,10 @@ return;
 
 }
 
-if(!price){
+if(!price || Number(price) <= 0){
 
 sellMessage.innerText =
-"กรุณาใส่ราคา";
+"กรุณาใส่ราคาที่ถูกต้อง";
 
 return;
 
@@ -2479,16 +2687,13 @@ return;
 
 }
 
-
 publishButton.disabled =
 true;
 
 publishButton.innerText =
 "กำลังลงขาย...";
 
-let image_url =
-"";
-
+let image_url = "";
 
 if(file){
 
@@ -2496,9 +2701,7 @@ sellMessage.innerText =
 "กำลังอัปโหลดรูป...";
 
 const extension =
-file.name
-.split(".")
-.pop();
+file.name.split(".").pop();
 
 const fileName =
 user.id +
@@ -2510,7 +2713,6 @@ Math.random()
 .substring(2) +
 "." +
 extension;
-
 
 const {error:uploadError} =
 await supabaseClient
@@ -2525,10 +2727,7 @@ upsert:false
 }
 );
 
-
 if(uploadError){
-
-console.error(uploadError);
 
 publishButton.disabled =
 false;
@@ -2544,7 +2743,6 @@ return;
 
 }
 
-
 const {data:publicData} =
 supabaseClient
 .storage
@@ -2556,16 +2754,13 @@ publicData.publicUrl;
 
 }
 
-
 sellMessage.innerText =
 "กำลังบันทึกสินค้า...";
-
 
 const {error} =
 await supabaseClient
 .from("products")
 .insert({
-
 user_id:user.id,
 title:title,
 price:Number(price),
@@ -2573,9 +2768,7 @@ location:location,
 description:description,
 image_url:image_url,
 status:"active"
-
 });
-
 
 publishButton.disabled =
 false;
@@ -2583,10 +2776,7 @@ false;
 publishButton.innerText =
 "ลงขายสินค้า";
 
-
 if(error){
-
-console.error(error);
 
 sellMessage.innerText =
 "เกิดข้อผิดพลาด: " +
@@ -2596,32 +2786,16 @@ return;
 
 }
 
-
 sellMessage.innerText =
 "ลงขายสินค้าเรียบร้อยแล้ว!";
 
-
-document.getElementById("productTitle")
-.value = "";
-
-document.getElementById("productPrice")
-.value = "";
-
-document.getElementById("productLocation")
-.value = "";
-
-document.getElementById("productDescription")
-.value = "";
-
-productImage.value =
-"";
-
-imagePreview.src =
-"";
-
-imagePreview.style.display =
-"none";
-
+document.getElementById("productTitle").value="";
+document.getElementById("productPrice").value="";
+document.getElementById("productLocation").value="";
+document.getElementById("productDescription").value="";
+productImage.value="";
+imagePreview.src="";
+imagePreview.style.display="none";
 
 setTimeout(
 function(){
@@ -2655,7 +2829,6 @@ document.getElementById("products");
 productsBox.innerHTML =
 '<div class="empty">กำลังโหลดสินค้า...</div>';
 
-
 let query =
 supabaseClient
 .from("products")
@@ -2663,11 +2836,8 @@ supabaseClient
 .eq("status","active")
 .order(
 "created_at",
-{
-ascending:false
-}
+{ascending:false}
 );
-
 
 if(searchText){
 
@@ -2682,14 +2852,10 @@ searchText +
 
 }
 
-
 const {data,error} =
 await query;
 
-
 if(error){
-
-console.error(error);
 
 productsBox.innerHTML =
 '<div class="empty">ไม่สามารถโหลดสินค้าได้</div>';
@@ -2698,9 +2864,7 @@ return;
 
 }
 
-
-if(!data ||
-data.length === 0){
+if(!data || data.length === 0){
 
 productsBox.innerHTML =
 '<div class="empty">ยังไม่มีสินค้าที่ลงขาย</div>';
@@ -2709,10 +2873,7 @@ return;
 
 }
 
-
-productsBox.innerHTML =
-"";
-
+productsBox.innerHTML = "";
 
 data.forEach(
 function(product){
@@ -2723,10 +2884,8 @@ document.createElement("div");
 card.className =
 "card";
 
-
 let imageHTML =
 '<div class="image">🖥️</div>';
-
 
 if(product.image_url){
 
@@ -2739,68 +2898,41 @@ escapeHTML(product.image_url) +
 
 }
 
-
 card.innerHTML =
 imageHTML +
-
 '<div class="info">' +
-
 '<h3>' +
 escapeHTML(product.title) +
 '</h3>' +
-
 '<div class="price">' +
-Number(product.price)
-.toLocaleString() +
+Number(product.price).toLocaleString() +
 ' บาท' +
 '</div>' +
-
 '<div class="location">' +
 '📍 ' +
-escapeHTML(
-product.location ||
-"ไม่ระบุ"
-) +
+escapeHTML(product.location || "ไม่ระบุ") +
 '</div>' +
-
 (
 product.description
 ?
 '<div class="description">' +
-escapeHTML(
-product.description
-) +
+escapeHTML(product.description) +
 '</div>'
 :
 ""
 ) +
-
 '<button class="detail-button" type="button">' +
 '🔎 ดูรายละเอียด' +
 '</button>' +
-
 '</div>';
-
 
 productsBox.appendChild(card);
 
-
-const detailButton =
-card.querySelector(
-".detail-button"
-);
-
-
-detailButton.addEventListener(
+card.querySelector(".detail-button")
+.addEventListener(
 "click",
-function(event){
-
-event.preventDefault();
-
-event.stopPropagation();
-
+function(){
 openProductDetail(product);
-
 }
 );
 
@@ -2813,58 +2945,36 @@ openProductDetail(product);
 PRODUCT DETAIL
 ===================================================== */
 
-async function openProductDetail(
-product
-){
-
-const detailModal =
-document.getElementById(
-"detailModal"
-);
-
-const detailImage =
-document.getElementById(
-"detailImage"
-);
-
-const detailTitle =
-document.getElementById(
-"detailTitle"
-);
-
-const detailPrice =
-document.getElementById(
-"detailPrice"
-);
-
-const detailLocation =
-document.getElementById(
-"detailLocation"
-);
-
-const detailSeller =
-document.getElementById(
-"detailSeller"
-);
-
-const detailDescription =
-document.getElementById(
-"detailDescription"
-);
-
-const contactSellerButton =
-document.getElementById(
-"contactSellerButton"
-);
-
+async function openProductDetail(product){
 
 currentProduct =
 product;
 
+const detailModal =
+document.getElementById("detailModal");
 
-detailImage.innerHTML =
-"";
+const detailImage =
+document.getElementById("detailImage");
 
+const detailTitle =
+document.getElementById("detailTitle");
+
+const detailPrice =
+document.getElementById("detailPrice");
+
+const detailLocation =
+document.getElementById("detailLocation");
+
+const detailSeller =
+document.getElementById("detailSeller");
+
+const detailDescription =
+document.getElementById("detailDescription");
+
+const buyButton =
+document.getElementById("buyProductButton");
+
+detailImage.innerHTML = "";
 
 if(product.image_url){
 
@@ -2875,44 +2985,31 @@ img.src =
 product.image_url;
 
 img.alt =
-product.title ||
-"สินค้า";
+product.title || "สินค้า";
 
 img.onerror =
 function(){
-
-detailImage.innerHTML =
-"🖥️";
-
+detailImage.innerHTML = "🖥️";
 };
 
 detailImage.appendChild(img);
 
 }else{
 
-detailImage.innerHTML =
-"🖥️";
+detailImage.innerHTML = "🖥️";
 
 }
 
-
 detailTitle.innerText =
-product.title ||
-"ไม่ระบุชื่อสินค้า";
+product.title || "ไม่ระบุชื่อสินค้า";
 
 detailPrice.innerText =
-Number(
-product.price || 0
-)
-.toLocaleString() +
+Number(product.price || 0).toLocaleString() +
 " บาท";
 
 detailLocation.innerText =
 "📍 " +
-(
-product.location ||
-"ไม่ระบุสถานที่"
-);
+(product.location || "ไม่ระบุสถานที่");
 
 detailDescription.innerText =
 product.description ||
@@ -2921,65 +3018,313 @@ product.description ||
 detailSeller.innerText =
 "👤 ผู้ขาย: กำลังโหลด...";
 
-
 detailModal.style.display =
 "flex";
 
-document.body.style.overflow =
-"hidden";
+document.body.classList.add("no-scroll");
 
-
-if(product.user_id){
-
-try{
-
-const {
-data:seller,
-error:sellerError
-} =
-await supabaseClient
-.from("profiles")
-.select("display_name")
-.eq(
-"id",
-product.user_id
-)
-.maybeSingle();
-
+const {data:userData} =
+await supabaseClient.auth.getUser();
 
 if(
-!sellerError &&
-seller &&
-seller.display_name
+userData.user &&
+userData.user.id ===
+product.user_id
 ){
 
-detailSeller.innerText =
-"👤 ผู้ขาย: " +
-seller.display_name;
+buyButton.innerText =
+"🏪 สินค้าของคุณ";
+
+buyButton.disabled =
+true;
+
+buyButton.style.opacity =
+".5";
 
 }else{
 
-detailSeller.innerText =
-"👤 ผู้ขาย: ผู้ขาย PC2Deal";
+buyButton.innerText =
+"🛒 ซื้อสินค้านี้";
+
+buyButton.disabled =
+false;
+
+buyButton.style.opacity =
+"1";
 
 }
 
-}catch(error){
+if(product.user_id){
+
+const {data:seller} =
+await supabaseClient
+.from("profiles")
+.select("display_name")
+.eq("id",product.user_id)
+.maybeSingle();
+
+detailSeller.innerText =
+"👤 ผู้ขาย: " +
+(
+seller &&
+seller.display_name
+?
+seller.display_name
+:
+"ผู้ขาย PC2Deal"
+);
+
+}
+
+}
+
+
+/* =====================================================
+BUY BUTTON
+===================================================== */
+
+document.getElementById(
+"buyProductButton"
+).onclick =
+async function(){
+
+if(!currentProduct){
+
+return;
+
+}
+
+const {data:userData} =
+await supabaseClient.auth.getUser();
+
+if(!userData.user){
+
+closeProductDetail();
+
+loginModal.style.display =
+"flex";
+
+message.innerText =
+"กรุณาเข้าสู่ระบบก่อนซื้อสินค้า";
+
+return;
+
+}
+
+if(
+userData.user.id ===
+currentProduct.user_id
+){
+
+alert(
+"ไม่สามารถซื้อสินค้าของตัวเองได้"
+);
+
+return;
+
+}
+
+orderProductSummary.innerHTML =
+"<b>" +
+escapeHTML(currentProduct.title) +
+"</b><br>" +
+"<span class='price'>" +
+Number(currentProduct.price).toLocaleString() +
+" บาท</span><br>" +
+"📍 " +
+escapeHTML(
+currentProduct.location ||
+"ไม่ระบุ"
+);
+
+buyerName.value = "";
+buyerPhone.value = "";
+buyerAddress.value = "";
+orderMessage.innerText = "";
+
+createOrderModal.style.display =
+"flex";
+
+};
+
+
+/* =====================================================
+CREATE ORDER
+===================================================== */
+
+confirmOrderButton.onclick =
+async function(){
+
+if(!currentProduct){
+
+return;
+
+}
+
+const {data:userData} =
+await supabaseClient.auth.getUser();
+
+if(!userData.user){
+
+orderMessage.innerText =
+"กรุณาเข้าสู่ระบบก่อน";
+
+return;
+
+}
+
+const name =
+buyerName.value.trim();
+
+const phone =
+buyerPhone.value.trim();
+
+const address =
+buyerAddress.value.trim();
+
+if(!name){
+
+orderMessage.innerText =
+"กรุณากรอกชื่อผู้รับ";
+
+return;
+
+}
+
+if(!phone){
+
+orderMessage.innerText =
+"กรุณากรอกเบอร์โทรศัพท์";
+
+return;
+
+}
+
+if(!address){
+
+orderMessage.innerText =
+"กรุณากรอกที่อยู่จัดส่ง";
+
+return;
+
+}
+
+confirmOrderButton.disabled =
+true;
+
+confirmOrderButton.innerText =
+"กำลังสร้างออเดอร์...";
+
+const {data,error} =
+await supabaseClient
+.from("orders")
+.insert({
+
+product_id:
+currentProduct.id,
+
+buyer_id:
+userData.user.id,
+
+seller_id:
+currentProduct.user_id,
+
+product_title:
+currentProduct.title,
+
+price:
+Number(currentProduct.price),
+
+buyer_name:
+name,
+
+buyer_phone:
+phone,
+
+buyer_address:
+address,
+
+status:
+"pending"
+
+})
+.select()
+.maybeSingle();
+
+confirmOrderButton.disabled =
+false;
+
+confirmOrderButton.innerText =
+"ยืนยันสั่งซื้อ";
+
+if(error){
 
 console.error(error);
 
-detailSeller.innerText =
-"👤 ผู้ขาย: ผู้ขาย PC2Deal";
+if(
+error.code === "23505"
+){
+
+orderMessage.innerText =
+"สินค้านี้มีออเดอร์อยู่แล้ว";
+
+}else{
+
+orderMessage.innerText =
+"สร้างออเดอร์ไม่สำเร็จ: " +
+error.message;
 
 }
 
-}
-
-
-contactSellerButton.onclick =
-openChat;
+return;
 
 }
+
+orderMessage.innerText =
+"🎉 สั่งซื้อสำเร็จ!";
+
+setTimeout(
+async function(){
+
+createOrderModal.style.display =
+"none";
+
+document.getElementById(
+"detailModal"
+).style.display =
+"none";
+
+document.body.classList.remove(
+"no-scroll"
+);
+
+await updateOrderBadge();
+
+alert(
+"🎉 สั่งซื้อสำเร็จ!\n\n" +
+"รอผู้ขายยืนยันออเดอร์ได้เลย"
+);
+
+},
+800
+);
+
+};
+
+
+/* =====================================================
+CLOSE ORDER CREATE
+===================================================== */
+
+document.getElementById(
+"closeCreateOrderButton"
+).onclick =
+function(){
+
+createOrderModal.style.display =
+"none";
+
+};
 
 
 /* =====================================================
@@ -2993,25 +3338,20 @@ document.getElementById(
 ).style.display =
 "none";
 
-document.body.style.overflow =
-"";
+document.body.classList.remove(
+"no-scroll"
+);
 
 }
 
-
 document.getElementById(
 "closeDetailButton"
-)
-.addEventListener(
-"click",
-closeProductDetail
-);
-
+).onclick =
+closeProductDetail;
 
 document.getElementById(
 "detailModal"
-)
-.addEventListener(
+).addEventListener(
 "click",
 function(event){
 
@@ -3026,16 +3366,18 @@ closeProductDetail();
 
 
 /* =====================================================
-OPEN CHAT FROM PRODUCT
+CHAT FROM PRODUCT
 ===================================================== */
+
+document.getElementById(
+"contactSellerButton"
+).onclick =
+openChat;
 
 async function openChat(){
 
 const {data:userData} =
-await supabaseClient
-.auth
-.getUser();
-
+await supabaseClient.auth.getUser();
 
 if(!userData.user){
 
@@ -3051,17 +3393,11 @@ return;
 
 }
 
-
 if(!currentProduct){
-
-alert(
-"ไม่พบข้อมูลสินค้า"
-);
 
 return;
 
 }
-
 
 if(
 userData.user.id ===
@@ -3076,13 +3412,11 @@ return;
 
 }
 
-
 currentChatPartner =
 currentProduct.user_id;
 
 currentChatProduct =
 currentProduct;
-
 
 chatProductTitle.innerText =
 currentProduct.title ||
@@ -3090,7 +3424,6 @@ currentProduct.title ||
 
 chatSellerName.innerText =
 "👤 ผู้ขาย PC2Deal";
-
 
 chatModal.style.display =
 "flex";
@@ -3100,25 +3433,18 @@ document.getElementById(
 ).style.display =
 "none";
 
-document.body.style.overflow =
-"hidden";
+document.body.classList.add(
+"no-scroll"
+);
 
-
-try{
-
-const {data:seller,error} =
+const {data:seller} =
 await supabaseClient
 .from("profiles")
 .select("display_name")
-.eq(
-"id",
-currentProduct.user_id
-)
+.eq("id",currentProduct.user_id)
 .maybeSingle();
 
-
 if(
-!error &&
 seller &&
 seller.display_name
 ){
@@ -3128,13 +3454,6 @@ chatSellerName.innerText =
 seller.display_name;
 
 }
-
-}catch(error){
-
-console.error(error);
-
-}
-
 
 await loadMessages();
 
@@ -3151,25 +3470,11 @@ async function openInboxChat(
 conversation
 ){
 
-const {data:userData} =
-await supabaseClient
-.auth
-.getUser();
-
-
-if(!userData.user){
-
-return;
-
-}
-
-
 currentChatPartner =
 conversation.otherUserId;
 
 currentChatProduct =
 conversation.product;
-
 
 chatProductTitle.innerText =
 conversation.product
@@ -3178,11 +3483,9 @@ conversation.product.title
 :
 "แชท";
 
-
 chatSellerName.innerText =
 "👤 " +
 conversation.otherName;
-
 
 inboxModal.style.display =
 "none";
@@ -3190,9 +3493,9 @@ inboxModal.style.display =
 chatModal.style.display =
 "flex";
 
-document.body.style.overflow =
-"hidden";
-
+document.body.classList.add(
+"no-scroll"
+);
 
 await loadMessages();
 
@@ -3208,10 +3511,7 @@ LOAD MESSAGES
 async function loadMessages(){
 
 const {data:userData} =
-await supabaseClient
-.auth
-.getUser();
-
+await supabaseClient.auth.getUser();
 
 if(
 !userData.user ||
@@ -3221,11 +3521,6 @@ if(
 return;
 
 }
-
-
-chatStatus.innerText =
-"กำลังโหลดข้อความ...";
-
 
 let query =
 supabaseClient
@@ -3243,7 +3538,6 @@ userData.user.id +
 ")"
 );
 
-
 if(currentChatProduct){
 
 query =
@@ -3254,20 +3548,13 @@ currentChatProduct.id
 
 }
 
-
 const {data,error} =
-await query
-.order(
+await query.order(
 "created_at",
-{
-ascending:true
-}
+{ascending:true}
 );
 
-
 if(error){
-
-console.error(error);
 
 chatStatus.innerText =
 "โหลดข้อความไม่สำเร็จ";
@@ -3276,15 +3563,9 @@ return;
 
 }
 
+chatMessages.innerHTML = "";
 
-chatMessages.innerHTML =
-"";
-
-
-if(
-!data ||
-data.length === 0
-){
+if(!data || data.length === 0){
 
 chatMessages.innerHTML = `
 <div class="chat-empty">
@@ -3300,35 +3581,22 @@ return;
 
 }
 
-
 data.forEach(
 function(msg){
 
 const row =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 const mine =
 msg.sender_id ===
 userData.user.id;
 
-
 row.className =
 "message-row " +
-(
-mine
-?
-"mine"
-:
-"theirs"
-);
-
+(mine ? "mine" : "theirs");
 
 const bubble =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 bubble.className =
 "message-bubble";
@@ -3336,11 +3604,8 @@ bubble.className =
 bubble.innerText =
 msg.message;
 
-
 const time =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 time.className =
 "message-time";
@@ -3348,15 +3613,13 @@ time.className =
 time.innerText =
 new Date(
 msg.created_at
-)
-.toLocaleTimeString(
+).toLocaleTimeString(
 "th-TH",
 {
 hour:"2-digit",
 minute:"2-digit"
 }
 );
-
 
 bubble.appendChild(time);
 
@@ -3365,7 +3628,6 @@ row.appendChild(bubble);
 chatMessages.appendChild(row);
 
 });
-
 
 chatMessages.scrollTop =
 chatMessages.scrollHeight;
@@ -3385,41 +3647,23 @@ async function sendMessage(){
 const text =
 chatInput.value.trim();
 
-
 if(!text){
 
 return;
 
 }
 
-
 const {data:userData} =
-await supabaseClient
-.auth
-.getUser();
+await supabaseClient.auth.getUser();
 
-
-if(!userData.user){
-
-alert(
-"กรุณาเข้าสู่ระบบก่อน"
-);
+if(
+!userData.user ||
+!currentChatPartner
+){
 
 return;
 
 }
-
-
-if(!currentChatPartner){
-
-alert(
-"ไม่พบผู้สนทนา"
-);
-
-return;
-
-}
-
 
 chatSendButton.disabled =
 true;
@@ -3427,8 +3671,7 @@ true;
 chatSendButton.innerText =
 "กำลังส่ง...";
 
-
-const {data:newMessage,error} =
+const {error} =
 await supabaseClient
 .from("messages")
 .insert({
@@ -3449,10 +3692,7 @@ null,
 message:
 text
 
-})
-.select()
-.maybeSingle();
-
+});
 
 chatSendButton.disabled =
 false;
@@ -3460,13 +3700,7 @@ false;
 chatSendButton.innerText =
 "ส่ง";
 
-
 if(error){
-
-console.error(
-"ส่งข้อความไม่สำเร็จ:",
-error
-);
 
 alert(
 "ส่งข้อความไม่สำเร็จ\n\n" +
@@ -3477,20 +3711,7 @@ return;
 
 }
 
-
-chatInput.value =
-"";
-
-
-if(newMessage){
-
-/*
-ไม่ต้องเอาไปนับเป็น incoming
-เพราะเราเป็น sender
-*/
-
-}
-
+chatInput.value = "";
 
 await loadMessages();
 
@@ -3498,14 +3719,8 @@ chatInput.focus();
 
 }
 
-
-/* SEND */
-
 chatSendButton.onclick =
 sendMessage;
-
-
-/* ENTER */
 
 chatInput.addEventListener(
 "keydown",
@@ -3527,7 +3742,7 @@ sendMessage();
 
 
 /* =====================================================
-BACK FROM CHAT
+CHAT BACK
 ===================================================== */
 
 chatBackButton.onclick =
@@ -3536,17 +3751,13 @@ function(){
 chatModal.style.display =
 "none";
 
-document.body.style.overflow =
-"";
+document.body.classList.remove(
+"no-scroll"
+);
 
 openInbox();
 
 };
-
-
-/* =====================================================
-CHAT BACKGROUND
-===================================================== */
 
 chatModal.addEventListener(
 "click",
@@ -3557,8 +3768,9 @@ if(event.target === chatModal){
 chatModal.style.display =
 "none";
 
-document.body.style.overflow =
-"";
+document.body.classList.remove(
+"no-scroll"
+);
 
 }
 
@@ -3567,32 +3779,11 @@ document.body.style.overflow =
 
 
 /* =====================================================
-OPEN INBOX
+INBOX
 ===================================================== */
 
 messageButton.onclick =
 async function(){
-
-const {data:userData} =
-await supabaseClient
-.auth
-.getUser();
-
-
-if(!userData.user){
-
-loginModal.style.display =
-"flex";
-
-return;
-
-}
-
-
-/*
-ขอสิทธิ์ browser notification
-ครั้งแรกที่ผู้ใช้กดกล่องข้อความ
-*/
 
 requestBrowserNotification();
 
@@ -3600,18 +3791,10 @@ await openInbox();
 
 };
 
-
-/* =====================================================
-OPEN INBOX FUNCTION
-===================================================== */
-
 async function openInbox(){
 
 const {data:userData} =
-await supabaseClient
-.auth
-.getUser();
-
+await supabaseClient.auth.getUser();
 
 if(!userData.user){
 
@@ -3619,21 +3802,16 @@ return;
 
 }
 
-
 inboxModal.style.display =
 "flex";
 
-document.body.style.overflow =
-"hidden";
+document.body.classList.add(
+"no-scroll"
+);
 
 await loadInbox();
 
 }
-
-
-/* =====================================================
-CLOSE INBOX
-===================================================== */
 
 inboxCloseButton.onclick =
 function(){
@@ -3641,15 +3819,11 @@ function(){
 inboxModal.style.display =
 "none";
 
-document.body.style.overflow =
-"";
+document.body.classList.remove(
+"no-scroll"
+);
 
 };
-
-
-/* =====================================================
-INBOX BACKGROUND
-===================================================== */
 
 inboxModal.addEventListener(
 "click",
@@ -3660,8 +3834,9 @@ if(event.target === inboxModal){
 inboxModal.style.display =
 "none";
 
-document.body.style.overflow =
-"";
+document.body.classList.remove(
+"no-scroll"
+);
 
 }
 
@@ -3676,10 +3851,7 @@ LOAD INBOX
 async function loadInbox(){
 
 const {data:userData} =
-await supabaseClient
-.auth
-.getUser();
-
+await supabaseClient.auth.getUser();
 
 if(!userData.user){
 
@@ -3687,14 +3859,12 @@ return;
 
 }
 
-
 inboxList.innerHTML =
 `
 <div class="inbox-loading">
 กำลังโหลดข้อความ...
 </div>
 `;
-
 
 const {data:messagesData,error} =
 await supabaseClient
@@ -3708,31 +3878,21 @@ userData.user.id
 )
 .order(
 "created_at",
-{
-ascending:false
-}
+{ascending:false}
 );
-
 
 if(error){
-
-console.error(
-"โหลดกล่องข้อความไม่สำเร็จ:",
-error
-);
 
 inboxList.innerHTML =
 `
 <div class="inbox-empty">
-ไม่สามารถโหลดข้อความได้<br>
-${escapeHTML(error.message)}
+ไม่สามารถโหลดข้อความได้
 </div>
 `;
 
 return;
 
 }
-
 
 if(
 !messagesData ||
@@ -3752,14 +3912,8 @@ return;
 
 }
 
-
-/*
-สร้าง conversation
-*/
-
 const conversations =
 new Map();
-
 
 messagesData.forEach(
 function(msg){
@@ -3781,78 +3935,40 @@ otherUserId +
 "_" +
 productKey;
 
-
 if(!conversations.has(key)){
 
 conversations.set(
 key,
 {
-otherUserId:
-otherUserId,
-
-productId:
-msg.product_id,
-
-lastMessage:
-msg,
-
-unread:false
+otherUserId:otherUserId,
+productId:msg.product_id,
+lastMessage:msg,
+unread:
+msg.receiver_id ===
+userData.user.id
 }
 );
 
 }
 
-const conversation =
-conversations.get(key);
-
-
-/*
-ถ้าข้อความล่าสุดเป็นข้อความที่ส่งเข้ามา
-ให้แสดงจุดแจ้งเตือน
-*/
-
-if(
-msg ===
-conversation.lastMessage &&
-msg.receiver_id ===
-userData.user.id
-){
-
-conversation.unread =
-true;
-
-}
-
 });
-
 
 const conversationArray =
 Array.from(
 conversations.values()
 );
 
-
-/*
-โหลดข้อมูลเพิ่มเติม
-*/
-
 for(
 const conversation
 of conversationArray
 ){
 
-try{
-
 const {data:profile} =
 await supabaseClient
 .from("profiles")
 .select("display_name")
-.eq(
-"id",
-conversation.otherUserId
-)
+.eq("id",conversation.otherUserId)
 .maybeSingle();
-
 
 conversation.otherName =
 profile &&
@@ -3862,83 +3978,33 @@ profile.display_name
 :
 "ผู้ใช้ PC2Deal";
 
-}catch(error){
-
-conversation.otherName =
-"ผู้ใช้ PC2Deal";
-
-}
-
-
 if(conversation.productId){
-
-try{
 
 const {data:product} =
 await supabaseClient
 .from("products")
 .select("*")
-.eq(
-"id",
-conversation.productId
-)
+.eq("id",conversation.productId)
 .maybeSingle();
-
 
 conversation.product =
 product || null;
 
-}catch(error){
-
-conversation.product =
-null;
-
-}
-
 }else{
 
-conversation.product =
-null;
+conversation.product = null;
 
 }
 
 }
 
-
-/*
-เรียงล่าสุดก่อน
-*/
-
-conversationArray.sort(
-function(a,b){
-
-return new Date(
-b.lastMessage.created_at
-)
--
-new Date(
-a.lastMessage.created_at
-);
-
-}
-);
-
-
-/*
-RENDER
-*/
-
-inboxList.innerHTML =
-"";
-
+inboxList.innerHTML = "";
 
 conversationArray.forEach(
 function(conversation){
 
 const item =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 item.className =
 "conversation " +
@@ -3950,131 +4016,51 @@ conversation.unread
 ""
 );
 
+item.innerHTML = `
+<div class="conversation-avatar">
+👤
+</div>
 
-const avatar =
-document.createElement(
-"div"
-);
+<div class="conversation-content">
 
-avatar.className =
-"conversation-avatar";
+<div class="conversation-top">
 
-avatar.innerText =
-"👤";
+<div class="conversation-name">
+${escapeHTML(conversation.otherName)}
+</div>
 
+<div class="conversation-time">
+${formatMessageTime(conversation.lastMessage.created_at)}
+</div>
 
-const content =
-document.createElement(
-"div"
-);
+</div>
 
-content.className =
-"conversation-content";
-
-
-const top =
-document.createElement(
-"div"
-);
-
-top.className =
-"conversation-top";
-
-
-const name =
-document.createElement(
-"div"
-);
-
-name.className =
-"conversation-name";
-
-name.innerText =
-conversation.otherName;
-
-
-const time =
-document.createElement(
-"div"
-);
-
-time.className =
-"conversation-time";
-
-time.innerText =
-formatMessageTime(
-conversation.lastMessage.created_at
-);
-
-
-top.appendChild(name);
-
-top.appendChild(time);
-
-
-const product =
-document.createElement(
-"div"
-);
-
-product.className =
-"conversation-product";
-
-product.innerText =
+<div class="conversation-product">
+${
 conversation.product
 ?
 "🖥️ " +
-conversation.product.title
+escapeHTML(conversation.product.title)
 :
-"💬 การสนทนา";
-
-
-const lastMessage =
-document.createElement(
-"div"
-);
-
-lastMessage.className =
-"conversation-message";
-
-lastMessage.innerText =
-conversation.lastMessage.message;
-
-
-content.appendChild(top);
-
-content.appendChild(product);
-
-content.appendChild(lastMessage);
-
-
-const unreadDot =
-document.createElement(
-"div"
-);
-
-unreadDot.className =
-"unread-dot";
-
-
-item.appendChild(avatar);
-
-item.appendChild(content);
-
-item.appendChild(unreadDot);
-
-
-item.addEventListener(
-"click",
-async function(){
-
-await openInboxChat(
-conversation
-);
-
+"💬 การสนทนา"
 }
-);
+</div>
 
+<div class="conversation-message">
+${escapeHTML(conversation.lastMessage.message)}
+</div>
+
+</div>
+
+<div class="unread-dot"></div>
+`;
+
+item.onclick =
+function(){
+
+openInboxChat(conversation);
+
+};
 
 inboxList.appendChild(item);
 
@@ -4084,18 +4070,12 @@ inboxList.appendChild(item);
 
 
 /* =====================================================
-UPDATE BADGE
+MESSAGE BADGE
 ===================================================== */
 
 async function updateMessageBadge(){
 
-const {data:userData} =
-await supabaseClient
-.auth
-.getUser();
-
-
-if(!userData.user){
+if(!currentUserId){
 
 messageBadge.style.display =
 "none";
@@ -4104,28 +4084,17 @@ return;
 
 }
 
-
 const {data,error} =
 await supabaseClient
 .from("messages")
 .select("id")
-.eq(
-"receiver_id",
-userData.user.id
-);
-
+.eq("receiver_id",currentUserId);
 
 if(error){
-
-console.error(
-"ตรวจข้อความไม่สำเร็จ:",
-error
-);
 
 return;
 
 }
-
 
 const count =
 data
@@ -4133,7 +4102,6 @@ data
 data.length
 :
 0;
-
 
 if(count > 0){
 
@@ -4158,7 +4126,831 @@ messageBadge.style.display =
 
 
 /* =====================================================
-POLLING FALLBACK
+ORDERS
+===================================================== */
+
+orderButton.onclick =
+async function(){
+
+const {data:userData} =
+await supabaseClient.auth.getUser();
+
+if(!userData.user){
+
+loginModal.style.display =
+"flex";
+
+return;
+
+}
+
+orderModal.style.display =
+"flex";
+
+document.body.classList.add(
+"no-scroll"
+);
+
+currentOrderTab =
+"buyer";
+
+setOrderTab();
+
+await loadOrders();
+
+};
+
+
+/* =====================================================
+ORDER TABS
+===================================================== */
+
+myOrdersTab.onclick =
+async function(){
+
+currentOrderTab =
+"buyer";
+
+setOrderTab();
+
+await loadOrders();
+
+};
+
+sellingOrdersTab.onclick =
+async function(){
+
+currentOrderTab =
+"seller";
+
+setOrderTab();
+
+await loadOrders();
+
+};
+
+function setOrderTab(){
+
+if(currentOrderTab === "buyer"){
+
+myOrdersTab.classList.add("active");
+sellingOrdersTab.classList.remove("active");
+
+}else{
+
+sellingOrdersTab.classList.add("active");
+myOrdersTab.classList.remove("active");
+
+}
+
+}
+
+
+/* =====================================================
+CLOSE ORDER
+===================================================== */
+
+document.getElementById(
+"orderCloseButton"
+).onclick =
+function(){
+
+orderModal.style.display =
+"none";
+
+document.body.classList.remove(
+"no-scroll"
+);
+
+};
+
+orderModal.addEventListener(
+"click",
+function(event){
+
+if(event.target === orderModal){
+
+orderModal.style.display =
+"none";
+
+document.body.classList.remove(
+"no-scroll"
+);
+
+}
+
+}
+);
+
+
+/* =====================================================
+LOAD ORDERS
+===================================================== */
+
+async function loadOrders(){
+
+const {data:userData} =
+await supabaseClient.auth.getUser();
+
+if(!userData.user){
+
+return;
+
+}
+
+orderList.innerHTML =
+`
+<div class="inbox-loading">
+กำลังโหลดออเดอร์...
+</div>
+`;
+
+let query =
+supabaseClient
+.from("orders")
+.select("*")
+.order(
+"created_at",
+{ascending:false}
+);
+
+if(currentOrderTab === "buyer"){
+
+query =
+query.eq(
+"buyer_id",
+userData.user.id
+);
+
+}else{
+
+query =
+query.eq(
+"seller_id",
+userData.user.id
+);
+
+}
+
+const {data,error} =
+await query;
+
+if(error){
+
+console.error(error);
+
+orderList.innerHTML =
+`
+<div class="inbox-empty">
+ไม่สามารถโหลดออเดอร์ได้<br><br>
+${escapeHTML(error.message)}
+</div>
+`;
+
+return;
+
+}
+
+if(!data || data.length === 0){
+
+orderList.innerHTML =
+`
+<div class="inbox-empty">
+${
+currentOrderTab === "buyer"
+?
+"🛒 ยังไม่มีรายการสั่งซื้อ"
+:
+"🏪 ยังไม่มีลูกค้าสั่งสินค้า"
+}
+</div>
+`;
+
+return;
+
+}
+
+orderList.innerHTML = "";
+
+data.forEach(
+function(order){
+
+renderOrderCard(order);
+
+});
+
+}
+
+
+/* =====================================================
+RENDER ORDER
+===================================================== */
+
+function renderOrderCard(order){
+
+const card =
+document.createElement("div");
+
+card.className =
+"order-card";
+
+const statusText =
+getOrderStatusText(
+order.status
+);
+
+const statusClass =
+"status-" +
+order.status;
+
+const roleText =
+currentOrderTab === "buyer"
+?
+"🏪 ผู้ขาย"
+:
+"🛒 ผู้ซื้อ";
+
+const personName =
+currentOrderTab === "buyer"
+?
+"ผู้ขาย"
+:
+"ผู้ซื้อ";
+
+const displayPerson =
+currentOrderTab === "buyer"
+?
+order.seller_id
+:
+order.buyer_name || "ไม่ระบุ";
+
+card.innerHTML = `
+
+<div class="order-top">
+
+<div>
+
+<div class="order-title">
+${escapeHTML(order.product_title)}
+</div>
+
+<div class="order-id">
+Order #${escapeHTML(order.id.substring(0,8))}
+</div>
+
+</div>
+
+<div class="order-status ${statusClass}">
+${statusText}
+</div>
+
+</div>
+
+<div class="order-price">
+${Number(order.price).toLocaleString()} บาท
+</div>
+
+<div class="order-person">
+${roleText}: ${escapeHTML(displayPerson)}
+</div>
+
+${
+currentOrderTab === "seller"
+?
+`
+<div class="order-info-box">
+👤 ${escapeHTML(order.buyer_name || "ไม่ระบุ")}<br>
+📞 ${escapeHTML(order.buyer_phone || "ไม่ระบุ")}<br>
+📍 ${escapeHTML(order.buyer_address || "ไม่ระบุ")}
+</div>
+`
+:
+""
+}
+
+<div class="order-date">
+สั่งซื้อเมื่อ:
+${new Date(order.created_at).toLocaleString("th-TH")}
+</div>
+
+<div
+class="order-buttons"
+id="buttons-${order.id}"
+>
+</div>
+`;
+
+orderList.appendChild(card);
+
+renderOrderButtons(
+order,
+card.querySelector(
+"#buttons-" + order.id
+)
+);
+
+}
+
+
+/* =====================================================
+ORDER BUTTONS
+===================================================== */
+
+function renderOrderButtons(
+order,
+container
+){
+
+container.innerHTML = "";
+
+if(currentOrderTab === "seller"){
+
+if(order.status === "pending"){
+
+addOrderButton(
+container,
+"✅ ยืนยันออเดอร์",
+"green",
+function(){
+changeOrderStatus(
+order.id,
+"confirmed"
+);
+}
+);
+
+addOrderButton(
+container,
+"❌ ยกเลิก",
+"red",
+function(){
+changeOrderStatus(
+order.id,
+"cancelled"
+);
+}
+);
+
+}
+
+else if(order.status === "confirmed"){
+
+addOrderButton(
+container,
+"📦 เริ่มจัดส่ง",
+"green",
+function(){
+changeOrderStatus(
+order.id,
+"shipping"
+);
+}
+);
+
+addOrderButton(
+container,
+"❌ ยกเลิก",
+"red",
+function(){
+changeOrderStatus(
+order.id,
+"cancelled"
+);
+}
+);
+
+}
+
+else if(order.status === "shipping"){
+
+addOrderButton(
+container,
+"🚚 จัดส่งแล้ว",
+"green",
+function(){
+changeOrderStatus(
+order.id,
+"shipped"
+);
+}
+);
+
+}
+
+}
+
+else{
+
+if(order.status === "pending"){
+
+addOrderButton(
+container,
+"❌ ยกเลิกคำสั่งซื้อ",
+"red",
+function(){
+changeOrderStatus(
+order.id,
+"cancelled"
+);
+}
+);
+
+}
+
+if(order.status === "shipped"){
+
+addOrderButton(
+container,
+"✅ ได้รับสินค้าแล้ว",
+"green",
+function(){
+changeOrderStatus(
+order.id,
+"completed"
+);
+}
+);
+
+}
+
+}
+
+}
+
+
+function addOrderButton(
+container,
+text,
+className,
+callback
+){
+
+const button =
+document.createElement("button");
+
+button.innerText =
+text;
+
+button.className =
+className;
+
+button.onclick =
+callback;
+
+container.appendChild(button);
+
+}
+
+
+/* =====================================================
+CHANGE ORDER STATUS
+===================================================== */
+
+async function changeOrderStatus(
+orderId,
+newStatus
+){
+
+let confirmText =
+"";
+
+if(newStatus === "confirmed"){
+
+confirmText =
+"ยืนยันรับออเดอร์นี้ใช่ไหม?";
+
+}
+
+if(newStatus === "shipping"){
+
+confirmText =
+"ยืนยันว่าเริ่มจัดส่งสินค้าแล้วใช่ไหม?";
+
+}
+
+if(newStatus === "shipped"){
+
+confirmText =
+"ยืนยันว่าจัดส่งสินค้าแล้วใช่ไหม?";
+
+}
+
+if(newStatus === "completed"){
+
+confirmText =
+"ยืนยันว่าได้รับสินค้าแล้วใช่ไหม?";
+
+}
+
+if(newStatus === "cancelled"){
+
+confirmText =
+"ยืนยันยกเลิกออเดอร์นี้ใช่ไหม?";
+
+}
+
+if(
+confirmText &&
+!confirm(confirmText)
+){
+
+return;
+
+}
+
+const {data:userData} =
+await supabaseClient.auth.getUser();
+
+if(!userData.user){
+
+return;
+
+}
+
+const {data:order,error:findError} =
+await supabaseClient
+.from("orders")
+.select("*")
+.eq("id",orderId)
+.maybeSingle();
+
+if(findError || !order){
+
+alert(
+"ไม่พบออเดอร์"
+);
+
+return;
+
+}
+
+if(
+order.buyer_id !== userData.user.id &&
+order.seller_id !== userData.user.id
+){
+
+alert(
+"คุณไม่มีสิทธิ์แก้ไขออเดอร์นี้"
+);
+
+return;
+
+}
+
+
+/*
+ตรวจสอบสิทธิ์การเปลี่ยนสถานะ
+*/
+
+if(
+userData.user.id === order.seller_id
+){
+
+const sellerAllowed =
+(
+order.status === "pending" &&
+(
+newStatus === "confirmed" ||
+newStatus === "cancelled"
+)
+)
+||
+(
+order.status === "confirmed" &&
+(
+newStatus === "shipping" ||
+newStatus === "cancelled"
+)
+)
+||
+(
+order.status === "shipping" &&
+newStatus === "shipped"
+);
+
+if(!sellerAllowed){
+
+alert(
+"ไม่สามารถเปลี่ยนสถานะนี้ได้"
+);
+
+return;
+
+}
+
+}else{
+
+const buyerAllowed =
+(
+order.status === "pending" &&
+newStatus === "cancelled"
+)
+||
+(
+order.status === "shipped" &&
+newStatus === "completed"
+);
+
+if(!buyerAllowed){
+
+alert(
+"ไม่สามารถเปลี่ยนสถานะนี้ได้"
+);
+
+return;
+
+}
+
+}
+
+
+/*
+เปลี่ยนสถานะ
+*/
+
+const {error} =
+await supabaseClient
+.from("orders")
+.update({
+status:newStatus,
+updated_at:new Date().toISOString()
+})
+.eq("id",orderId);
+
+if(error){
+
+alert(
+"เปลี่ยนสถานะไม่สำเร็จ\n\n" +
+error.message
+);
+
+return;
+
+}
+
+
+/*
+เปลี่ยนสถานะสินค้า
+*/
+
+if(newStatus === "completed"){
+
+await supabaseClient
+.from("products")
+.update({
+status:"sold"
+})
+.eq(
+"id",
+order.product_id
+);
+
+}
+
+if(newStatus === "cancelled"){
+
+await supabaseClient
+.from("products")
+.update({
+status:"active"
+})
+.eq(
+"id",
+order.product_id
+);
+
+}
+
+if(newStatus === "confirmed"){
+
+await supabaseClient
+.from("products")
+.update({
+status:"reserved"
+})
+.eq(
+"id",
+order.product_id
+);
+
+}
+
+await loadOrders();
+
+await updateOrderBadge();
+
+loadProducts();
+
+alert(
+"อัปเดตสถานะเรียบร้อยแล้ว"
+);
+
+}
+
+
+/* =====================================================
+ORDER BADGE
+===================================================== */
+
+async function updateOrderBadge(){
+
+if(!currentUserId){
+
+orderBadge.style.display =
+"none";
+
+return;
+
+}
+
+const {data,error} =
+await supabaseClient
+.from("orders")
+.select("id,status")
+.eq(
+"seller_id",
+currentUserId
+)
+.eq(
+"status",
+"pending"
+);
+
+if(error){
+
+console.error(error);
+
+return;
+
+}
+
+const count =
+data
+?
+data.length
+:
+0;
+
+if(count > 0){
+
+orderBadge.innerText =
+count > 99
+?
+"99+"
+:
+count;
+
+orderBadge.style.display =
+"flex";
+
+}else{
+
+orderBadge.style.display =
+"none";
+
+}
+
+}
+
+
+/* =====================================================
+ORDER STATUS TEXT
+===================================================== */
+
+function getOrderStatusText(
+status
+){
+
+const map = {
+
+pending:
+"⏳ รอผู้ขายยืนยัน",
+
+confirmed:
+"✅ ยืนยันแล้ว",
+
+shipping:
+"📦 กำลังจัดส่ง",
+
+shipped:
+"🚚 จัดส่งแล้ว",
+
+completed:
+"🎉 ซื้อขายสำเร็จ",
+
+cancelled:
+"❌ ยกเลิก"
+
+};
+
+return map[status] ||
+status;
+
+}
+
+
+/* =====================================================
+POLLING
 ===================================================== */
 
 async function checkForNewMessages(){
@@ -4168,7 +4960,6 @@ if(!currentUserId){
 return;
 
 }
-
 
 const {data,error} =
 await supabaseClient
@@ -4182,46 +4973,24 @@ currentUserId
 )
 .order(
 "created_at",
-{
-ascending:false
-}
+{ascending:false}
 )
 .limit(100);
 
-
-if(error){
-
-console.error(
-"ตรวจข้อความใหม่ไม่สำเร็จ:",
-error
-);
+if(error || !data){
 
 return;
 
 }
-
-
-if(!data){
-
-return;
-
-}
-
-
-/*
-ครั้งแรกไม่แจ้งเตือน
-*/
 
 if(!firstMessageCheckDone){
 
 data.forEach(
-function(msg){
-
+msg =>
 knownIncomingMessageIds.add(
 msg.id
+)
 );
-
-});
 
 firstMessageCheckDone =
 true;
@@ -4230,99 +4999,42 @@ return;
 
 }
 
-
-/*
-หาข้อความใหม่
-*/
-
 const newMessages =
 data.filter(
-function(msg){
-
-return !knownIncomingMessageIds.has(
+msg =>
+!knownIncomingMessageIds.has(
 msg.id
+)
 );
-
-}
-);
-
-
-/*
-บันทึก ID ทั้งหมด
-*/
 
 data.forEach(
-function(msg){
-
+msg =>
 knownIncomingMessageIds.add(
 msg.id
+)
 );
 
-});
-
-
-if(
-newMessages.length === 0
-){
+if(!newMessages.length){
 
 return;
 
 }
 
-
-/*
-อัปเดต badge
-*/
-
 await updateMessageBadge();
 
-
-/*
-ถ้ากำลังเปิดแชทที่ตรงกัน
-*/
-
 for(
-const newMessage
-of newMessages
+const msg of newMessages
 ){
-
-if(
-chatModal.style.display === "flex" &&
-currentChatPartner ===
-newMessage.sender_id &&
-(
-!currentChatProduct ||
-currentChatProduct.id ===
-newMessage.product_id
-)
-){
-
-await loadMessages();
-
-continue;
-
-}
-
-
-/*
-โหลดชื่อผู้ส่ง
-*/
 
 let senderName =
 "ผู้ใช้ PC2Deal";
-
-try{
 
 const {data:profile} =
 await supabaseClient
 .from("profiles")
 .select("display_name")
-.eq(
-"id",
-newMessage.sender_id
-)
+.eq("id",msg.sender_id)
 .maybeSingle();
-
 
 if(
 profile &&
@@ -4334,28 +5046,12 @@ profile.display_name;
 
 }
 
-}catch(error){
-
-console.error(error);
-
-}
-
-
-/*
-แจ้งเตือน
-*/
-
 showNewMessageNotification(
 senderName,
-newMessage.message
+msg.message
 );
 
 }
-
-
-/*
-รีเฟรช Inbox ถ้าเปิดอยู่
-*/
 
 if(
 inboxModal.style.display === "flex"
@@ -4377,9 +5073,7 @@ dateString
 ){
 
 const date =
-new Date(
-dateString
-);
+new Date(dateString);
 
 const now =
 new Date();
@@ -4387,13 +5081,11 @@ new Date();
 const diff =
 now - date;
 
-
 if(diff < 60000){
 
 return "เมื่อสักครู่";
 
 }
-
 
 if(diff < 3600000){
 
@@ -4403,7 +5095,6 @@ diff / 60000
 " นาทีที่แล้ว";
 
 }
-
 
 if(
 date.toDateString() ===
@@ -4419,7 +5110,6 @@ minute:"2-digit"
 );
 
 }
-
 
 return date.toLocaleDateString(
 "th-TH",
@@ -4446,44 +5136,66 @@ return;
 
 }
 
-
 if(
-chatModal.style.display ===
-"flex"
+chatModal.style.display === "flex"
 ){
 
 chatModal.style.display =
 "none";
 
-document.body.style.overflow =
-"";
+document.body.classList.remove(
+"no-scroll"
+);
 
 return;
 
 }
 
-
 if(
-inboxModal.style.display ===
-"flex"
+inboxModal.style.display === "flex"
 ){
 
 inboxModal.style.display =
 "none";
 
-document.body.style.overflow =
-"";
+document.body.classList.remove(
+"no-scroll"
+);
 
 return;
 
 }
 
+if(
+orderModal.style.display === "flex"
+){
+
+orderModal.style.display =
+"none";
+
+document.body.classList.remove(
+"no-scroll"
+);
+
+return;
+
+}
+
+if(
+createOrderModal.style.display === "flex"
+){
+
+createOrderModal.style.display =
+"none";
+
+return;
+
+}
 
 if(
 document.getElementById(
 "detailModal"
-).style.display ===
-"flex"
+).style.display === "flex"
 ){
 
 closeProductDetail();
@@ -4501,58 +5213,81 @@ AUTO REFRESH
 setInterval(
 async function(){
 
-/*
-รีเฟรชแชท
-*/
-
 if(
-chatModal.style.display ===
-"flex"
+chatModal.style.display === "flex"
 ){
 
 await loadMessages();
 
 }
 
-
-/*
-ตรวจข้อความใหม่
-เป็นระบบสำรอง Realtime
-*/
-
 if(currentUserId){
 
 await checkForNewMessages();
 
-}
-
-
-/*
-อัปเดต badge
-*/
-
-if(currentUserId){
-
 await updateMessageBadge();
 
+await updateOrderBadge();
+
 }
 
-
-/*
-รีเฟรช Inbox
-*/
-
 if(
-inboxModal.style.display ===
-"flex"
+inboxModal.style.display === "flex"
 ){
 
 await loadInbox();
 
 }
 
+if(
+orderModal.style.display === "flex"
+){
+
+await loadOrders();
+
+}
+
 },
 3000
+);
+
+
+/* =====================================================
+SEARCH
+===================================================== */
+
+const searchInput =
+document.getElementById(
+"searchInput"
+);
+
+const searchButton =
+document.getElementById(
+"searchButton"
+);
+
+searchButton.onclick =
+function(){
+
+loadProducts(
+searchInput.value.trim()
+);
+
+};
+
+searchInput.addEventListener(
+"keydown",
+function(event){
+
+if(event.key === "Enter"){
+
+loadProducts(
+searchInput.value.trim()
+);
+
+}
+
+}
 );
 
 
@@ -4571,47 +5306,6 @@ text || "";
 return div.innerHTML;
 
 }
-
-
-/* =====================================================
-SEARCH
-===================================================== */
-
-const searchInput =
-document.getElementById(
-"searchInput"
-);
-
-const searchButton =
-document.getElementById(
-"searchButton"
-);
-
-
-searchButton.onclick =
-function(){
-
-loadProducts(
-searchInput.value.trim()
-);
-
-};
-
-
-searchInput.addEventListener(
-"keydown",
-function(event){
-
-if(event.key === "Enter"){
-
-loadProducts(
-searchInput.value.trim()
-);
-
-}
-
-}
-);
 
 
 /* =====================================================

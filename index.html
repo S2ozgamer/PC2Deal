@@ -30,6 +30,11 @@ button{
   cursor:pointer;
 }
 
+button:disabled{
+  cursor:not-allowed;
+  opacity:.65;
+}
+
 header{
   background:#111827;
   color:white;
@@ -436,6 +441,7 @@ header{
   border-radius:999px;
   font-size:12px;
   font-weight:bold;
+  white-space:nowrap;
 }
 
 .status-pending{
@@ -479,6 +485,16 @@ header{
   flex-wrap:wrap;
   gap:7px;
   margin-top:12px;
+}
+
+.review-action{
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid #e5e7eb;
+}
+
+.review-action .btn{
+  width:100%;
 }
 
 .review-box{
@@ -614,6 +630,7 @@ header{
   display:none;
   z-index:1000;
   max-width:350px;
+  white-space:pre-line;
 }
 
 .toast.show{
@@ -694,6 +711,10 @@ header{
   .modal-box{
     padding:17px;
   }
+
+  .order-head{
+    flex-direction:column;
+  }
 }
 </style>
 </head>
@@ -704,12 +725,15 @@ header{
   <div class="logo">PC2Deal</div>
 
   <div class="header-right">
+
     <button id="orderButton" class="header-btn" style="display:none">
-      📦 ออเดอร์ <span id="orderBadge" class="badge" style="display:none">0</span>
+      📦 ออเดอร์
+      <span id="orderBadge" class="badge" style="display:none">0</span>
     </button>
 
     <button id="messageButton" class="header-btn" style="display:none">
-      💬 ข้อความ <span id="messageBadge" class="badge" style="display:none">0</span>
+      💬 ข้อความ
+      <span id="messageBadge" class="badge" style="display:none">0</span>
     </button>
 
     <button id="sellButton" class="header-btn" style="display:none">
@@ -719,254 +743,543 @@ header{
     <button id="authButton" class="header-btn">
       เข้าสู่ระบบ
     </button>
+
   </div>
 </header>
 
 <section class="hero">
+
   <h1>ตลาดซื้อขายคอมมือสอง</h1>
-  <p>ซื้อ ขาย แลกเปลี่ยน PC และอุปกรณ์คอมพิวเตอร์กับคนไทย</p>
+
+  <p>
+    ซื้อ ขาย แลกเปลี่ยน PC และอุปกรณ์คอมพิวเตอร์กับคนไทย
+  </p>
 
   <div class="search-box">
-    <input id="searchInput" placeholder="ค้นหา GTX 1650, i5, RAM, SSD...">
-    <button id="searchButton">🔎 ค้นหา</button>
+
+    <input
+      id="searchInput"
+      placeholder="ค้นหา GTX 1650, i5, RAM, SSD..."
+    >
+
+    <button id="searchButton">
+      🔎 ค้นหา
+    </button>
+
   </div>
+
 </section>
 
 <main class="container">
 
   <div class="section-head">
+
     <h2>🔥 สินค้าล่าสุด</h2>
-    <button class="btn btn-primary" id="refreshButton">รีเฟรช</button>
+
+    <button
+      class="btn btn-primary"
+      id="refreshButton"
+    >
+      รีเฟรช
+    </button>
+
   </div>
 
   <div id="products" class="products">
-    <div class="loading">กำลังโหลดสินค้า...</div>
+    <div class="loading">
+      กำลังโหลดสินค้า...
+    </div>
   </div>
 
 </main>
 
-<!-- AUTH MODAL -->
-<div id="authModal" class="modal">
-  <div class="modal-box">
-    <button class="close" onclick="closeModal('authModal')">×</button>
 
-    <div class="modal-title" id="authTitle">เข้าสู่ระบบ</div>
+<!-- AUTH MODAL -->
+
+<div id="authModal" class="modal">
+
+  <div class="modal-box">
+
+    <button
+      class="close"
+      onclick="closeModal('authModal')"
+    >
+      ×
+    </button>
+
+    <div
+      class="modal-title"
+      id="authTitle"
+    >
+      เข้าสู่ระบบ
+    </div>
 
     <form id="authForm">
 
       <div class="form-group">
+
         <label>อีเมล</label>
-        <input id="authEmail" type="email" required>
+
+        <input
+          id="authEmail"
+          type="email"
+          required
+        >
+
       </div>
 
       <div class="form-group">
+
         <label>รหัสผ่าน</label>
-        <input id="authPassword" type="password" required minlength="6">
+
+        <input
+          id="authPassword"
+          type="password"
+          required
+          minlength="6"
+        >
+
       </div>
 
-      <button class="btn btn-primary" style="width:100%" type="submit">
-        <span id="authSubmitText">เข้าสู่ระบบ</span>
+      <button
+        class="btn btn-primary"
+        style="width:100%"
+        type="submit"
+      >
+        <span id="authSubmitText">
+          เข้าสู่ระบบ
+        </span>
       </button>
 
     </form>
 
     <div class="auth-switch">
-      <button id="toggleAuthMode">ยังไม่มีบัญชี? สมัครสมาชิก</button>
+
+      <button id="toggleAuthMode">
+        ยังไม่มีบัญชี? สมัครสมาชิก
+      </button>
+
     </div>
 
     <div class="auth-switch">
-      <button id="forgotPassword">ลืมรหัสผ่าน?</button>
+
+      <button id="forgotPassword">
+        ลืมรหัสผ่าน?
+      </button>
+
     </div>
 
   </div>
+
 </div>
 
-<!-- SELL MODAL -->
-<div id="sellModal" class="modal">
-  <div class="modal-box">
-    <button class="close" onclick="closeModal('sellModal')">×</button>
 
-    <div class="modal-title">ลงขายสินค้า</div>
+<!-- SELL MODAL -->
+
+<div id="sellModal" class="modal">
+
+  <div class="modal-box">
+
+    <button
+      class="close"
+      onclick="closeModal('sellModal')"
+    >
+      ×
+    </button>
+
+    <div class="modal-title">
+      ลงขายสินค้า
+    </div>
 
     <form id="sellForm">
 
       <div class="form-group">
+
         <label>ชื่อสินค้า</label>
-        <input id="sellTitle" required placeholder="เช่น GTX 1650 ASUS 4GB">
+
+        <input
+          id="sellTitle"
+          required
+          placeholder="เช่น GTX 1650 ASUS 4GB"
+        >
+
       </div>
 
       <div class="form-group">
+
         <label>ราคา</label>
-        <input id="sellPrice" type="number" min="0" required>
+
+        <input
+          id="sellPrice"
+          type="number"
+          min="0"
+          required
+        >
+
       </div>
 
       <div class="form-group">
+
         <label>จังหวัด / พื้นที่</label>
-        <input id="sellLocation" required placeholder="เช่น ชลบุรี">
+
+        <input
+          id="sellLocation"
+          required
+          placeholder="เช่น ชลบุรี"
+        >
+
       </div>
 
       <div class="form-group">
+
         <label>รายละเอียด</label>
-        <textarea id="sellDescription" placeholder="รายละเอียดสินค้า สภาพ ประกัน ฯลฯ"></textarea>
+
+        <textarea
+          id="sellDescription"
+          placeholder="รายละเอียดสินค้า สภาพ ประกัน ฯลฯ"
+        ></textarea>
+
       </div>
 
       <div class="form-group">
+
         <label>รูปสินค้า</label>
-        <input id="sellImage" type="file" accept="image/*" required>
+
+        <input
+          id="sellImage"
+          type="file"
+          accept="image/*"
+          required
+        >
+
       </div>
 
-      <button class="btn btn-primary" style="width:100%" type="submit">
+      <button
+        class="btn btn-primary"
+        style="width:100%"
+        type="submit"
+      >
         ลงขายสินค้า
       </button>
 
     </form>
+
   </div>
+
 </div>
+
 
 <!-- PRODUCT DETAIL -->
+
 <div id="detailModal" class="modal">
+
   <div class="modal-box large">
-    <button class="close" onclick="closeModal('detailModal')">×</button>
+
+    <button
+      class="close"
+      onclick="closeModal('detailModal')"
+    >
+      ×
+    </button>
 
     <div id="productDetail"></div>
+
   </div>
+
 </div>
 
+
 <!-- CREATE ORDER -->
+
 <div id="orderCreateModal" class="modal">
+
   <div class="modal-box">
 
-    <button class="close" onclick="closeModal('orderCreateModal')">×</button>
+    <button
+      class="close"
+      onclick="closeModal('orderCreateModal')"
+    >
+      ×
+    </button>
 
-    <div class="modal-title">🛒 สั่งซื้อสินค้า</div>
+    <div class="modal-title">
+      🛒 สั่งซื้อสินค้า
+    </div>
 
     <div id="createOrderProduct"></div>
 
     <form id="createOrderForm">
 
       <div class="form-group">
+
         <label>ชื่อผู้รับ</label>
-        <input id="buyerName" required>
+
+        <input
+          id="buyerName"
+          required
+        >
+
       </div>
 
       <div class="form-group">
+
         <label>เบอร์โทรศัพท์</label>
-        <input id="buyerPhone" required>
+
+        <input
+          id="buyerPhone"
+          required
+        >
+
       </div>
 
       <div class="form-group">
+
         <label>ที่อยู่จัดส่ง</label>
-        <textarea id="buyerAddress" required></textarea>
+
+        <textarea
+          id="buyerAddress"
+          required
+        ></textarea>
+
       </div>
 
-      <button class="btn btn-success" style="width:100%" type="submit">
+      <button
+        class="btn btn-success"
+        style="width:100%"
+        type="submit"
+      >
         ยืนยันการสั่งซื้อ
       </button>
 
     </form>
 
   </div>
+
 </div>
 
+
 <!-- ORDER MODAL -->
+
 <div id="ordersModal" class="modal">
+
   <div class="modal-box large">
 
-    <button class="close" onclick="closeModal('ordersModal')">×</button>
+    <button
+      class="close"
+      onclick="closeModal('ordersModal')"
+    >
+      ×
+    </button>
 
-    <div class="modal-title">📦 ออเดอร์ของฉัน</div>
+    <div class="modal-title">
+      📦 ออเดอร์ของฉัน
+    </div>
 
     <div class="tabs">
-      <button class="tab active" id="buyerTab">🛒 ซื้อ</button>
-      <button class="tab" id="sellerTab">🏪 ขาย</button>
+
+      <button
+        class="tab active"
+        id="buyerTab"
+      >
+        🛒 ซื้อ
+      </button>
+
+      <button
+        class="tab"
+        id="sellerTab"
+      >
+        🏪 ขาย
+      </button>
+
     </div>
 
     <div id="ordersList"></div>
 
   </div>
+
 </div>
 
+
 <!-- REVIEW MODAL -->
+
 <div id="reviewModal" class="modal">
+
   <div class="modal-box">
 
-    <button class="close" onclick="closeModal('reviewModal')">×</button>
+    <button
+      class="close"
+      onclick="closeModal('reviewModal')"
+    >
+      ×
+    </button>
 
-    <div class="modal-title">⭐ ให้คะแนนผู้ขาย</div>
+    <div class="modal-title">
+      ⭐ ให้คะแนนผู้ขาย
+    </div>
 
     <div id="reviewProductInfo"></div>
 
     <div class="form-group">
+
       <label>คะแนน</label>
 
       <div class="star-select">
-        <button type="button" class="star-btn" data-star="1">★</button>
-        <button type="button" class="star-btn" data-star="2">★</button>
-        <button type="button" class="star-btn" data-star="3">★</button>
-        <button type="button" class="star-btn" data-star="4">★</button>
-        <button type="button" class="star-btn" data-star="5">★</button>
+
+        <button
+          type="button"
+          class="star-btn"
+          data-star="1"
+        >
+          ★
+        </button>
+
+        <button
+          type="button"
+          class="star-btn"
+          data-star="2"
+        >
+          ★
+        </button>
+
+        <button
+          type="button"
+          class="star-btn"
+          data-star="3"
+        >
+          ★
+        </button>
+
+        <button
+          type="button"
+          class="star-btn"
+          data-star="4"
+        >
+          ★
+        </button>
+
+        <button
+          type="button"
+          class="star-btn"
+          data-star="5"
+        >
+          ★
+        </button>
+
       </div>
+
     </div>
 
     <div class="form-group">
+
       <label>รีวิว</label>
-      <textarea id="reviewComment" placeholder="บอกประสบการณ์การซื้อขายของคุณ..."></textarea>
+
+      <textarea
+        id="reviewComment"
+        placeholder="บอกประสบการณ์การซื้อขายของคุณ..."
+      ></textarea>
+
     </div>
 
-    <button id="submitReviewButton" class="btn btn-primary" style="width:100%">
+    <button
+      id="submitReviewButton"
+      class="btn btn-primary"
+      style="width:100%"
+    >
       ส่งรีวิว
     </button>
 
   </div>
+
 </div>
 
+
 <!-- INBOX -->
+
 <div id="inboxModal" class="modal">
+
   <div class="modal-box large">
 
-    <button class="close" onclick="closeModal('inboxModal')">×</button>
+    <button
+      class="close"
+      onclick="closeModal('inboxModal')"
+    >
+      ×
+    </button>
 
-    <div class="modal-title">💬 ข้อความ</div>
+    <div class="modal-title">
+      💬 ข้อความ
+    </div>
 
     <div id="inboxList"></div>
 
   </div>
+
 </div>
 
+
 <!-- CHAT -->
+
 <div id="chatModal" class="modal">
+
   <div class="modal-box">
 
-    <button class="close" onclick="closeModal('chatModal')">×</button>
+    <button
+      class="close"
+      onclick="closeModal('chatModal')"
+    >
+      ×
+    </button>
 
-    <div class="modal-title" id="chatTitle">💬 แชต</div>
+    <div
+      class="modal-title"
+      id="chatTitle"
+    >
+      💬 แชต
+    </div>
 
-    <div id="chatMessages" class="chat-messages"></div>
+    <div
+      id="chatMessages"
+      class="chat-messages"
+    ></div>
 
     <div class="chat-input">
-      <input id="chatInput" placeholder="พิมพ์ข้อความ...">
-      <button id="sendMessageButton" class="btn btn-primary">
+
+      <input
+        id="chatInput"
+        placeholder="พิมพ์ข้อความ..."
+      >
+
+      <button
+        id="sendMessageButton"
+        class="btn btn-primary"
+      >
         ส่ง
       </button>
+
     </div>
 
   </div>
+
 </div>
+
 
 <div id="toast" class="toast"></div>
 
+
 <script>
-const SUPABASE_URL = "https://jnkeffwgnjjebujrcprb.supabase.co";
 
-/*
-  ใช้ publishable key ตัวเดิมของโปรเจกต์
-*/
-const SUPABASE_KEY = "sb_publishable_q0UFEgWWvBZLXPlEwLX01w_HhK47RtP";
+const SUPABASE_URL =
+  "https://jnkeffwgnjjebujrcprb.supabase.co";
 
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const SUPABASE_KEY =
+  "sb_publishable_q0UFEgWWvBZLXPlEwLX01w_HhK47RtP";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
 
 let currentUser = null;
 let currentUserId = null;
@@ -985,7 +1298,6 @@ let currentChatProductId = null;
 let realtimeChannel = null;
 let orderRealtimeChannel = null;
 
-let lastOrderStates = {};
 let knownMessageIds = new Set();
 
 let pollingTimer = null;
@@ -996,28 +1308,52 @@ let pollingTimer = null;
 ========================= */
 
 function closeModal(id){
-  document.getElementById(id).classList.remove("active");
+
+  document
+    .getElementById(id)
+    .classList.remove("active");
+
 }
+
 
 function openModal(id){
-  document.getElementById(id).classList.add("active");
+
+  document
+    .getElementById(id)
+    .classList.add("active");
+
 }
 
+
 function showToast(message){
-  const toast = document.getElementById("toast");
+
+  const toast =
+    document.getElementById("toast");
 
   toast.textContent = message;
+
   toast.classList.add("show");
 
   clearTimeout(window.toastTimer);
 
-  window.toastTimer = setTimeout(()=>{
-    toast.classList.remove("show");
-  },3500);
+  window.toastTimer =
+    setTimeout(()=>{
+      toast.classList.remove("show");
+    },3500);
+
 }
 
+
 function escapeHTML(value){
-  if(value === null || value === undefined) return "";
+
+  if(
+    value === null ||
+    value === undefined
+  ){
+
+    return "";
+
+  }
 
   return String(value)
     .replace(/&/g,"&amp;")
@@ -1025,42 +1361,92 @@ function escapeHTML(value){
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
+
 }
+
 
 function formatPrice(price){
-  return Number(price || 0).toLocaleString("th-TH");
+
+  return Number(price || 0)
+    .toLocaleString("th-TH");
+
 }
+
 
 function formatDate(date){
+
   if(!date) return "";
 
-  return new Date(date).toLocaleString("th-TH",{
-    dateStyle:"medium",
-    timeStyle:"short"
-  });
+  return new Date(date)
+    .toLocaleString(
+      "th-TH",
+      {
+        dateStyle:"medium",
+        timeStyle:"short"
+      }
+    );
+
 }
+
 
 function statusText(status){
+
+  const normalized =
+    String(status || "")
+      .trim()
+      .toLowerCase();
+
   const map = {
+
     pending:"รอผู้ขายยืนยัน",
+
     confirmed:"ผู้ขายยืนยันแล้ว",
+
     shipping:"กำลังจัดส่ง",
+
     shipped:"จัดส่งแล้ว",
+
     completed:"ซื้อขายสำเร็จ",
+
     cancelled:"ยกเลิก"
+
   };
 
-  return map[status] || status;
+  return map[normalized] ||
+    status ||
+    "ไม่ทราบสถานะ";
+
 }
+
 
 function statusClass(status){
-  return "status-" + status;
+
+  const normalized =
+    String(status || "")
+      .trim()
+      .toLowerCase();
+
+  return "status-" + normalized;
+
 }
 
-function starsHTML(rating){
-  const r = Math.round(Number(rating || 0));
 
-  return "★".repeat(r) + "☆".repeat(5-r);
+function starsHTML(rating){
+
+  const r =
+    Math.max(
+      0,
+      Math.min(
+        5,
+        Math.round(
+          Number(rating || 0)
+        )
+      )
+    );
+
+  return "★".repeat(r) +
+    "☆".repeat(5-r);
+
 }
 
 
@@ -1074,10 +1460,16 @@ async function checkUser(){
     data:{
       user
     }
-  } = await supabaseClient.auth.getUser();
+  } =
+    await supabaseClient.auth.getUser();
 
-  currentUser = user || null;
-  currentUserId = user ? user.id : null;
+  currentUser =
+    user || null;
+
+  currentUserId =
+    user
+      ? user.id
+      : null;
 
   updateAuthUI();
 
@@ -1086,9 +1478,11 @@ async function checkUser(){
     await ensureProfile();
 
     initializeMessaging();
+
     initializeOrderRealtime();
 
     await updateMessageBadge();
+
     await updateOrderBadge();
 
   }else{
@@ -1096,33 +1490,57 @@ async function checkUser(){
     stopRealtime();
 
   }
+
 }
+
 
 function updateAuthUI(){
 
-  const authButton = document.getElementById("authButton");
-  const orderButton = document.getElementById("orderButton");
-  const messageButton = document.getElementById("messageButton");
-  const sellButton = document.getElementById("sellButton");
+  const authButton =
+    document.getElementById("authButton");
+
+  const orderButton =
+    document.getElementById("orderButton");
+
+  const messageButton =
+    document.getElementById("messageButton");
+
+  const sellButton =
+    document.getElementById("sellButton");
+
 
   if(currentUser){
 
-    authButton.textContent = "ออกจากระบบ";
+    authButton.textContent =
+      "ออกจากระบบ";
 
-    orderButton.style.display = "inline-block";
-    messageButton.style.display = "inline-block";
-    sellButton.style.display = "inline-block";
+    orderButton.style.display =
+      "inline-block";
+
+    messageButton.style.display =
+      "inline-block";
+
+    sellButton.style.display =
+      "inline-block";
 
   }else{
 
-    authButton.textContent = "เข้าสู่ระบบ";
+    authButton.textContent =
+      "เข้าสู่ระบบ";
 
-    orderButton.style.display = "none";
-    messageButton.style.display = "none";
-    sellButton.style.display = "none";
+    orderButton.style.display =
+      "none";
+
+    messageButton.style.display =
+      "none";
+
+    sellButton.style.display =
+      "none";
 
   }
+
 }
+
 
 async function ensureProfile(){
 
@@ -1130,84 +1548,134 @@ async function ensureProfile(){
 
   const {
     data
-  } = await supabaseClient
-    .from("profiles")
-    .select("id")
-    .eq("id",currentUser.id)
-    .maybeSingle();
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select("id")
+      .eq("id",currentUser.id)
+      .maybeSingle();
 
   if(!data){
 
     await supabaseClient
       .from("profiles")
       .insert({
+
         id:currentUser.id,
-        display_name:"ผู้ใช้ PC2Deal"
+
+        display_name:
+          "ผู้ใช้ PC2Deal"
+
       });
 
   }
+
 }
+
 
 async function login(){
 
-  const email = document.getElementById("authEmail").value.trim();
-  const password = document.getElementById("authPassword").value;
+  const email =
+    document
+      .getElementById("authEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("authPassword")
+      .value;
+
 
   const {
     error
-  } = await supabaseClient.auth.signInWithPassword({
-    email,
-    password
-  });
+  } =
+    await supabaseClient.auth
+      .signInWithPassword({
+
+        email,
+        password
+
+      });
+
 
   if(error){
 
     alert(error.message);
+
     return;
 
   }
 
+
   closeModal("authModal");
 
-  showToast("เข้าสู่ระบบสำเร็จ");
+  showToast(
+    "เข้าสู่ระบบสำเร็จ"
+  );
 
   await checkUser();
+
 }
+
 
 async function register(){
 
-  const email = document.getElementById("authEmail").value.trim();
-  const password = document.getElementById("authPassword").value;
+  const email =
+    document
+      .getElementById("authEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("authPassword")
+      .value;
+
 
   const {
     data,
     error
-  } = await supabaseClient.auth.signUp({
-    email,
-    password
-  });
+  } =
+    await supabaseClient.auth
+      .signUp({
+
+        email,
+        password
+
+      });
+
 
   if(error){
 
     alert(error.message);
+
     return;
 
   }
 
+
   if(data.session){
 
-    showToast("สมัครสมาชิกสำเร็จ");
+    showToast(
+      "สมัครสมาชิกสำเร็จ"
+    );
 
   }else{
 
-    alert("สมัครสมาชิกสำเร็จ กรุณาตรวจสอบอีเมลเพื่อยืนยันบัญชี");
+    alert(
+      "สมัครสมาชิกสำเร็จ กรุณาตรวจสอบอีเมลเพื่อยืนยันบัญชี"
+    );
 
   }
+
 
   closeModal("authModal");
 
   await checkUser();
+
 }
+
 
 async function logout(){
 
@@ -1216,27 +1684,40 @@ async function logout(){
   await supabaseClient.auth.signOut();
 
   currentUser = null;
+
   currentUserId = null;
 
   updateAuthUI();
 
-  showToast("ออกจากระบบแล้ว");
+  showToast(
+    "ออกจากระบบแล้ว"
+  );
+
 }
+
 
 async function resetPassword(){
 
-  const email = prompt("กรอกอีเมลที่ใช้สมัคร");
+  const email =
+    prompt(
+      "กรอกอีเมลที่ใช้สมัคร"
+    );
 
   if(!email) return;
 
+
   const {
     error
-  } = await supabaseClient.auth.resetPasswordForEmail(
-    email,
-    {
-      redirectTo:"https://s2ozgamer.github.io/PC2Deal/"
-    }
-  );
+  } =
+    await supabaseClient.auth
+      .resetPasswordForEmail(
+        email,
+        {
+          redirectTo:
+            "https://s2ozgamer.github.io/PC2Deal/"
+        }
+      );
+
 
   if(error){
 
@@ -1244,9 +1725,12 @@ async function resetPassword(){
 
   }else{
 
-    alert("ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมลแล้ว");
+    alert(
+      "ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมลแล้ว"
+    );
 
   }
+
 }
 
 
@@ -1256,73 +1740,103 @@ async function resetPassword(){
 
 async function loadProducts(){
 
-  const container = document.getElementById("products");
+  const container =
+    document.getElementById("products");
 
-  container.innerHTML = `<div class="loading">กำลังโหลดสินค้า...</div>`;
+  container.innerHTML =
+    `<div class="loading">
+      กำลังโหลดสินค้า...
+    </div>`;
 
-  let query = supabaseClient
-    .from("products")
-    .select("*")
-    .eq("status","active")
-    .order("created_at",{ascending:false});
 
-  const search = document.getElementById("searchInput").value.trim();
+  let query =
+    supabaseClient
+      .from("products")
+      .select("*")
+      .eq("status","active")
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+  const search =
+    document
+      .getElementById("searchInput")
+      .value
+      .trim();
+
 
   if(search){
 
-    query = query.or(
-      `title.ilike.%${search}%,description.ilike.%${search}%`
-    );
+    query =
+      query.or(
+        `title.ilike.%${search}%,description.ilike.%${search}%`
+      );
 
   }
+
 
   const {
     data,
     error
-  } = await query;
+  } =
+    await query;
+
 
   if(error){
 
     console.error(error);
 
     container.innerHTML =
-      `<div class="empty">โหลดสินค้าไม่สำเร็จ</div>`;
+      `<div class="empty">
+        โหลดสินค้าไม่สำเร็จ
+      </div>`;
 
     return;
 
   }
 
-  if(!data || data.length === 0){
+
+  if(
+    !data ||
+    data.length === 0
+  ){
 
     container.innerHTML =
-      `<div class="empty">ยังไม่มีสินค้าที่ตรงกับการค้นหา</div>`;
+      `<div class="empty">
+        ยังไม่มีสินค้าที่ตรงกับการค้นหา
+      </div>`;
 
     return;
 
   }
+
 
   container.innerHTML = "";
 
-  for(const product of data){
 
-    const card = await createProductCard(product);
+  for(
+    const product of data
+  ){
+
+    const card =
+      await createProductCard(
+        product
+      );
 
     container.appendChild(card);
 
   }
+
 }
+
 
 async function getSellerRating(userId){
 
-  const {
-    data,
-    error
-  } = await supabaseClient
-    .from("reviews")
-    .select("rating")
-    .eq("seller_id",userId);
-
-  if(error || !data || data.length === 0){
+  if(!userId){
 
     return {
       average:0,
@@ -1331,30 +1845,85 @@ async function getSellerRating(userId){
 
   }
 
-  const total = data.reduce(
-    (sum,item)=>sum + Number(item.rating || 0),
-    0
-  );
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("reviews")
+      .select("rating")
+      .eq(
+        "seller_id",
+        userId
+      );
+
+
+  if(
+    error ||
+    !data ||
+    data.length === 0
+  ){
+
+    return {
+      average:0,
+      count:0
+    };
+
+  }
+
+
+  const total =
+    data.reduce(
+      (sum,item)=>
+        sum +
+        Number(
+          item.rating || 0
+        ),
+      0
+    );
+
 
   return {
-    average:total / data.length,
-    count:data.length
+
+    average:
+      total / data.length,
+
+    count:
+      data.length
+
   };
+
 }
 
-async function createProductCard(product){
 
-  const card = document.createElement("div");
+async function createProductCard(
+  product
+){
 
-  card.className = "product-card";
+  const card =
+    document.createElement("div");
 
-  const rating = await getSellerRating(product.user_id);
+  card.className =
+    "product-card";
 
-  const image = product.image_url
-    ? escapeHTML(product.image_url)
-    : "https://placehold.co/600x400?text=PC2Deal";
+
+  const rating =
+    await getSellerRating(
+      product.user_id
+    );
+
+
+  const image =
+    product.image_url
+      ? escapeHTML(
+          product.image_url
+        )
+      : "https://placehold.co/600x400?text=PC2Deal";
+
 
   card.innerHTML = `
+
     <img
       class="product-image"
       src="${image}"
@@ -1372,7 +1941,10 @@ async function createProductCard(product){
       </div>
 
       <div class="location">
-        📍 ${escapeHTML(product.location || "ไม่ระบุ")}
+        📍 ${escapeHTML(
+          product.location ||
+          "ไม่ระบุ"
+        )}
       </div>
 
       <div class="seller">
@@ -1383,44 +1955,74 @@ async function createProductCard(product){
         rating.count > 0
         ?
         `<div class="rating">
-          ${starsHTML(rating.average)}
+          ${starsHTML(
+            rating.average
+          )}
           ${rating.average.toFixed(1)}
           (${rating.count} รีวิว)
         </div>`
         :
-        `<div class="seller">ยังไม่มีรีวิว</div>`
+        `<div class="seller">
+          ยังไม่มีรีวิว
+        </div>`
       }
 
       <div class="card-actions">
 
-        <button class="btn btn-primary detail-btn">
+        <button
+          class="btn btn-primary detail-btn"
+        >
           ดูรายละเอียด
         </button>
 
       </div>
 
     </div>
+
   `;
 
-  const sellerElement = card.querySelector(".seller");
+
+  const sellerElement =
+    card.querySelector(
+      ".seller"
+    );
+
 
   const {
     data:seller
-  } = await supabaseClient
-    .from("profiles")
-    .select("display_name")
-    .eq("id",product.user_id)
-    .maybeSingle();
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select("display_name")
+      .eq(
+        "id",
+        product.user_id
+      )
+      .maybeSingle();
+
 
   sellerElement.textContent =
-    "👤 " + (seller?.display_name || "ผู้ขาย PC2Deal");
+    "👤 " +
+    (
+      seller?.display_name ||
+      "ผู้ขาย PC2Deal"
+    );
 
-  card.querySelector(".detail-btn")
-    .addEventListener("click",()=>{
-      showProductDetail(product);
-    });
+
+  card
+    .querySelector(".detail-btn")
+    .addEventListener(
+      "click",
+      ()=>{
+        showProductDetail(
+          product
+        );
+      }
+    );
+
 
   return card;
+
 }
 
 
@@ -1428,90 +2030,157 @@ async function createProductCard(product){
    PRODUCT DETAIL
 ========================= */
 
-async function showProductDetail(product){
+async function showProductDetail(
+  product
+){
 
-  currentProduct = product;
+  currentProduct =
+    product;
+
 
   const container =
-    document.getElementById("productDetail");
+    document.getElementById(
+      "productDetail"
+    );
+
 
   container.innerHTML =
-    `<div class="loading">กำลังโหลด...</div>`;
+    `<div class="loading">
+      กำลังโหลด...
+    </div>`;
 
-  openModal("detailModal");
 
-  const rating = await getSellerRating(product.user_id);
+  openModal(
+    "detailModal"
+  );
+
+
+  const rating =
+    await getSellerRating(
+      product.user_id
+    );
+
 
   const {
     data:seller
-  } = await supabaseClient
-    .from("profiles")
-    .select("display_name")
-    .eq("id",product.user_id)
-    .maybeSingle();
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select("display_name")
+      .eq(
+        "id",
+        product.user_id
+      )
+      .maybeSingle();
+
 
   const {
     data:reviews
-  } = await supabaseClient
-    .from("reviews")
-    .select(`
-      rating,
-      comment,
-      created_at,
-      reviewer_id
-    `)
-    .eq("seller_id",product.user_id)
-    .order("created_at",{ascending:false})
-    .limit(10);
+  } =
+    await supabaseClient
+      .from("reviews")
+      .select(`
+        rating,
+        comment,
+        created_at,
+        reviewer_id
+      `)
+      .eq(
+        "seller_id",
+        product.user_id
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      )
+      .limit(10);
 
-  const image = product.image_url
-    ? escapeHTML(product.image_url)
-    : "https://placehold.co/800x500?text=PC2Deal";
+
+  const image =
+    product.image_url
+      ? escapeHTML(
+          product.image_url
+        )
+      : "https://placehold.co/800x500?text=PC2Deal";
+
 
   let reviewHTML = "";
 
-  if(reviews && reviews.length){
+
+  if(
+    reviews &&
+    reviews.length
+  ){
 
     reviewHTML = `
+
       <div class="review-box">
-        <h3>⭐ รีวิวผู้ขาย</h3>
+
+        <h3>
+          ⭐ รีวิวผู้ขาย
+        </h3>
 
         ${
-          reviews.map(review=>`
-            <div class="review-item">
+          reviews
+            .map(
+              review=>`
 
-              <div class="review-stars">
-                ${starsHTML(review.rating)}
+              <div class="review-item">
+
+                <div class="review-stars">
+                  ${starsHTML(
+                    review.rating
+                  )}
+                </div>
+
+                <div class="review-comment">
+                  ${escapeHTML(
+                    review.comment ||
+                    "ไม่ได้เขียนความคิดเห็น"
+                  )}
+                </div>
+
+                <div class="review-user">
+                  ${formatDate(
+                    review.created_at
+                  )}
+                </div>
+
               </div>
 
-              <div class="review-comment">
-                ${escapeHTML(review.comment || "ไม่ได้เขียนความคิดเห็น")}
-              </div>
-
-              <div class="review-user">
-                ${formatDate(review.created_at)}
-              </div>
-
-            </div>
-          `).join("")
+            `
+            )
+            .join("")
         }
 
       </div>
+
     `;
 
   }else{
 
     reviewHTML = `
+
       <div class="review-box">
-        <strong>⭐ ยังไม่มีรีวิว</strong>
+
+        <strong>
+          ⭐ ยังไม่มีรีวิว
+        </strong>
+
       </div>
+
     `;
 
   }
 
+
   const isOwner =
     currentUserId &&
-    currentUserId === product.user_id;
+    currentUserId ===
+      product.user_id;
+
 
   container.innerHTML = `
 
@@ -1522,37 +2191,57 @@ async function showProductDetail(product){
     >
 
     <div class="detail-title">
-      ${escapeHTML(product.title)}
+      ${escapeHTML(
+        product.title
+      )}
     </div>
 
     <div class="detail-price">
-      ฿${formatPrice(product.price)}
+      ฿${formatPrice(
+        product.price
+      )}
     </div>
 
     <div class="detail-info">
 
       <div>
-        📍 ${escapeHTML(product.location || "ไม่ระบุ")}
+        📍 ${escapeHTML(
+          product.location ||
+          "ไม่ระบุ"
+        )}
       </div>
 
       <div style="margin-top:6px">
-        👤 ${escapeHTML(seller?.display_name || "ผู้ขาย PC2Deal")}
+
+        👤 ${escapeHTML(
+          seller?.display_name ||
+          "ผู้ขาย PC2Deal"
+        )}
+
       </div>
 
       <div style="margin-top:6px">
+
         ${
           rating.count
           ?
-          `⭐ ${rating.average.toFixed(1)} / 5 (${rating.count} รีวิว)`
+          `⭐ ${rating.average.toFixed(1)}
+          / 5 (${rating.count} รีวิว)`
           :
           `⭐ ยังไม่มีรีวิว`
         }
+
       </div>
 
     </div>
 
     <div class="detail-description">
-      ${escapeHTML(product.description || "ไม่มีรายละเอียด")}
+
+      ${escapeHTML(
+        product.description ||
+        "ไม่มีรายละเอียด"
+      )}
+
     </div>
 
     <div class="detail-actions">
@@ -1561,46 +2250,71 @@ async function showProductDetail(product){
         !isOwner
         ?
         `
-        <button id="buyProductButton" class="btn btn-success">
-          🛒 ซื้อสินค้า
-        </button>
+          <button
+            id="buyProductButton"
+            class="btn btn-success"
+          >
+            🛒 ซื้อสินค้า
+          </button>
 
-        <button id="contactSellerButton" class="btn btn-primary">
-          💬 ติดต่อผู้ขาย
-        </button>
+          <button
+            id="contactSellerButton"
+            class="btn btn-primary"
+          >
+            💬 ติดต่อผู้ขาย
+          </button>
         `
         :
         `
-        <button class="btn btn-secondary" disabled>
-          สินค้าของคุณ
-        </button>
+          <button
+            class="btn btn-secondary"
+            disabled
+          >
+            สินค้าของคุณ
+          </button>
         `
       }
 
     </div>
 
     ${reviewHTML}
+
   `;
+
 
   if(!isOwner){
 
     document
-      .getElementById("buyProductButton")
-      ?.addEventListener("click",()=>{
-        openCreateOrder(product);
-      });
+      .getElementById(
+        "buyProductButton"
+      )
+      ?.addEventListener(
+        "click",
+        ()=>{
+          openCreateOrder(
+            product
+          );
+        }
+      );
+
 
     document
-      .getElementById("contactSellerButton")
-      ?.addEventListener("click",()=>{
-        openChat(
-          product.user_id,
-          product.id,
-          product.title
-        );
-      });
+      .getElementById(
+        "contactSellerButton"
+      )
+      ?.addEventListener(
+        "click",
+        ()=>{
+          openChat(
+            product.user_id,
+            product.id,
+            product.title
+          );
+        }
+      );
 
   }
+
 }
 
 
@@ -1608,91 +2322,188 @@ async function showProductDetail(product){
    SELL
 ========================= */
 
-async function sellProduct(event){
+async function sellProduct(
+  event
+){
 
   event.preventDefault();
 
+
   if(!currentUser){
 
-    alert("กรุณาเข้าสู่ระบบก่อน");
+    alert(
+      "กรุณาเข้าสู่ระบบก่อน"
+    );
+
     return;
 
   }
 
+
   const title =
-    document.getElementById("sellTitle").value.trim();
+    document
+      .getElementById(
+        "sellTitle"
+      )
+      .value
+      .trim();
+
 
   const price =
-    Number(document.getElementById("sellPrice").value);
+    Number(
+      document
+        .getElementById(
+          "sellPrice"
+        )
+        .value
+    );
+
 
   const location =
-    document.getElementById("sellLocation").value.trim();
+    document
+      .getElementById(
+        "sellLocation"
+      )
+      .value
+      .trim();
+
 
   const description =
-    document.getElementById("sellDescription").value.trim();
+    document
+      .getElementById(
+        "sellDescription"
+      )
+      .value
+      .trim();
+
 
   const file =
-    document.getElementById("sellImage").files[0];
+    document
+      .getElementById(
+        "sellImage"
+      )
+      .files[0];
+
 
   if(!file){
 
-    alert("กรุณาเลือกรูปสินค้า");
+    alert(
+      "กรุณาเลือกรูปสินค้า"
+    );
+
     return;
 
   }
 
+
   try{
 
-    showToast("กำลังอัปโหลดรูป...");
+    showToast(
+      "กำลังอัปโหลดรูป..."
+    );
+
 
     const ext =
-      file.name.split(".").pop();
+      file.name
+        .split(".")
+        .pop();
+
 
     const filename =
       `${currentUser.id}/${Date.now()}.${ext}`;
 
+
     const {
       error:uploadError
-    } = await supabaseClient
-      .storage
-      .from("product-images")
-      .upload(filename,file,{
-        upsert:false
-      });
+    } =
+      await supabaseClient
+        .storage
+        .from(
+          "product-images"
+        )
+        .upload(
+          filename,
+          file,
+          {
+            upsert:false
+          }
+        );
 
-    if(uploadError) throw uploadError;
+
+    if(uploadError){
+
+      throw uploadError;
+
+    }
+
 
     const {
       data:publicData
-    } = supabaseClient
-      .storage
-      .from("product-images")
-      .getPublicUrl(filename);
+    } =
+      supabaseClient
+        .storage
+        .from(
+          "product-images"
+        )
+        .getPublicUrl(
+          filename
+        );
+
 
     const imageUrl =
       publicData.publicUrl;
 
+
     const {
       error
-    } = await supabaseClient
-      .from("products")
-      .insert({
-        user_id:currentUser.id,
-        title,
-        price,
-        location,
-        description,
-        image_url:imageUrl,
-        status:"active"
-      });
+    } =
+      await supabaseClient
+        .from("products")
+        .insert({
 
-    if(error) throw error;
+          user_id:
+            currentUser.id,
 
-    document.getElementById("sellForm").reset();
+          title,
 
-    closeModal("sellModal");
+          price,
 
-    showToast("ลงขายสินค้าเรียบร้อย");
+          location,
+
+          description,
+
+          image_url:
+            imageUrl,
+
+          status:
+            "active"
+
+        });
+
+
+    if(error){
+
+      throw error;
+
+    }
+
+
+    document
+      .getElementById(
+        "sellForm"
+      )
+      .reset();
+
+
+    closeModal(
+      "sellModal"
+    );
+
+
+    showToast(
+      "ลงขายสินค้าเรียบร้อย"
+    );
+
 
     await loadProducts();
 
@@ -1700,9 +2511,13 @@ async function sellProduct(event){
 
     console.error(error);
 
-    alert("ลงขายไม่สำเร็จ: " + error.message);
+    alert(
+      "ลงขายไม่สำเร็จ: " +
+      error.message
+    );
 
   }
+
 }
 
 
@@ -1710,107 +2525,228 @@ async function sellProduct(event){
    CREATE ORDER
 ========================= */
 
-function openCreateOrder(product){
+function openCreateOrder(
+  product
+){
 
   if(!currentUser){
 
-    closeModal("detailModal");
+    closeModal(
+      "detailModal"
+    );
 
-    openModal("authModal");
+    openModal(
+      "authModal"
+    );
 
     return;
 
   }
 
-  if(product.user_id === currentUser.id){
 
-    alert("ไม่สามารถซื้อสินค้าของตัวเองได้");
+  if(
+    product.user_id ===
+    currentUser.id
+  ){
+
+    alert(
+      "ไม่สามารถซื้อสินค้าของตัวเองได้"
+    );
+
     return;
 
   }
 
-  currentProduct = product;
 
-  document.getElementById("createOrderProduct").innerHTML = `
-    <div class="order-card">
+  currentProduct =
+    product;
 
-      <div class="order-title">
-        ${escapeHTML(product.title)}
+
+  document
+    .getElementById(
+      "createOrderProduct"
+    )
+    .innerHTML = `
+
+      <div class="order-card">
+
+        <div class="order-title">
+          ${escapeHTML(
+            product.title
+          )}
+        </div>
+
+        <div class="price">
+          ฿${formatPrice(
+            product.price
+          )}
+        </div>
+
       </div>
 
-      <div class="price">
-        ฿${formatPrice(product.price)}
-      </div>
+    `;
 
-    </div>
-  `;
 
-  document.getElementById("buyerName").value = "";
-  document.getElementById("buyerPhone").value = "";
-  document.getElementById("buyerAddress").value = "";
+  document
+    .getElementById(
+      "buyerName"
+    )
+    .value = "";
 
-  closeModal("detailModal");
 
-  openModal("orderCreateModal");
+  document
+    .getElementById(
+      "buyerPhone"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "buyerAddress"
+    )
+    .value = "";
+
+
+  closeModal(
+    "detailModal"
+  );
+
+  openModal(
+    "orderCreateModal"
+  );
+
 }
 
-async function createOrder(event){
+
+async function createOrder(
+  event
+){
 
   event.preventDefault();
 
-  if(!currentUser || !currentProduct){
 
-    alert("ข้อมูลไม่ครบ");
+  if(
+    !currentUser ||
+    !currentProduct
+  ){
+
+    alert(
+      "ข้อมูลไม่ครบ"
+    );
+
     return;
 
   }
+
 
   const name =
-    document.getElementById("buyerName").value.trim();
+    document
+      .getElementById(
+        "buyerName"
+      )
+      .value
+      .trim();
+
 
   const phone =
-    document.getElementById("buyerPhone").value.trim();
+    document
+      .getElementById(
+        "buyerPhone"
+      )
+      .value
+      .trim();
+
 
   const address =
-    document.getElementById("buyerAddress").value.trim();
+    document
+      .getElementById(
+        "buyerAddress"
+      )
+      .value
+      .trim();
 
-  if(!name || !phone || !address){
 
-    alert("กรุณากรอกข้อมูลให้ครบ");
+  if(
+    !name ||
+    !phone ||
+    !address
+  ){
+
+    alert(
+      "กรุณากรอกข้อมูลให้ครบ"
+    );
+
     return;
 
   }
+
 
   const {
     error
-  } = await supabaseClient
-    .from("orders")
-    .insert({
-      product_id:currentProduct.id,
-      buyer_id:currentUser.id,
-      seller_id:currentProduct.user_id,
-      product_title:currentProduct.title,
-      price:Number(currentProduct.price),
-      buyer_name:name,
-      buyer_phone:phone,
-      buyer_address:address,
-      status:"pending"
-    });
+  } =
+    await supabaseClient
+      .from("orders")
+      .insert({
+
+        product_id:
+          currentProduct.id,
+
+        buyer_id:
+          currentUser.id,
+
+        seller_id:
+          currentProduct.user_id,
+
+        product_title:
+          currentProduct.title,
+
+        price:
+          Number(
+            currentProduct.price
+          ),
+
+        buyer_name:
+          name,
+
+        buyer_phone:
+          phone,
+
+        buyer_address:
+          address,
+
+        status:
+          "pending"
+
+      });
+
 
   if(error){
 
     console.error(error);
 
-    alert("สร้างออเดอร์ไม่สำเร็จ: " + error.message);
+    alert(
+      "สร้างออเดอร์ไม่สำเร็จ: " +
+      error.message
+    );
+
     return;
 
   }
 
-  closeModal("orderCreateModal");
 
-  showToast("🛒 สั่งซื้อสำเร็จ รอผู้ขายยืนยัน");
+  closeModal(
+    "orderCreateModal"
+  );
+
+
+  showToast(
+    "🛒 สั่งซื้อสำเร็จ รอผู้ขายยืนยัน"
+  );
+
 
   await updateOrderBadge();
+
 }
 
 
@@ -1822,57 +2758,102 @@ async function openOrders(){
 
   if(!currentUser){
 
-    openModal("authModal");
+    openModal(
+      "authModal"
+    );
+
     return;
 
   }
 
-  orderMode = "buyer";
 
-  document.getElementById("buyerTab").classList.add("active");
-  document.getElementById("sellerTab").classList.remove("active");
+  orderMode =
+    "buyer";
 
-  openModal("ordersModal");
+
+  document
+    .getElementById(
+      "buyerTab"
+    )
+    .classList
+    .add("active");
+
+
+  document
+    .getElementById(
+      "sellerTab"
+    )
+    .classList
+    .remove("active");
+
+
+  openModal(
+    "ordersModal"
+  );
+
 
   await loadOrders();
+
 }
+
 
 async function loadOrders(){
 
   if(!currentUser) return;
 
+
   const container =
-    document.getElementById("ordersList");
+    document.getElementById(
+      "ordersList"
+    );
+
 
   container.innerHTML =
-    `<div class="loading">กำลังโหลดออเดอร์...</div>`;
+    `<div class="loading">
+      กำลังโหลดออเดอร์...
+    </div>`;
+
 
   let query =
     supabaseClient
       .from("orders")
       .select("*")
-      .order("created_at",{ascending:false});
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
 
-  if(orderMode === "buyer"){
 
-    query = query.eq(
-      "buyer_id",
-      currentUser.id
-    );
+  if(
+    orderMode ===
+    "buyer"
+  ){
+
+    query =
+      query.eq(
+        "buyer_id",
+        currentUser.id
+      );
 
   }else{
 
-    query = query.eq(
-      "seller_id",
-      currentUser.id
-    );
+    query =
+      query.eq(
+        "seller_id",
+        currentUser.id
+      );
 
   }
+
 
   const {
     data,
     error
-  } = await query;
+  } =
+    await query;
+
 
   if(error){
 
@@ -1881,21 +2862,29 @@ async function loadOrders(){
     container.innerHTML =
       `<div class="empty">
         โหลดออเดอร์ไม่สำเร็จ<br>
-        ${escapeHTML(error.message)}
+        ${escapeHTML(
+          error.message
+        )}
       </div>`;
 
     return;
 
   }
 
-  if(!data || data.length === 0){
+
+  if(
+    !data ||
+    data.length === 0
+  ){
 
     container.innerHTML =
       `<div class="empty">
         ${
           orderMode === "buyer"
-          ? "ยังไม่มีประวัติการซื้อ"
-          : "ยังไม่มีประวัติการขาย"
+          ?
+          "ยังไม่มีประวัติการซื้อ"
+          :
+          "ยังไม่มีประวัติการขาย"
         }
       </div>`;
 
@@ -1903,171 +2892,361 @@ async function loadOrders(){
 
   }
 
+
   container.innerHTML = "";
 
-  for(const order of data){
+
+  for(
+    const order of data
+  ){
 
     const card =
-      await renderOrderCard(order);
+      await renderOrderCard(
+        order
+      );
 
-    container.appendChild(card);
+    container.appendChild(
+      card
+    );
 
   }
+
 }
 
-async function hasReview(orderId){
+
+async function hasReview(
+  orderId
+){
 
   if(!currentUser) return false;
 
+
   const {
-    data
-  } = await supabaseClient
-    .from("reviews")
-    .select("id")
-    .eq("order_id",orderId)
-    .eq("reviewer_id",currentUser.id)
-    .maybeSingle();
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("reviews")
+      .select("id")
+      .eq(
+        "order_id",
+        orderId
+      )
+      .eq(
+        "reviewer_id",
+        currentUser.id
+      )
+      .maybeSingle();
+
+
+  if(error){
+
+    console.error(
+      "hasReview:",
+      error
+    );
+
+    return false;
+
+  }
+
 
   return !!data;
+
 }
 
-async function renderOrderCard(order){
+
+/*
+  จุดสำคัญ:
+  ปุ่มรีวิวตรวจจาก buyer_id
+  โดยตรง ไม่พึ่ง orderMode
+*/
+
+async function renderOrderCard(
+  order
+){
 
   const card =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
-  card.className = "order-card";
 
-  let reviewButton = "";
+  card.className =
+    "order-card";
+
+
+  const normalizedStatus =
+    String(
+      order.status || ""
+    )
+      .trim()
+      .toLowerCase();
+
+
+  const isBuyer =
+    String(
+      order.buyer_id || ""
+    ) ===
+    String(
+      currentUser?.id ||
+      currentUserId ||
+      ""
+    );
+
+
+  const isSeller =
+    String(
+      order.seller_id || ""
+    ) ===
+    String(
+      currentUser?.id ||
+      currentUserId ||
+      ""
+    );
+
+
+  let actions = "";
+
+
+  /*
+    SELLER ACTIONS
+  */
+
+  if(isSeller){
+
+    if(
+      normalizedStatus ===
+      "pending"
+    ){
+
+      actions = `
+
+        <button
+          class="btn btn-success confirm-btn"
+        >
+          ✅ ยืนยันออเดอร์
+        </button>
+
+        <button
+          class="btn btn-danger cancel-btn"
+        >
+          ❌ ยกเลิก
+        </button>
+
+      `;
+
+    }else if(
+      normalizedStatus ===
+      "confirmed"
+    ){
+
+      actions = `
+
+        <button
+          class="btn btn-primary shipping-btn"
+        >
+          🚚 ส่งสินค้า
+        </button>
+
+        <button
+          class="btn btn-danger cancel-btn"
+        >
+          ❌ ยกเลิก
+        </button>
+
+      `;
+
+    }else if(
+      normalizedStatus ===
+      "shipping"
+    ){
+
+      actions = `
+
+        <button
+          class="btn btn-primary shipped-btn"
+        >
+          📦 แจ้งจัดส่งแล้ว
+        </button>
+
+      `;
+
+    }
+
+  }
+
+
+  /*
+    BUYER ACTIONS
+  */
+
+  if(isBuyer){
+
+    if(
+      normalizedStatus ===
+      "pending"
+    ){
+
+      actions += `
+
+        <button
+          class="btn btn-danger cancel-btn"
+        >
+          ❌ ยกเลิกออเดอร์
+        </button>
+
+      `;
+
+    }else if(
+      normalizedStatus ===
+      "shipped"
+    ){
+
+      actions += `
+
+        <button
+          class="btn btn-success completed-btn"
+        >
+          ✅ ได้รับสินค้าแล้ว
+        </button>
+
+      `;
+
+    }
+
+  }
+
+
+  /*
+    REVIEW BUTTON
+    แยกออกจาก order-actions
+    เพื่อไม่ให้ CSS หรือ action อื่น
+    ทำให้ปุ่มหาย
+  */
+
+  let reviewHTML = "";
+
 
   if(
-    orderMode === "buyer" &&
-    order.status === "completed"
+    isBuyer &&
+    normalizedStatus ===
+    "completed"
   ){
 
     const alreadyReviewed =
-      await hasReview(order.id);
+      await hasReview(
+        order.id
+      );
+
 
     if(alreadyReviewed){
 
-      reviewButton = `
-        <button class="btn btn-secondary" disabled>
-          ⭐ รีวิวแล้ว
-        </button>
+      reviewHTML = `
+
+        <div class="review-action">
+
+          <button
+            class="btn btn-secondary"
+            disabled
+          >
+            ⭐ รีวิวแล้ว
+          </button>
+
+        </div>
+
       `;
 
     }else{
 
-      reviewButton = `
-        <button class="btn btn-warning review-btn">
-          ⭐ ให้คะแนนผู้ขาย
-        </button>
-      `;
+      reviewHTML = `
 
-    }
-  }
+        <div class="review-action">
 
-  let actions = "";
+          <button
+            class="btn btn-warning review-btn"
+          >
+            ⭐ ให้คะแนนผู้ขาย
+          </button>
 
-  if(orderMode === "seller"){
+        </div>
 
-    if(order.status === "pending"){
-
-      actions = `
-        <button class="btn btn-success confirm-btn">
-          ✅ ยืนยันออเดอร์
-        </button>
-
-        <button class="btn btn-danger cancel-btn">
-          ❌ ยกเลิก
-        </button>
-      `;
-
-    }else if(order.status === "confirmed"){
-
-      actions = `
-        <button class="btn btn-primary shipping-btn">
-          🚚 ส่งสินค้า
-        </button>
-
-        <button class="btn btn-danger cancel-btn">
-          ❌ ยกเลิก
-        </button>
-      `;
-
-    }else if(order.status === "shipping"){
-
-      actions = `
-        <button class="btn btn-primary shipped-btn">
-          📦 แจ้งจัดส่งแล้ว
-        </button>
-      `;
-
-    }
-
-  }else{
-
-    if(order.status === "pending"){
-
-      actions = `
-        <button class="btn btn-danger cancel-btn">
-          ❌ ยกเลิกออเดอร์
-        </button>
-      `;
-
-    }else if(order.status === "shipped"){
-
-      actions = `
-        <button class="btn btn-success completed-btn">
-          ✅ ได้รับสินค้าแล้ว
-        </button>
       `;
 
     }
 
   }
+
+
+  /*
+    ORDER HTML
+  */
 
   card.innerHTML = `
 
     <div class="order-head">
 
       <div class="order-title">
-        ${escapeHTML(order.product_title)}
+        ${escapeHTML(
+          order.product_title
+        )}
       </div>
 
-      <span class="status ${statusClass(order.status)}">
-        ${statusText(order.status)}
+      <span
+        class="status ${statusClass(
+          normalizedStatus
+        )}"
+      >
+        ${statusText(
+          normalizedStatus
+        )}
       </span>
 
     </div>
 
+
     <div class="price">
-      ฿${formatPrice(order.price)}
+      ฿${formatPrice(
+        order.price
+      )}
     </div>
+
 
     <div class="order-meta">
 
-      📅 ${formatDate(order.created_at)}
+      📅 ${formatDate(
+        order.created_at
+      )}
 
       <br>
 
       ${
-        orderMode === "buyer"
+        isBuyer
         ?
         "🏪 ผู้ขาย: กำลังโหลด..."
         :
-        "🛒 ผู้ซื้อ: " + escapeHTML(order.buyer_name || "-")
+        "🛒 ผู้ซื้อ: " +
+        escapeHTML(
+          order.buyer_name ||
+          "-"
+        )
       }
 
       ${
-        orderMode === "seller"
+        isSeller
         ?
         `
-        <br>
-        📞 ${escapeHTML(order.buyer_phone || "-")}
+          <br>
+          📞 ${escapeHTML(
+            order.buyer_phone ||
+            "-"
+          )}
 
-        <br>
-        📍 ${escapeHTML(order.buyer_address || "-")}
+          <br>
+          📍 ${escapeHTML(
+            order.buyer_address ||
+            "-"
+          )}
         `
         :
         ""
@@ -2075,89 +3254,163 @@ async function renderOrderCard(order){
 
     </div>
 
-    <div class="order-actions">
-      ${actions}
-      ${reviewButton}
-    </div>
+
+    ${
+      actions
+      ?
+      `
+        <div class="order-actions">
+          ${actions}
+        </div>
+      `
+      :
+      ""
+    }
+
+
+    ${reviewHTML}
+
   `;
 
-  if(orderMode === "buyer"){
+
+  /*
+    LOAD SELLER NAME
+  */
+
+  if(isBuyer){
 
     const sellerLine =
-      card.querySelector(".order-meta");
+      card.querySelector(
+        ".order-meta"
+      );
+
 
     const {
       data:seller
-    } = await supabaseClient
-      .from("profiles")
-      .select("display_name")
-      .eq("id",order.seller_id)
-      .maybeSingle();
-
-    sellerLine.innerHTML =
-      sellerLine.innerHTML.replace(
-        "🏪 ผู้ขาย: กำลังโหลด...",
-        "🏪 ผู้ขาย: " +
-        escapeHTML(
-          seller?.display_name ||
-          "ผู้ขาย PC2Deal"
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select("display_name")
+        .eq(
+          "id",
+          order.seller_id
         )
-      );
+        .maybeSingle();
+
+
+    if(sellerLine){
+
+      sellerLine.innerHTML =
+        sellerLine.innerHTML
+          .replace(
+            "🏪 ผู้ขาย: กำลังโหลด...",
+            "🏪 ผู้ขาย: " +
+            escapeHTML(
+              seller?.display_name ||
+              "ผู้ขาย PC2Deal"
+            )
+          );
+
+    }
 
   }
 
-  card
-    .querySelector(".confirm-btn")
-    ?.addEventListener("click",()=>{
-      changeOrderStatus(
-        order,
-        "confirmed"
-      );
-    });
+
+  /*
+    BUTTON EVENTS
+  */
 
   card
-    .querySelector(".shipping-btn")
-    ?.addEventListener("click",()=>{
-      changeOrderStatus(
-        order,
-        "shipping"
-      );
-    });
+    .querySelector(
+      ".confirm-btn"
+    )
+    ?.addEventListener(
+      "click",
+      ()=>{
+        changeOrderStatus(
+          order,
+          "confirmed"
+        );
+      }
+    );
+
 
   card
-    .querySelector(".shipped-btn")
-    ?.addEventListener("click",()=>{
-      changeOrderStatus(
-        order,
-        "shipped"
-      );
-    });
+    .querySelector(
+      ".shipping-btn"
+    )
+    ?.addEventListener(
+      "click",
+      ()=>{
+        changeOrderStatus(
+          order,
+          "shipping"
+        );
+      }
+    );
+
 
   card
-    .querySelector(".completed-btn")
-    ?.addEventListener("click",()=>{
-      changeOrderStatus(
-        order,
-        "completed"
-      );
-    });
+    .querySelector(
+      ".shipped-btn"
+    )
+    ?.addEventListener(
+      "click",
+      ()=>{
+        changeOrderStatus(
+          order,
+          "shipped"
+        );
+      }
+    );
+
 
   card
-    .querySelector(".cancel-btn")
-    ?.addEventListener("click",()=>{
-      changeOrderStatus(
-        order,
-        "cancelled"
-      );
-    });
+    .querySelector(
+      ".completed-btn"
+    )
+    ?.addEventListener(
+      "click",
+      ()=>{
+        changeOrderStatus(
+          order,
+          "completed"
+        );
+      }
+    );
+
 
   card
-    .querySelector(".review-btn")
-    ?.addEventListener("click",()=>{
-      openReview(order);
-    });
+    .querySelector(
+      ".cancel-btn"
+    )
+    ?.addEventListener(
+      "click",
+      ()=>{
+        changeOrderStatus(
+          order,
+          "cancelled"
+        );
+      }
+    );
+
+
+  card
+    .querySelector(
+      ".review-btn"
+    )
+    ?.addEventListener(
+      "click",
+      ()=>{
+        openReview(
+          order
+        );
+      }
+    );
+
 
   return card;
+
 }
 
 
@@ -2165,51 +3418,139 @@ async function renderOrderCard(order){
    ORDER STATUS
 ========================= */
 
-async function changeOrderStatus(order,newStatus){
+async function changeOrderStatus(
+  order,
+  newStatus
+){
 
   if(!currentUser) return;
 
+
+  const isSeller =
+    String(
+      order.seller_id
+    ) ===
+    String(
+      currentUser.id
+    );
+
+
+  const isBuyer =
+    String(
+      order.buyer_id
+    ) ===
+    String(
+      currentUser.id
+    );
+
+
   if(
-    orderMode === "seller" &&
-    order.seller_id !== currentUser.id
+    newStatus === "confirmed" ||
+    newStatus === "shipping" ||
+    newStatus === "shipped"
   ){
 
-    alert("ไม่มีสิทธิ์");
-    return;
+    if(!isSeller){
+
+      alert(
+        "เฉพาะผู้ขายเท่านั้นที่ทำรายการนี้ได้"
+      );
+
+      return;
+
+    }
 
   }
 
+
   if(
-    orderMode === "buyer" &&
-    order.buyer_id !== currentUser.id
+    newStatus === "completed"
   ){
 
-    alert("ไม่มีสิทธิ์");
-    return;
+    if(!isBuyer){
+
+      alert(
+        "เฉพาะผู้ซื้อเท่านั้นที่ยืนยันรับสินค้าได้"
+      );
+
+      return;
+
+    }
 
   }
+
+
+  if(
+    newStatus === "cancelled"
+  ){
+
+    if(
+      !isBuyer &&
+      !isSeller
+    ){
+
+      alert(
+        "ไม่มีสิทธิ์"
+      );
+
+      return;
+
+    }
+
+  }
+
 
   const confirmText = {
-    confirmed:"ยืนยันออเดอร์นี้หรือไม่?",
-    shipping:"ยืนยันว่าจะส่งสินค้าให้ออเดอร์นี้หรือไม่?",
-    shipped:"ยืนยันว่าได้จัดส่งสินค้าแล้วหรือไม่?",
-    completed:"ยืนยันว่าได้รับสินค้าและซื้อขายสำเร็จแล้วหรือไม่?",
-    cancelled:"ต้องการยกเลิกออเดอร์นี้หรือไม่?"
+
+    confirmed:
+      "ยืนยันออเดอร์นี้หรือไม่?",
+
+    shipping:
+      "ยืนยันว่าจะส่งสินค้าให้ออเดอร์นี้หรือไม่?",
+
+    shipped:
+      "ยืนยันว่าได้จัดส่งสินค้าแล้วหรือไม่?",
+
+    completed:
+      "ยืนยันว่าได้รับสินค้าและซื้อขายสำเร็จแล้วหรือไม่?",
+
+    cancelled:
+      "ต้องการยกเลิกออเดอร์นี้หรือไม่?"
+
   };
 
-  if(!confirm(confirmText[newStatus] || "ยืนยันการเปลี่ยนสถานะ?")){
+
+  if(
+    !confirm(
+      confirmText[newStatus] ||
+      "ยืนยันการเปลี่ยนสถานะ?"
+    )
+  ){
+
     return;
+
   }
+
 
   const {
     error
-  } = await supabaseClient
-    .from("orders")
-    .update({
-      status:newStatus,
-      updated_at:new Date().toISOString()
-    })
-    .eq("id",order.id);
+  } =
+    await supabaseClient
+      .from("orders")
+      .update({
+
+        status:
+          newStatus,
+
+        updated_at:
+          new Date().toISOString()
+
+      })
+      .eq(
+        "id",
+        order.id
+      );
+
 
   if(error){
 
@@ -2224,50 +3565,75 @@ async function changeOrderStatus(order,newStatus){
 
   }
 
+
   /*
     เปลี่ยนสถานะสินค้า
   */
 
-  if(newStatus === "confirmed"){
+  if(
+    newStatus ===
+    "confirmed"
+  ){
 
     await supabaseClient
       .from("products")
       .update({
         status:"reserved"
       })
-      .eq("id",order.product_id);
+      .eq(
+        "id",
+        order.product_id
+      );
 
   }
 
-  if(newStatus === "cancelled"){
+
+  if(
+    newStatus ===
+    "cancelled"
+  ){
 
     await supabaseClient
       .from("products")
       .update({
         status:"active"
       })
-      .eq("id",order.product_id);
+      .eq(
+        "id",
+        order.product_id
+      );
 
   }
 
-  if(newStatus === "completed"){
+
+  if(
+    newStatus ===
+    "completed"
+  ){
 
     await supabaseClient
       .from("products")
       .update({
         status:"sold"
       })
-      .eq("id",order.product_id);
+      .eq(
+        "id",
+        order.product_id
+      );
 
   }
+
 
   showToast(
     "เปลี่ยนสถานะเป็น " +
     statusText(newStatus)
   );
 
+
   await loadOrders();
+
   await updateOrderBadge();
+
 }
 
 
@@ -2275,111 +3641,222 @@ async function changeOrderStatus(order,newStatus){
    REVIEWS
 ========================= */
 
-function openReview(order){
+function openReview(
+  order
+){
 
-  currentOrder = order;
-  selectedRating = 0;
+  currentOrder =
+    order;
 
-  document.getElementById("reviewComment").value = "";
+  selectedRating =
+    0;
+
 
   document
-    .querySelectorAll(".star-btn")
-    .forEach(btn=>{
-      btn.classList.remove("selected");
-    });
+    .getElementById(
+      "reviewComment"
+    )
+    .value = "";
 
-  document.getElementById("reviewProductInfo").innerHTML = `
-    <div class="order-card">
 
-      <strong>
-        ${escapeHTML(order.product_title)}
-      </strong>
+  document
+    .querySelectorAll(
+      ".star-btn"
+    )
+    .forEach(
+      btn=>{
+        btn.classList
+          .remove(
+            "selected"
+          );
+      }
+    );
 
-      <div style="margin-top:5px">
-        ฿${formatPrice(order.price)}
+
+  document
+    .getElementById(
+      "reviewProductInfo"
+    )
+    .innerHTML = `
+
+      <div class="order-card">
+
+        <strong>
+          ${escapeHTML(
+            order.product_title
+          )}
+        </strong>
+
+        <div style="margin-top:5px">
+
+          ฿${formatPrice(
+            order.price
+          )}
+
+        </div>
+
       </div>
 
-    </div>
-  `;
+    `;
 
-  openModal("reviewModal");
+
+  openModal(
+    "reviewModal"
+  );
+
 }
 
-function selectRating(value){
 
-  selectedRating = Number(value);
+function selectRating(
+  value
+){
+
+  selectedRating =
+    Number(value);
+
 
   document
-    .querySelectorAll(".star-btn")
-    .forEach(btn=>{
+    .querySelectorAll(
+      ".star-btn"
+    )
+    .forEach(
+      btn=>{
 
-      const star =
-        Number(btn.dataset.star);
+        const star =
+          Number(
+            btn.dataset.star
+          );
 
-      btn.classList.toggle(
-        "selected",
-        star <= selectedRating
-      );
 
-    });
+        btn.classList.toggle(
+          "selected",
+          star <=
+          selectedRating
+        );
+
+      }
+    );
+
 }
+
 
 async function submitReview(){
 
-  if(!currentUser || !currentOrder){
+  if(
+    !currentUser ||
+    !currentOrder
+  ){
 
-    alert("ข้อมูลไม่ครบ");
+    alert(
+      "ข้อมูลไม่ครบ"
+    );
+
     return;
 
   }
 
-  if(currentOrder.status !== "completed"){
 
-    alert("สามารถรีวิวได้หลังซื้อขายสำเร็จเท่านั้น");
+  const normalizedStatus =
+    String(
+      currentOrder.status ||
+      ""
+    )
+      .trim()
+      .toLowerCase();
+
+
+  if(
+    normalizedStatus !==
+    "completed"
+  ){
+
+    alert(
+      "สามารถรีวิวได้หลังซื้อขายสำเร็จเท่านั้น"
+    );
+
     return;
 
   }
 
-  if(currentOrder.buyer_id !== currentUser.id){
 
-    alert("เฉพาะผู้ซื้อเท่านั้นที่รีวิวได้");
+  if(
+    String(
+      currentOrder.buyer_id
+    ) !==
+    String(
+      currentUser.id
+    )
+  ){
+
+    alert(
+      "เฉพาะผู้ซื้อเท่านั้นที่รีวิวได้"
+    );
+
     return;
 
   }
 
-  if(selectedRating < 1 || selectedRating > 5){
 
-    alert("กรุณาเลือกคะแนน 1–5 ดาว");
+  if(
+    selectedRating < 1 ||
+    selectedRating > 5
+  ){
+
+    alert(
+      "กรุณาเลือกคะแนน 1–5 ดาว"
+    );
+
     return;
 
   }
+
 
   const comment =
-    document.getElementById("reviewComment")
+    document
+      .getElementById(
+        "reviewComment"
+      )
       .value
       .trim();
 
+
   const {
     error
-  } = await supabaseClient
-    .from("reviews")
-    .insert({
-      order_id:currentOrder.id,
-      reviewer_id:currentUser.id,
-      seller_id:currentOrder.seller_id,
-      rating:selectedRating,
-      comment:comment || null
-    });
+  } =
+    await supabaseClient
+      .from("reviews")
+      .insert({
+
+        order_id:
+          currentOrder.id,
+
+        reviewer_id:
+          currentUser.id,
+
+        seller_id:
+          currentOrder.seller_id,
+
+        rating:
+          selectedRating,
+
+        comment:
+          comment || null
+
+      });
+
 
   if(error){
 
     console.error(error);
 
     if(
-      error.code === "23505"
+      error.code ===
+      "23505"
     ){
 
-      alert("ออเดอร์นี้รีวิวไปแล้ว");
+      alert(
+        "ออเดอร์นี้รีวิวไปแล้ว"
+      );
 
     }else{
 
@@ -2394,17 +3871,28 @@ async function submitReview(){
 
   }
 
-  closeModal("reviewModal");
 
-  showToast("⭐ ขอบคุณสำหรับรีวิว");
+  closeModal(
+    "reviewModal"
+  );
+
+
+  showToast(
+    "⭐ ขอบคุณสำหรับรีวิว"
+  );
+
 
   await loadOrders();
 
+
   if(currentProduct){
 
-    await showProductDetail(currentProduct);
+    await showProductDetail(
+      currentProduct
+    );
 
   }
+
 }
 
 
@@ -2416,53 +3904,72 @@ function initializeMessaging(){
 
   if(!currentUser) return;
 
+
   if(realtimeChannel){
 
     supabaseClient
-      .removeChannel(realtimeChannel);
+      .removeChannel(
+        realtimeChannel
+      );
 
   }
 
+
   realtimeChannel =
     supabaseClient
-      .channel("messages-" + currentUser.id)
+      .channel(
+        "messages-" +
+        currentUser.id
+      )
       .on(
         "postgres_changes",
         {
           event:"INSERT",
           schema:"public",
           table:"messages",
-          filter:`receiver_id=eq.${currentUser.id}`
+          filter:
+            `receiver_id=eq.${currentUser.id}`
         },
         async payload=>{
 
           const message =
             payload.new;
 
+
           if(
-            message.sender_id === currentUser.id
+            message.sender_id ===
+            currentUser.id
           ){
 
             return;
 
           }
 
+
           if(
-            knownMessageIds.has(message.id)
+            knownMessageIds.has(
+              message.id
+            )
           ){
 
             return;
 
           }
 
-          knownMessageIds.add(message.id);
+
+          knownMessageIds.add(
+            message.id
+          );
+
 
           notifyUser(
             "💬 มีข้อความใหม่",
             message.message
           );
 
+
           await updateMessageBadge();
+
 
           if(
             currentChatUserId ===
@@ -2476,123 +3983,198 @@ function initializeMessaging(){
         }
       )
       .subscribe();
+
 }
+
 
 function stopRealtime(){
 
   if(realtimeChannel){
 
     supabaseClient
-      .removeChannel(realtimeChannel);
+      .removeChannel(
+        realtimeChannel
+      );
 
-    realtimeChannel = null;
+    realtimeChannel =
+      null;
 
   }
+
 
   if(orderRealtimeChannel){
 
     supabaseClient
-      .removeChannel(orderRealtimeChannel);
+      .removeChannel(
+        orderRealtimeChannel
+      );
 
-    orderRealtimeChannel = null;
+    orderRealtimeChannel =
+      null;
 
   }
+
 }
+
 
 async function openInbox(){
 
   if(!currentUser){
 
-    openModal("authModal");
+    openModal(
+      "authModal"
+    );
+
     return;
 
   }
 
-  openModal("inboxModal");
+
+  openModal(
+    "inboxModal"
+  );
+
 
   await loadInbox();
 
 }
 
+
 async function loadInbox(){
 
   const container =
-    document.getElementById("inboxList");
+    document.getElementById(
+      "inboxList"
+    );
+
 
   container.innerHTML =
-    `<div class="loading">กำลังโหลด...</div>`;
+    `<div class="loading">
+      กำลังโหลด...
+    </div>`;
+
 
   const {
     data,
     error
-  } = await supabaseClient
-    .from("messages")
-    .select("*")
-    .or(
-      `sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`
-    )
-    .order("created_at",{ascending:false});
+  } =
+    await supabaseClient
+      .from("messages")
+      .select("*")
+      .or(
+        `sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
 
   if(error){
 
     container.innerHTML =
-      `<div class="empty">โหลดข้อความไม่สำเร็จ</div>`;
+      `<div class="empty">
+        โหลดข้อความไม่สำเร็จ
+      </div>`;
 
     return;
 
   }
 
-  if(!data || data.length === 0){
+
+  if(
+    !data ||
+    data.length === 0
+  ){
 
     container.innerHTML =
-      `<div class="empty">ยังไม่มีข้อความ</div>`;
+      `<div class="empty">
+        ยังไม่มีข้อความ
+      </div>`;
 
     return;
 
   }
+
 
   const groups = {};
 
-  for(const msg of data){
+
+  for(
+    const msg of data
+  ){
 
     const otherUser =
-      msg.sender_id === currentUser.id
-      ? msg.receiver_id
-      : msg.sender_id;
+      msg.sender_id ===
+      currentUser.id
+      ?
+      msg.receiver_id
+      :
+      msg.sender_id;
+
 
     const key =
-      otherUser + "|" + (msg.product_id || "");
+      otherUser +
+      "|" +
+      (
+        msg.product_id ||
+        ""
+      );
+
 
     if(!groups[key]){
 
       groups[key] = {
+
         otherUser,
-        productId:msg.product_id,
-        message:msg
+
+        productId:
+          msg.product_id,
+
+        message:
+          msg
+
       };
 
     }
 
   }
 
-  container.innerHTML = "";
 
-  for(const key of Object.keys(groups)){
+  container.innerHTML =
+    "";
+
+
+  for(
+    const key of Object.keys(
+      groups
+    )
+  ){
 
     const item =
       groups[key];
 
-    let productTitle = "สินค้า";
+
+    let productTitle =
+      "สินค้า";
+
 
     if(item.productId){
 
       const {
         data:product
-      } = await supabaseClient
-        .from("products")
-        .select("title")
-        .eq("id",item.productId)
-        .maybeSingle();
+      } =
+        await supabaseClient
+          .from("products")
+          .select("title")
+          .eq(
+            "id",
+            item.productId
+          )
+          .maybeSingle();
+
 
       if(product){
 
@@ -2603,77 +4185,135 @@ async function loadInbox(){
 
     }
 
+
     const {
       data:profile
-    } = await supabaseClient
-      .from("profiles")
-      .select("display_name")
-      .eq("id",item.otherUser)
-      .maybeSingle();
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select("display_name")
+        .eq(
+          "id",
+          item.otherUser
+        )
+        .maybeSingle();
+
 
     const div =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
-    div.className = "inbox-item";
+
+    div.className =
+      "inbox-item";
+
 
     div.innerHTML = `
 
       <div class="inbox-title">
+
         💬 ${escapeHTML(
           profile?.display_name ||
           "ผู้ใช้ PC2Deal"
         )}
+
       </div>
 
       <div class="inbox-preview">
-        📦 ${escapeHTML(productTitle)}
+
+        📦 ${escapeHTML(
+          productTitle
+        )}
+
       </div>
 
       <div class="inbox-preview">
-        ${escapeHTML(item.message.message)}
+
+        ${escapeHTML(
+          item.message.message
+        )}
+
       </div>
 
     `;
 
-    div.addEventListener("click",()=>{
 
-      openChat(
-        item.otherUser,
-        item.productId,
-        productTitle
-      );
+    div.addEventListener(
+      "click",
+      ()=>{
+        openChat(
+          item.otherUser,
+          item.productId,
+          productTitle
+        );
+      }
+    );
 
-    });
 
-    container.appendChild(div);
+    container.appendChild(
+      div
+    );
 
   }
 
 }
 
-function openChat(userId,productId,productTitle){
+
+function openChat(
+  userId,
+  productId,
+  productTitle
+){
 
   if(!currentUser){
 
-    openModal("authModal");
+    openModal(
+      "authModal"
+    );
+
     return;
 
   }
 
-  currentChatUserId = userId;
-  currentChatProductId = productId;
 
-  document.getElementById("chatTitle").textContent =
-    "💬 " + (productTitle || "แชต");
+  currentChatUserId =
+    userId;
 
-  closeModal("inboxModal");
-  closeModal("detailModal");
+  currentChatProductId =
+    productId;
 
-  openModal("chatModal");
+
+  document
+    .getElementById(
+      "chatTitle"
+    )
+    .textContent =
+      "💬 " +
+      (
+        productTitle ||
+        "แชต"
+      );
+
+
+  closeModal(
+    "inboxModal"
+  );
+
+  closeModal(
+    "detailModal"
+  );
+
+
+  openModal(
+    "chatModal"
+  );
+
 
   loadChatMessages();
 
 }
+
 
 async function loadChatMessages(){
 
@@ -2686,6 +4326,7 @@ async function loadChatMessages(){
 
   }
 
+
   let query =
     supabaseClient
       .from("messages")
@@ -2693,66 +4334,108 @@ async function loadChatMessages(){
       .or(
         `and(sender_id.eq.${currentUser.id},receiver_id.eq.${currentChatUserId}),and(sender_id.eq.${currentChatUserId},receiver_id.eq.${currentUser.id})`
       )
-      .order("created_at",{ascending:true});
+      .order(
+        "created_at",
+        {
+          ascending:true
+        }
+      );
+
 
   if(currentChatProductId){
 
-    query = query.eq(
-      "product_id",
-      currentChatProductId
-    );
+    query =
+      query.eq(
+        "product_id",
+        currentChatProductId
+      );
 
   }
+
 
   const {
     data,
     error
-  } = await query;
+  } =
+    await query;
+
 
   const container =
-    document.getElementById("chatMessages");
+    document.getElementById(
+      "chatMessages"
+    );
+
 
   if(error){
 
     container.innerHTML =
-      `<div class="empty">โหลดแชตไม่สำเร็จ</div>`;
+      `<div class="empty">
+        โหลดแชตไม่สำเร็จ
+      </div>`;
 
     return;
 
   }
 
-  container.innerHTML = "";
 
-  for(const msg of data || []){
+  container.innerHTML =
+    "";
+
+
+  for(
+    const msg of
+    data || []
+  ){
 
     const div =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
+
 
     div.className =
       "message " +
       (
-        msg.sender_id === currentUser.id
-        ? "mine"
-        : "other"
+        msg.sender_id ===
+        currentUser.id
+        ?
+        "mine"
+        :
+        "other"
       );
 
+
     div.innerHTML = `
+
       <div>
-        ${escapeHTML(msg.message)}
+        ${escapeHTML(
+          msg.message
+        )}
       </div>
 
       <div class="message-time">
-        ${formatDate(msg.created_at)}
+
+        ${formatDate(
+          msg.created_at
+        )}
+
       </div>
+
     `;
 
-    container.appendChild(div);
+
+    container.appendChild(
+      div
+    );
 
   }
 
+
   container.scrollTop =
     container.scrollHeight;
+
 }
+
 
 async function sendMessage(){
 
@@ -2765,24 +4448,41 @@ async function sendMessage(){
 
   }
 
+
   const input =
-    document.getElementById("chatInput");
+    document.getElementById(
+      "chatInput"
+    );
+
 
   const message =
     input.value.trim();
 
+
   if(!message) return;
+
 
   const {
     error
-  } = await supabaseClient
-    .from("messages")
-    .insert({
-      sender_id:currentUser.id,
-      receiver_id:currentChatUserId,
-      product_id:currentChatProductId || null,
-      message
-    });
+  } =
+    await supabaseClient
+      .from("messages")
+      .insert({
+
+        sender_id:
+          currentUser.id,
+
+        receiver_id:
+          currentChatUserId,
+
+        product_id:
+          currentChatProductId ||
+          null,
+
+        message
+
+      });
+
 
   if(error){
 
@@ -2795,7 +4495,10 @@ async function sendMessage(){
 
   }
 
-  input.value = "";
+
+  input.value =
+    "";
+
 
   await loadChatMessages();
 
@@ -2814,31 +4517,57 @@ async function updateMessageBadge(){
 
   }
 
+
   const {
     count,
     error
-  } = await supabaseClient
-    .from("messages")
-    .select("id",{count:"exact",head:true})
-    .eq("receiver_id",currentUser.id);
+  } =
+    await supabaseClient
+      .from("messages")
+      .select(
+        "id",
+        {
+          count:"exact",
+          head:true
+        }
+      )
+      .eq(
+        "receiver_id",
+        currentUser.id
+      );
+
 
   if(error) return;
 
+
   const badge =
-    document.getElementById("messageBadge");
+    document.getElementById(
+      "messageBadge"
+    );
+
 
   if(count > 0){
 
-    badge.textContent = count > 99 ? "99+" : count;
-    badge.style.display = "inline-flex";
+    badge.textContent =
+      count > 99
+      ?
+      "99+"
+      :
+      count;
+
+
+    badge.style.display =
+      "inline-flex";
 
   }else{
 
-    badge.style.display = "none";
+    badge.style.display =
+      "none";
 
   }
 
 }
+
 
 async function checkForNewMessages(){
 
@@ -2857,16 +4586,24 @@ function initializeOrderRealtime(){
 
   if(!currentUser) return;
 
+
   if(orderRealtimeChannel){
 
     supabaseClient
-      .removeChannel(orderRealtimeChannel);
+      .removeChannel(
+        orderRealtimeChannel
+      );
 
   }
 
+
   orderRealtimeChannel =
     supabaseClient
-      .channel("orders-" + currentUser.id)
+      .channel(
+        "orders-" +
+        currentUser.id
+      )
+
 
       .on(
         "postgres_changes",
@@ -2874,19 +4611,25 @@ function initializeOrderRealtime(){
           event:"INSERT",
           schema:"public",
           table:"orders",
-          filter:`seller_id=eq.${currentUser.id}`
+          filter:
+            `seller_id=eq.${currentUser.id}`
         },
         payload=>{
 
           const order =
             payload.new;
 
-          if(order.status === "pending"){
+
+          if(
+            order.status ===
+            "pending"
+          ){
 
             notifyUser(
               "📦 มีออเดอร์ใหม่",
               order.product_title
             );
+
 
             updateOrderBadge();
 
@@ -2894,6 +4637,7 @@ function initializeOrderRealtime(){
 
         }
       )
+
 
       .on(
         "postgres_changes",
@@ -2907,20 +4651,30 @@ function initializeOrderRealtime(){
           const oldOrder =
             payload.old;
 
+
           const order =
             payload.new;
 
+
           const isBuyer =
-            order.buyer_id === currentUser.id;
+            order.buyer_id ===
+            currentUser.id;
+
 
           const isSeller =
-            order.seller_id === currentUser.id;
+            order.seller_id ===
+            currentUser.id;
 
-          if(!isBuyer && !isSeller){
+
+          if(
+            !isBuyer &&
+            !isSeller
+          ){
 
             return;
 
           }
+
 
           if(
             oldOrder.status ===
@@ -2931,61 +4685,95 @@ function initializeOrderRealtime(){
 
           }
 
+
           const isSellerSide =
             isSeller;
 
+
           let text = "";
 
-          if(order.status === "confirmed"){
+
+          if(
+            order.status ===
+            "confirmed"
+          ){
 
             text =
               isSellerSide
-              ? "คุณยืนยันออเดอร์แล้ว"
-              : "ผู้ขายยืนยันออเดอร์แล้ว";
+              ?
+              "คุณยืนยันออเดอร์แล้ว"
+              :
+              "ผู้ขายยืนยันออเดอร์แล้ว";
 
-          }else if(order.status === "shipping"){
-
-            text =
-              isSellerSide
-              ? "กำลังเตรียมจัดส่งสินค้า"
-              : "ผู้ขายกำลังจัดส่งสินค้า";
-
-          }else if(order.status === "shipped"){
+          }else if(
+            order.status ===
+            "shipping"
+          ){
 
             text =
               isSellerSide
-              ? "แจ้งจัดส่งสินค้าแล้ว"
-              : "ผู้ขายจัดส่งสินค้าแล้ว";
+              ?
+              "กำลังเตรียมจัดส่งสินค้า"
+              :
+              "ผู้ขายกำลังจัดส่งสินค้า";
 
-          }else if(order.status === "completed"){
+          }else if(
+            order.status ===
+            "shipped"
+          ){
 
             text =
               isSellerSide
-              ? "ออเดอร์ซื้อขายสำเร็จแล้ว"
-              : "ซื้อขายสำเร็จแล้ว ⭐";
+              ?
+              "แจ้งจัดส่งสินค้าแล้ว"
+              :
+              "ผู้ขายจัดส่งสินค้าแล้ว";
 
-          }else if(order.status === "cancelled"){
+          }else if(
+            order.status ===
+            "completed"
+          ){
 
-            text = "ออเดอร์ถูกยกเลิก";
+            text =
+              isSellerSide
+              ?
+              "ออเดอร์ซื้อขายสำเร็จแล้ว"
+              :
+              "ซื้อขายสำเร็จแล้ว ⭐";
+
+          }else if(
+            order.status ===
+            "cancelled"
+          ){
+
+            text =
+              "ออเดอร์ถูกยกเลิก";
 
           }
+
 
           if(text){
 
             notifyUser(
               "📦 อัปเดตออเดอร์",
-              text + "\n" +
+              text +
+              "\n" +
               order.product_title
             );
 
           }
 
+
           updateOrderBadge();
+
 
           if(
             document
-              .getElementById("ordersModal")
-              .classList.contains("active")
+              .getElementById(
+                "ordersModal"
+              )
+              .classList
+              .contains("active")
           ){
 
             loadOrders();
@@ -2994,6 +4782,7 @@ function initializeOrderRealtime(){
 
         }
       )
+
 
       .subscribe();
 
@@ -3012,44 +4801,72 @@ async function updateOrderBadge(){
 
   }
 
-  /*
-    ฝั่งผู้ขาย:
-    นับออเดอร์ที่รอยืนยัน
-
-    ฝั่งผู้ซื้อ:
-    นับออเดอร์ที่ยังต้องดำเนินการ
-  */
 
   const {
     data:sellerOrders
-  } = await supabaseClient
-    .from("orders")
-    .select("id,status")
-    .eq("seller_id",currentUser.id)
-    .eq("status","pending");
+  } =
+    await supabaseClient
+      .from("orders")
+      .select(
+        "id,status"
+      )
+      .eq(
+        "seller_id",
+        currentUser.id
+      )
+      .eq(
+        "status",
+        "pending"
+      );
+
 
   const {
     data:buyerOrders
-  } = await supabaseClient
-    .from("orders")
-    .select("id,status")
-    .eq("buyer_id",currentUser.id)
-    .in(
-      "status",
-      ["confirmed","shipped"]
-    );
+  } =
+    await supabaseClient
+      .from("orders")
+      .select(
+        "id,status"
+      )
+      .eq(
+        "buyer_id",
+        currentUser.id
+      )
+      .in(
+        "status",
+        [
+          "confirmed",
+          "shipped"
+        ]
+      );
+
 
   const count =
-    (sellerOrders?.length || 0) +
-    (buyerOrders?.length || 0);
+    (
+      sellerOrders?.length ||
+      0
+    ) +
+    (
+      buyerOrders?.length ||
+      0
+    );
+
 
   const badge =
-    document.getElementById("orderBadge");
+    document.getElementById(
+      "orderBadge"
+    );
+
 
   if(count > 0){
 
     badge.textContent =
-      count > 99 ? "99+" : count;
+      count > 99
+      ?
+      "99+"
+      :
+      count;
+
 
     badge.style.display =
       "inline-flex";
@@ -3068,18 +4885,26 @@ async function updateOrderBadge(){
    NOTIFICATIONS
 ========================= */
 
-function notifyUser(title,message){
+function notifyUser(
+  title,
+  message
+){
 
   showToast(
-    title + "\n" + message
+    title +
+    "\n" +
+    message
   );
 
+
   if(
-    "Notification" in window
+    "Notification" in
+    window
   ){
 
     if(
-      Notification.permission === "granted"
+      Notification.permission ===
+      "granted"
     ){
 
       try{
@@ -3087,29 +4912,32 @@ function notifyUser(title,message){
         new Notification(
           title,
           {
-            body:message,
-            icon:"https://placehold.co/128x128?text=PC2"
+            body:
+              message,
+
+            icon:
+              "https://placehold.co/128x128?text=PC2"
           }
         );
 
       }catch(e){}
 
+
     }else if(
-      Notification.permission === "default"
+      Notification.permission ===
+      "default"
     ){
 
       Notification
         .requestPermission()
-        .catch(()=>{});
+        .catch(
+          ()=>{}
+        );
 
     }
 
   }
 
-  /*
-    alert เป็น fallback สำรอง
-    แต่ไม่ยิง alert ทุกครั้งเพื่อไม่รบกวนเกินไป
-  */
 }
 
 
@@ -3121,40 +4949,55 @@ function startPolling(){
 
   if(pollingTimer){
 
-    clearInterval(pollingTimer);
+    clearInterval(
+      pollingTimer
+    );
 
   }
 
+
   pollingTimer =
-    setInterval(async()=>{
+    setInterval(
+      async()=>{
 
-      if(!currentUser) return;
+        if(!currentUser) return;
 
-      await checkForNewMessages();
 
-      await updateOrderBadge();
+        await checkForNewMessages();
 
-      if(
-        document
-          .getElementById("ordersModal")
-          .classList.contains("active")
-      ){
+        await updateOrderBadge();
 
-        await loadOrders();
 
-      }
+        if(
+          document
+            .getElementById(
+              "ordersModal"
+            )
+            .classList
+            .contains("active")
+        ){
 
-      if(
-        document
-          .getElementById("chatModal")
-          .classList.contains("active")
-      ){
+          await loadOrders();
 
-        await loadChatMessages();
+        }
 
-      }
 
-    },3000);
+        if(
+          document
+            .getElementById(
+              "chatModal"
+            )
+            .classList
+            .contains("active")
+        ){
+
+          await loadChatMessages();
+
+        }
+
+      },
+      3000
+    );
 
 }
 
@@ -3164,220 +5007,378 @@ function startPolling(){
 ========================= */
 
 document
-  .getElementById("authButton")
-  .addEventListener("click",async()=>{
+  .getElementById(
+    "authButton"
+  )
+  .addEventListener(
+    "click",
+    async()=>{
 
-    if(currentUser){
+      if(currentUser){
 
-      await logout();
+        await logout();
 
-    }else{
+      }else{
 
-      openModal("authModal");
+        openModal(
+          "authModal"
+        );
 
-    }
-
-  });
-
-document
-  .getElementById("orderButton")
-  .addEventListener("click",openOrders);
-
-document
-  .getElementById("messageButton")
-  .addEventListener("click",openInbox);
-
-document
-  .getElementById("sellButton")
-  .addEventListener("click",()=>{
-
-    if(!currentUser){
-
-      openModal("authModal");
-      return;
+      }
 
     }
+  );
 
-    openModal("sellModal");
-
-  });
 
 document
-  .getElementById("searchButton")
-  .addEventListener("click",loadProducts);
+  .getElementById(
+    "orderButton"
+  )
+  .addEventListener(
+    "click",
+    openOrders
+  );
+
 
 document
-  .getElementById("searchInput")
-  .addEventListener("keydown",event=>{
+  .getElementById(
+    "messageButton"
+  )
+  .addEventListener(
+    "click",
+    openInbox
+  );
 
-    if(event.key === "Enter"){
-
-      loadProducts();
-
-    }
-
-  });
 
 document
-  .getElementById("refreshButton")
-  .addEventListener("click",loadProducts);
+  .getElementById(
+    "sellButton"
+  )
+  .addEventListener(
+    "click",
+    ()=>{
 
-document
-  .getElementById("authForm")
-  .addEventListener("submit",async event=>{
+      if(!currentUser){
 
-    event.preventDefault();
+        openModal(
+          "authModal"
+        );
 
-    if(authMode === "login"){
+        return;
 
-      await login();
+      }
 
-    }else{
-
-      await register();
-
-    }
-
-  });
-
-document
-  .getElementById("toggleAuthMode")
-  .addEventListener("click",()=>{
-
-    if(authMode === "login"){
-
-      authMode = "register";
-
-      document
-        .getElementById("authTitle")
-        .textContent =
-        "สมัครสมาชิก";
-
-      document
-        .getElementById("authSubmitText")
-        .textContent =
-        "สมัครสมาชิก";
-
-      document
-        .getElementById("toggleAuthMode")
-        .textContent =
-        "มีบัญชีแล้ว? เข้าสู่ระบบ";
-
-    }else{
-
-      authMode = "login";
-
-      document
-        .getElementById("authTitle")
-        .textContent =
-        "เข้าสู่ระบบ";
-
-      document
-        .getElementById("authSubmitText")
-        .textContent =
-        "เข้าสู่ระบบ";
-
-      document
-        .getElementById("toggleAuthMode")
-        .textContent =
-        "ยังไม่มีบัญชี? สมัครสมาชิก";
-
-    }
-
-  });
-
-document
-  .getElementById("forgotPassword")
-  .addEventListener("click",resetPassword);
-
-document
-  .getElementById("sellForm")
-  .addEventListener("submit",sellProduct);
-
-document
-  .getElementById("createOrderForm")
-  .addEventListener("submit",createOrder);
-
-document
-  .getElementById("buyerTab")
-  .addEventListener("click",async()=>{
-
-    orderMode = "buyer";
-
-    document
-      .getElementById("buyerTab")
-      .classList.add("active");
-
-    document
-      .getElementById("sellerTab")
-      .classList.remove("active");
-
-    await loadOrders();
-
-  });
-
-document
-  .getElementById("sellerTab")
-  .addEventListener("click",async()=>{
-
-    orderMode = "seller";
-
-    document
-      .getElementById("sellerTab")
-      .classList.add("active");
-
-    document
-      .getElementById("buyerTab")
-      .classList.remove("active");
-
-    await loadOrders();
-
-  });
-
-document
-  .querySelectorAll(".star-btn")
-  .forEach(btn=>{
-
-    btn.addEventListener("click",()=>{
-
-      selectRating(
-        btn.dataset.star
+      openModal(
+        "sellModal"
       );
 
-    });
+    }
+  );
 
-  });
 
 document
-  .getElementById("submitReviewButton")
+  .getElementById(
+    "searchButton"
+  )
+  .addEventListener(
+    "click",
+    loadProducts
+  );
+
+
+document
+  .getElementById(
+    "searchInput"
+  )
+  .addEventListener(
+    "keydown",
+    event=>{
+
+      if(
+        event.key ===
+        "Enter"
+      ){
+
+        loadProducts();
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "refreshButton"
+  )
+  .addEventListener(
+    "click",
+    loadProducts
+  );
+
+
+document
+  .getElementById(
+    "authForm"
+  )
+  .addEventListener(
+    "submit",
+    async event=>{
+
+      event.preventDefault();
+
+
+      if(
+        authMode ===
+        "login"
+      ){
+
+        await login();
+
+      }else{
+
+        await register();
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "toggleAuthMode"
+  )
+  .addEventListener(
+    "click",
+    ()=>{
+
+      if(
+        authMode ===
+        "login"
+      ){
+
+        authMode =
+          "register";
+
+
+        document
+          .getElementById(
+            "authTitle"
+          )
+          .textContent =
+            "สมัครสมาชิก";
+
+
+        document
+          .getElementById(
+            "authSubmitText"
+          )
+          .textContent =
+            "สมัครสมาชิก";
+
+
+        document
+          .getElementById(
+            "toggleAuthMode"
+          )
+          .textContent =
+            "มีบัญชีแล้ว? เข้าสู่ระบบ";
+
+      }else{
+
+        authMode =
+          "login";
+
+
+        document
+          .getElementById(
+            "authTitle"
+          )
+          .textContent =
+            "เข้าสู่ระบบ";
+
+
+        document
+          .getElementById(
+            "authSubmitText"
+          )
+          .textContent =
+            "เข้าสู่ระบบ";
+
+
+        document
+          .getElementById(
+            "toggleAuthMode"
+          )
+          .textContent =
+            "ยังไม่มีบัญชี? สมัครสมาชิก";
+
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "forgotPassword"
+  )
+  .addEventListener(
+    "click",
+    resetPassword
+  );
+
+
+document
+  .getElementById(
+    "sellForm"
+  )
+  .addEventListener(
+    "submit",
+    sellProduct
+  );
+
+
+document
+  .getElementById(
+    "createOrderForm"
+  )
+  .addEventListener(
+    "submit",
+    createOrder
+  );
+
+
+document
+  .getElementById(
+    "buyerTab"
+  )
+  .addEventListener(
+    "click",
+    async()=>{
+
+      orderMode =
+        "buyer";
+
+
+      document
+        .getElementById(
+          "buyerTab"
+        )
+        .classList
+        .add("active");
+
+
+      document
+        .getElementById(
+          "sellerTab"
+        )
+        .classList
+        .remove("active");
+
+
+      await loadOrders();
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "sellerTab"
+  )
+  .addEventListener(
+    "click",
+    async()=>{
+
+      orderMode =
+        "seller";
+
+
+      document
+        .getElementById(
+          "sellerTab"
+        )
+        .classList
+        .add("active");
+
+
+      document
+        .getElementById(
+          "buyerTab"
+        )
+        .classList
+        .remove("active");
+
+
+      await loadOrders();
+
+    }
+  );
+
+
+document
+  .querySelectorAll(
+    ".star-btn"
+  )
+  .forEach(
+    btn=>{
+
+      btn.addEventListener(
+        "click",
+        ()=>{
+          selectRating(
+            btn.dataset.star
+          );
+        }
+      );
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "submitReviewButton"
+  )
   .addEventListener(
     "click",
     submitReview
   );
 
+
 document
-  .getElementById("sendMessageButton")
+  .getElementById(
+    "sendMessageButton"
+  )
   .addEventListener(
     "click",
     sendMessage
   );
 
+
 document
-  .getElementById("chatInput")
-  .addEventListener("keydown",event=>{
+  .getElementById(
+    "chatInput"
+  )
+  .addEventListener(
+    "keydown",
+    event=>{
 
-    if(
-      event.key === "Enter" &&
-      !event.shiftKey
-    ){
+      if(
+        event.key === "Enter" &&
+        !event.shiftKey
+      ){
 
-      event.preventDefault();
+        event.preventDefault();
 
-      sendMessage();
+        sendMessage();
+
+      }
 
     }
-
-  });
+  );
 
 
 /* =========================
@@ -3385,39 +5386,65 @@ document
 ========================= */
 
 document
-  .querySelectorAll(".modal")
-  .forEach(modal=>{
+  .querySelectorAll(
+    ".modal"
+  )
+  .forEach(
+    modal=>{
 
-    modal.addEventListener("click",event=>{
+      modal.addEventListener(
+        "click",
+        event=>{
 
-      if(event.target === modal){
+          if(
+            event.target ===
+            modal
+          ){
 
-        modal.classList.remove("active");
+            modal.classList
+              .remove(
+                "active"
+              );
 
-      }
+          }
 
-    });
+        }
+      );
 
-  });
+    }
+  );
 
 
 /* =========================
    ESC
 ========================= */
 
-document.addEventListener("keydown",event=>{
+document.addEventListener(
+  "keydown",
+  event=>{
 
-  if(event.key === "Escape"){
+    if(
+      event.key ===
+      "Escape"
+    ){
 
-    document
-      .querySelectorAll(".modal.active")
-      .forEach(modal=>{
-        modal.classList.remove("active");
-      });
+      document
+        .querySelectorAll(
+          ".modal.active"
+        )
+        .forEach(
+          modal=>{
+            modal.classList
+              .remove(
+                "active"
+              );
+          }
+        );
+
+    }
 
   }
-
-});
+);
 
 
 /* =========================
@@ -3427,34 +5454,42 @@ document.addEventListener("keydown",event=>{
 supabaseClient
   .auth
   .onAuthStateChange(
-    async(event,session)=>{
+    async(
+      event,
+      session
+    )=>{
 
       currentUser =
-        session?.user || null;
+        session?.user ||
+        null;
+
 
       currentUserId =
-        session?.user?.id || null;
+        session?.user?.id ||
+        null;
+
 
       updateAuthUI();
 
+
       if(currentUser){
 
-        /*
-          หน่วงเล็กน้อยเพื่อไม่ให้ auth event
-          ชนกับ session initialization
-        */
+        setTimeout(
+          async()=>{
 
-        setTimeout(async()=>{
+            await ensureProfile();
 
-          await ensureProfile();
+            initializeMessaging();
 
-          initializeMessaging();
-          initializeOrderRealtime();
+            initializeOrderRealtime();
 
-          await updateMessageBadge();
-          await updateOrderBadge();
+            await updateMessageBadge();
 
-        },100);
+            await updateOrderBadge();
+
+          },
+          100
+        );
 
       }else{
 

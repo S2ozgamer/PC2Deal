@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -469,6 +468,164 @@ cursor:pointer
 }
 
 /* =========================
+CHAT
+========================= */
+
+#chatModal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.65);
+justify-content:center;
+align-items:center;
+padding:15px;
+z-index:11000
+}
+
+.chat-box{
+background:white;
+width:100%;
+max-width:550px;
+height:80vh;
+max-height:700px;
+border-radius:16px;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+box-shadow:0 10px 40px rgba(0,0,0,.35)
+}
+
+.chat-header{
+background:#111827;
+color:white;
+padding:15px;
+display:flex;
+align-items:center;
+gap:12px
+}
+
+.chat-back{
+width:42px!important;
+height:42px!important;
+padding:0!important;
+margin:0!important;
+background:#374151!important;
+border:0!important;
+border-radius:8px!important;
+color:white!important;
+font-size:22px!important;
+flex-shrink:0
+}
+
+.chat-header-info{
+flex:1;
+min-width:0
+}
+
+.chat-title{
+font-size:17px;
+font-weight:bold;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis
+}
+
+.chat-subtitle{
+font-size:13px;
+color:#d1d5db;
+margin-top:4px
+}
+
+.chat-messages{
+flex:1;
+overflow-y:auto;
+padding:15px;
+background:#f3f4f6;
+display:flex;
+flex-direction:column;
+gap:10px
+}
+
+.chat-empty{
+text-align:center;
+color:#9ca3af;
+margin:auto;
+line-height:1.7
+}
+
+.message-row{
+display:flex;
+width:100%
+}
+
+.message-row.mine{
+justify-content:flex-end
+}
+
+.message-row.theirs{
+justify-content:flex-start
+}
+
+.message-bubble{
+max-width:78%;
+padding:10px 13px;
+border-radius:14px;
+line-height:1.5;
+word-break:break-word;
+white-space:pre-wrap
+}
+
+.mine .message-bubble{
+background:#2563eb;
+color:white;
+border-bottom-right-radius:4px
+}
+
+.theirs .message-bubble{
+background:white;
+color:#222;
+border-bottom-left-radius:4px;
+box-shadow:0 1px 3px rgba(0,0,0,.08)
+}
+
+.message-time{
+font-size:10px;
+opacity:.65;
+margin-top:4px;
+text-align:right
+}
+
+.chat-status{
+font-size:12px;
+color:#6b7280;
+padding:7px 15px;
+background:white;
+border-top:1px solid #e5e7eb
+}
+
+.chat-input-area{
+padding:12px;
+background:white;
+border-top:1px solid #e5e7eb;
+display:flex;
+gap:8px
+}
+
+.chat-input{
+flex:1!important;
+height:46px!important;
+margin:0!important;
+resize:none
+}
+
+.chat-send{
+width:75px!important;
+margin:0!important;
+padding:10px!important;
+flex-shrink:0
+}
+
+/* =========================
 MOBILE
 ========================= */
 
@@ -504,6 +661,15 @@ height:230px
 
 .detail-title{
 font-size:21px
+}
+
+.chat-box{
+height:90vh;
+max-height:none
+}
+
+.message-bubble{
+max-width:85%
 }
 
 }
@@ -771,8 +937,6 @@ PRODUCT DETAIL MODAL
 <div id="detailLocation" class="detail-location">
 </div>
 
-<!-- SELLER -->
-
 <div id="detailSeller" class="detail-seller">
 👤 ผู้ขาย: กำลังโหลด...
 </div>
@@ -784,8 +948,6 @@ PRODUCT DETAIL MODAL
 <div id="detailDescription" class="detail-description">
 ผู้ขายไม่ได้ระบุรายละเอียดสินค้า
 </div>
-
-<!-- CONTACT -->
 
 <button
 id="contactSellerButton"
@@ -801,6 +963,89 @@ id="closeDetailButton"
 type="button"
 >
 ปิด
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+CHAT MODAL
+========================= -->
+
+<div id="chatModal">
+
+<div class="chat-box">
+
+<div class="chat-header">
+
+<button
+id="chatBackButton"
+class="chat-back"
+type="button"
+>
+←
+</button>
+
+<div class="chat-header-info">
+
+<div
+id="chatProductTitle"
+class="chat-title"
+>
+แชทกับผู้ขาย
+</div>
+
+<div
+id="chatSellerName"
+class="chat-subtitle"
+>
+👤 ผู้ขาย PC2Deal
+</div>
+
+</div>
+
+</div>
+
+
+<div
+id="chatMessages"
+class="chat-messages"
+>
+
+<div class="chat-empty">
+ยังไม่มีข้อความ<br>
+เริ่มต้นการสนทนาได้เลย
+</div>
+
+</div>
+
+
+<div
+id="chatStatus"
+class="chat-status"
+>
+พร้อมสนทนา
+</div>
+
+
+<div class="chat-input-area">
+
+<textarea
+id="chatInput"
+class="chat-input"
+placeholder="พิมพ์ข้อความ..."
+></textarea>
+
+<button
+id="chatSendButton"
+class="chat-send"
+type="button"
+>
+ส่ง
 </button>
 
 </div>
@@ -1805,9 +2050,7 @@ currentProduct =
 product;
 
 
-/* =========================
-IMAGE
-========================= */
+/* IMAGE */
 
 detailImage.innerHTML =
 "";
@@ -1843,18 +2086,14 @@ detailImage.innerHTML =
 }
 
 
-/* =========================
-TITLE
-========================= */
+/* TITLE */
 
 detailTitle.innerText =
 product.title ||
 "ไม่ระบุชื่อสินค้า";
 
 
-/* =========================
-PRICE
-========================= */
+/* PRICE */
 
 detailPrice.innerText =
 Number(
@@ -1864,9 +2103,7 @@ product.price || 0
 " บาท";
 
 
-/* =========================
-LOCATION
-========================= */
+/* LOCATION */
 
 detailLocation.innerText =
 "📍 " +
@@ -1876,23 +2113,14 @@ product.location ||
 );
 
 
-/* =========================
-DESCRIPTION
-========================= */
+/* DESCRIPTION */
 
 detailDescription.innerText =
 product.description ||
 "ผู้ขายไม่ได้ระบุรายละเอียดสินค้า";
 
 
-/* =========================
-SELLER
-========================= */
-
-/*
-แสดงก่อนเลย
-ไม่ต้องรอ Supabase
-*/
+/* SELLER */
 
 detailSeller.style.display =
 "block";
@@ -1901,21 +2129,13 @@ detailSeller.innerText =
 "👤 ผู้ขาย: ผู้ขาย PC2Deal";
 
 
-/* =========================
-CONTACT BUTTON
-========================= */
-
-/*
-แสดงปุ่มทันที
-*/
+/* CONTACT BUTTON */
 
 contactSellerButton.style.display =
 "block";
 
 
-/* =========================
-SHOW MODAL
-========================= */
+/* SHOW MODAL */
 
 detailModal.style.display =
 "flex";
@@ -1924,9 +2144,7 @@ document.body.style.overflow =
 "hidden";
 
 
-/* =========================
-LOAD SELLER PROFILE
-========================= */
+/* LOAD SELLER PROFILE */
 
 if(product.user_id){
 
@@ -1965,71 +2183,17 @@ console.error(
 error
 );
 
-/*
-ถ้าโหลดไม่ได้
-ยังคงแสดงชื่อเริ่มต้น
-*/
-
 }
 
 }
 
 
 /* =========================
-CONTACT BUTTON
+CONTACT SELLER
 ========================= */
 
 contactSellerButton.onclick =
-async function(){
-
-const {data} =
-await supabaseClient
-.auth
-.getUser();
-
-
-/* NOT LOGIN */
-
-if(!data.user){
-
-closeProductDetail();
-
-loginModal.style.display =
-"flex";
-
-message.innerText =
-"กรุณาเข้าสู่ระบบก่อนติดต่อผู้ขาย";
-
-return;
-
-}
-
-
-/* OWN PRODUCT */
-
-if(
-currentProduct &&
-data.user.id ===
-currentProduct.user_id
-){
-
-alert(
-"นี่คือสินค้าของคุณเอง"
-);
-
-return;
-
-}
-
-
-/* TEMP CHAT */
-
-alert(
-"💬 ระบบแชทกำลังเตรียมเปิดใช้งาน\n\n" +
-"ขั้นต่อไปเราจะทำระบบแชทระหว่างผู้ซื้อกับผู้ขาย"
-);
-
-};
+openChat;
 
 }
 
@@ -2094,15 +2258,604 @@ closeProductDetail();
 );
 
 
-/* ESC */
+/* =========================
+CHAT ELEMENTS
+========================= */
+
+const chatModal =
+document.getElementById(
+"chatModal"
+);
+
+const chatMessages =
+document.getElementById(
+"chatMessages"
+);
+
+const chatInput =
+document.getElementById(
+"chatInput"
+);
+
+const chatSendButton =
+document.getElementById(
+"chatSendButton"
+);
+
+const chatBackButton =
+document.getElementById(
+"chatBackButton"
+);
+
+const chatProductTitle =
+document.getElementById(
+"chatProductTitle"
+);
+
+const chatSellerName =
+document.getElementById(
+"chatSellerName"
+);
+
+const chatStatus =
+document.getElementById(
+"chatStatus"
+);
+
+
+/* =========================
+OPEN CHAT
+========================= */
+
+async function openChat(){
+
+const {data:userData} =
+await supabaseClient
+.auth
+.getUser();
+
+
+/* NOT LOGIN */
+
+if(!userData.user){
+
+closeProductDetail();
+
+loginModal.style.display =
+"flex";
+
+message.innerText =
+"กรุณาเข้าสู่ระบบก่อนติดต่อผู้ขาย";
+
+return;
+
+}
+
+
+/* NO PRODUCT */
+
+if(
+!currentProduct
+){
+
+alert(
+"ไม่พบข้อมูลสินค้า"
+);
+
+return;
+
+}
+
+
+/* OWN PRODUCT */
+
+if(
+userData.user.id ===
+currentProduct.user_id
+){
+
+alert(
+"นี่คือสินค้าของคุณเอง"
+);
+
+return;
+
+}
+
+
+/* SET CHAT INFO */
+
+chatProductTitle.innerText =
+currentProduct.title ||
+"สินค้า";
+
+chatSellerName.innerText =
+"👤 ผู้ขาย PC2Deal";
+
+
+/* SHOW CHAT */
+
+chatModal.style.display =
+"flex";
+
+document.getElementById(
+"detailModal"
+).style.display =
+"none";
+
+document.body.style.overflow =
+"hidden";
+
+
+/* LOAD SELLER */
+
+try{
+
+const {data:seller} =
+await supabaseClient
+.from("profiles")
+.select("display_name")
+.eq(
+"id",
+currentProduct.user_id
+)
+.maybeSingle();
+
+
+if(
+seller &&
+seller.display_name
+){
+
+chatSellerName.innerText =
+"👤 " +
+seller.display_name;
+
+}
+
+}catch(error){
+
+console.error(
+"โหลดชื่อผู้ขายไม่สำเร็จ:",
+error
+);
+
+}
+
+
+/* LOAD MESSAGES */
+
+await loadMessages();
+
+chatInput.focus();
+
+}
+
+
+/* =========================
+LOAD CHAT MESSAGES
+========================= */
+
+async function loadMessages(){
+
+const {data:userData} =
+await supabaseClient
+.auth
+.getUser();
+
+
+if(
+!userData.user ||
+!currentProduct
+){
+
+return;
+
+}
+
+
+chatStatus.innerText =
+"กำลังโหลดข้อความ...";
+
+
+const {data,error} =
+await supabaseClient
+.from("messages")
+.select("*")
+.eq(
+"product_id",
+currentProduct.id
+)
+.or(
+"sender_id.eq." +
+userData.user.id +
+",receiver_id.eq." +
+userData.user.id
+)
+.order(
+"created_at",
+{
+ascending:true
+}
+);
+
+
+if(error){
+
+console.error(
+"โหลดข้อความไม่สำเร็จ:",
+error
+);
+
+chatStatus.innerText =
+"โหลดข้อความไม่สำเร็จ";
+
+return;
+
+}
+
+
+chatMessages.innerHTML =
+"";
+
+
+if(
+!data ||
+data.length === 0
+){
+
+chatMessages.innerHTML = `
+<div class="chat-empty">
+ยังไม่มีข้อความ<br>
+เริ่มต้นการสนทนาได้เลย
+</div>
+`;
+
+chatStatus.innerText =
+"พร้อมสนทนา";
+
+return;
+
+}
+
+
+/* DISPLAY MESSAGES */
+
+data.forEach(
+function(msg){
+
+const row =
+document.createElement(
+"div"
+);
+
+const mine =
+msg.sender_id ===
+userData.user.id;
+
+
+row.className =
+"message-row " +
+(
+mine
+?
+"mine"
+:
+"theirs"
+);
+
+
+const bubble =
+document.createElement(
+"div"
+);
+
+bubble.className =
+"message-bubble";
+
+
+bubble.innerText =
+msg.message;
+
+
+const time =
+document.createElement(
+"div"
+);
+
+time.className =
+"message-time";
+
+
+time.innerText =
+new Date(
+msg.created_at
+)
+.toLocaleTimeString(
+"th-TH",
+{
+hour:"2-digit",
+minute:"2-digit"
+}
+);
+
+
+bubble.appendChild(
+time
+);
+
+row.appendChild(
+bubble
+);
+
+chatMessages.appendChild(
+row
+);
+
+});
+
+
+/* SCROLL BOTTOM */
+
+chatMessages.scrollTop =
+chatMessages.scrollHeight;
+
+
+chatStatus.innerText =
+"พร้อมสนทนา";
+
+}
+
+
+/* =========================
+SEND MESSAGE
+========================= */
+
+async function sendMessage(){
+
+const text =
+chatInput.value.trim();
+
+
+if(!text){
+
+return;
+
+}
+
+
+const {data:userData} =
+await supabaseClient
+.auth
+.getUser();
+
+
+if(
+!userData.user
+){
+
+alert(
+"กรุณาเข้าสู่ระบบก่อน"
+);
+
+return;
+
+}
+
+
+if(
+!currentProduct
+){
+
+alert(
+"ไม่พบข้อมูลสินค้า"
+);
+
+return;
+
+}
+
+
+if(
+userData.user.id ===
+currentProduct.user_id
+){
+
+alert(
+"ไม่สามารถส่งข้อความหาตัวเองได้"
+);
+
+return;
+
+}
+
+
+/* DISABLE */
+
+chatSendButton.disabled =
+true;
+
+chatSendButton.innerText =
+"กำลังส่ง...";
+
+
+/* INSERT MESSAGE */
+
+const {error} =
+await supabaseClient
+.from("messages")
+.insert({
+
+sender_id:
+userData.user.id,
+
+receiver_id:
+currentProduct.user_id,
+
+product_id:
+currentProduct.id,
+
+message:
+text
+
+});
+
+
+/* ENABLE */
+
+chatSendButton.disabled =
+false;
+
+chatSendButton.innerText =
+"ส่ง";
+
+
+/* ERROR */
+
+if(error){
+
+console.error(
+"ส่งข้อความไม่สำเร็จ:",
+error
+);
+
+alert(
+"ส่งข้อความไม่สำเร็จ\n\n" +
+error.message
+);
+
+return;
+
+}
+
+
+/* CLEAR */
+
+chatInput.value =
+"";
+
+
+/* RELOAD */
+
+await loadMessages();
+
+chatInput.focus();
+
+}
+
+
+/* SEND BUTTON */
+
+chatSendButton.onclick =
+sendMessage;
+
+
+/* =========================
+ENTER TO SEND
+========================= */
+
+chatInput.addEventListener(
+"keydown",
+function(event){
+
+if(
+event.key === "Enter" &&
+!event.shiftKey
+){
+
+event.preventDefault();
+
+sendMessage();
+
+}
+
+}
+);
+
+
+/* =========================
+BACK FROM CHAT
+========================= */
+
+chatBackButton.onclick =
+function(){
+
+chatModal.style.display =
+"none";
+
+document.body.style.overflow =
+"";
+
+
+document.getElementById(
+"detailModal"
+).style.display =
+"flex";
+
+};
+
+
+/* =========================
+CLICK CHAT BACKGROUND
+========================= */
+
+chatModal.addEventListener(
+"click",
+function(event){
+
+if(
+event.target ===
+chatModal
+){
+
+chatModal.style.display =
+"none";
+
+document.body.style.overflow =
+"";
+
+}
+
+}
+);
+
+
+/* =========================
+ESC
+========================= */
 
 document.addEventListener(
 "keydown",
 function(event){
 
 if(
-event.key === "Escape"
+event.key !== "Escape"
 ){
+
+return;
+
+}
+
+
+/* CHAT */
+
+if(
+chatModal.style.display ===
+"flex"
+){
+
+chatModal.style.display =
+"none";
+
+document.body.style.overflow =
+"";
+
+return;
+
+}
+
+
+/* DETAIL */
 
 const modal =
 document.getElementById(
@@ -2110,7 +2863,8 @@ document.getElementById(
 );
 
 if(
-modal.style.display === "flex"
+modal.style.display ===
+"flex"
 ){
 
 closeProductDetail();
@@ -2118,8 +2872,27 @@ closeProductDetail();
 }
 
 }
+);
+
+
+/* =========================
+AUTO REFRESH CHAT
+========================= */
+
+setInterval(
+async function(){
+
+if(
+chatModal.style.display ===
+"flex"
+){
+
+await loadMessages();
 
 }
+
+},
+3000
 );
 
 
@@ -2195,4 +2968,3 @@ loadProducts();
 
 </body>
 </html>
-```

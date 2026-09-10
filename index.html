@@ -1,9 +1,9 @@
+```html
 <!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>PC2Deal - ตลาดซื้อขายคอมมือสอง</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -395,18 +395,24 @@ margin-bottom:8px
 
 .detail-location{
 color:#6b7280;
-margin-bottom:10px
+margin-bottom:12px
 }
 
-/* SELLER */
+/* =========================
+SELLER
+========================= */
 
 .detail-seller{
-color:#374151;
-font-size:15px;
-margin-bottom:20px;
-padding:10px 12px;
+display:block;
+width:100%;
+padding:14px;
+margin:12px 0 20px;
 background:#f3f4f6;
-border-radius:8px
+border-radius:10px;
+color:#111827;
+font-size:16px;
+font-weight:600;
+line-height:1.5
 }
 
 .detail-label{
@@ -425,26 +431,31 @@ min-height:80px;
 word-break:break-word
 }
 
-/* CONTACT SELLER */
+/* =========================
+CONTACT SELLER
+========================= */
 
 .detail-contact{
-width:100%;
-margin-top:20px;
-padding:13px;
-border:0;
-border-radius:8px;
-background:#2563eb;
-color:white;
-font-size:16px;
-font-weight:bold;
-cursor:pointer
+display:block!important;
+width:100%!important;
+margin-top:20px!important;
+padding:14px!important;
+border:0!important;
+border-radius:10px!important;
+background:#2563eb!important;
+color:white!important;
+font-size:16px!important;
+font-weight:bold!important;
+cursor:pointer!important;
+text-align:center!important
 }
 
 .detail-contact:hover{
-background:#1d4ed8
+background:#1d4ed8!important
 }
 
 .detail-close{
+display:block;
 width:100%;
 margin-top:10px;
 padding:13px;
@@ -760,8 +771,10 @@ PRODUCT DETAIL MODAL
 <div id="detailLocation" class="detail-location">
 </div>
 
+<!-- SELLER -->
+
 <div id="detailSeller" class="detail-seller">
-👤 กำลังโหลดข้อมูลผู้ขาย...
+👤 ผู้ขาย: กำลังโหลด...
 </div>
 
 <div class="detail-label">
@@ -769,13 +782,24 @@ PRODUCT DETAIL MODAL
 </div>
 
 <div id="detailDescription" class="detail-description">
+ผู้ขายไม่ได้ระบุรายละเอียดสินค้า
 </div>
 
-<button id="contactSellerButton" class="detail-contact">
+<!-- CONTACT -->
+
+<button
+id="contactSellerButton"
+class="detail-contact"
+type="button"
+>
 💬 ติดต่อผู้ขาย
 </button>
 
-<button class="detail-close" id="closeDetailButton">
+<button
+class="detail-close"
+id="closeDetailButton"
+type="button"
+>
 ปิด
 </button>
 
@@ -803,6 +827,13 @@ window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
+
+
+/* =========================
+GLOBAL
+========================= */
+
+let currentProduct = null;
 
 
 /* =========================
@@ -851,14 +882,21 @@ document.getElementById("resetButton");
 let registerMode = false;
 
 
-loginButton.onclick = async function(){
+/* LOGIN BUTTON */
+
+loginButton.onclick =
+async function(){
 
 const {data} =
-await supabaseClient.auth.getUser();
+await supabaseClient
+.auth
+.getUser();
 
 if(data.user){
 
-await supabaseClient.auth.signOut();
+await supabaseClient
+.auth
+.signOut();
 
 loginButton.innerText =
 "เข้าสู่ระบบ";
@@ -873,6 +911,8 @@ loginModal.style.display =
 };
 
 
+/* CLOSE LOGIN */
+
 closeButton.onclick =
 function(){
 
@@ -884,6 +924,8 @@ message.innerText =
 
 };
 
+
+/* SWITCH LOGIN / REGISTER */
 
 switchMode.onclick =
 function(){
@@ -918,6 +960,8 @@ switchMode.innerText =
 };
 
 
+/* LOGIN / REGISTER */
+
 submitButton.onclick =
 async function(){
 
@@ -943,12 +987,11 @@ message.innerText =
 if(registerMode){
 
 const {error} =
-await supabaseClient.auth.signUp({
-
+await supabaseClient
+.auth
+.signUp({
 email:email,
-
 password:password
-
 });
 
 if(error){
@@ -966,12 +1009,11 @@ message.innerText =
 }else{
 
 const {error} =
-await supabaseClient.auth.signInWithPassword({
-
+await supabaseClient
+.auth
+.signInWithPassword({
 email:email,
-
 password:password
-
 });
 
 if(error){
@@ -987,14 +1029,17 @@ message.innerText =
 loginButton.innerText =
 "ออกจากระบบ";
 
-setTimeout(function(){
+setTimeout(
+function(){
 
 loginModal.style.display =
 "none";
 
 loadProducts();
 
-},1000);
+},
+1000
+);
 
 }
 
@@ -1002,6 +1047,8 @@ loadProducts();
 
 };
 
+
+/* FORGOT PASSWORD */
 
 forgotPassword.onclick =
 async function(){
@@ -1019,15 +1066,14 @@ return;
 }
 
 const {error} =
-await supabaseClient.auth.resetPasswordForEmail(
-
+await supabaseClient
+.auth
+.resetPasswordForEmail(
 email,
-
 {
 redirectTo:
 "https://s2ozgamer.github.io/PC2Deal/"
 }
-
 );
 
 if(error){
@@ -1045,8 +1091,9 @@ message.innerText =
 };
 
 
-supabaseClient.auth.onAuthStateChange(
+/* PASSWORD RECOVERY */
 
+supabaseClient.auth.onAuthStateChange(
 async function(event){
 
 if(event === "PASSWORD_RECOVERY"){
@@ -1078,9 +1125,10 @@ resetBox.style.display =
 }
 
 }
-
 );
 
+
+/* RESET PASSWORD */
 
 resetButton.onclick =
 async function(){
@@ -1098,10 +1146,10 @@ return;
 }
 
 const {error} =
-await supabaseClient.auth.updateUser({
-
+await supabaseClient
+.auth
+.updateUser({
 password:password
-
 });
 
 if(error){
@@ -1114,24 +1162,31 @@ error.message;
 message.innerText =
 "เปลี่ยนรหัสผ่านสำเร็จแล้ว!";
 
-setTimeout(function(){
+setTimeout(
+function(){
 
 loginModal.style.display =
 "none";
 
 location.reload();
 
-},1500);
+},
+1500
+);
 
 }
 
 };
 
 
+/* CHECK USER */
+
 async function checkUser(){
 
 const {data} =
-await supabaseClient.auth.getUser();
+await supabaseClient
+.auth
+.getUser();
 
 if(data.user){
 
@@ -1215,14 +1270,19 @@ imagePreview.style.display =
 
 reader.readAsDataURL(file);
 
-});
+}
+);
 
+
+/* SELL BUTTON */
 
 sellButton.onclick =
 async function(){
 
 const {data} =
-await supabaseClient.auth.getUser();
+await supabaseClient
+.auth
+.getUser();
 
 if(!data.user){
 
@@ -1241,6 +1301,8 @@ sellModal.style.display =
 
 };
 
+
+/* CLOSE SELL */
 
 closeSellButton.onclick =
 function(){
@@ -1262,7 +1324,9 @@ publishButton.onclick =
 async function(){
 
 const {data} =
-await supabaseClient.auth.getUser();
+await supabaseClient
+.auth
+.getUser();
 
 const user =
 data.user;
@@ -1276,10 +1340,10 @@ return;
 
 }
 
-
 const title =
 document.getElementById("productTitle")
-.value.trim();
+.value
+.trim();
 
 const price =
 document.getElementById("productPrice")
@@ -1287,11 +1351,13 @@ document.getElementById("productPrice")
 
 const location =
 document.getElementById("productLocation")
-.value.trim();
+.value
+.trim();
 
 const description =
 document.getElementById("productDescription")
-.value.trim();
+.value
+.trim();
 
 const file =
 productImage.files[0];
@@ -1329,8 +1395,7 @@ return;
 
 }
 
-if(file.size >
-5 * 1024 * 1024){
+if(file.size > 5 * 1024 * 1024){
 
 sellMessage.innerText =
 "รูปต้องมีขนาดไม่เกิน 5MB";
@@ -1348,7 +1413,6 @@ true;
 publishButton.innerText =
 "กำลังลงขาย...";
 
-
 let image_url =
 "";
 
@@ -1360,9 +1424,10 @@ if(file){
 sellMessage.innerText =
 "กำลังอัปโหลดรูป...";
 
-
 const extension =
-file.name.split(".").pop();
+file.name
+.split(".")
+.pop();
 
 const fileName =
 user.id +
@@ -1473,17 +1538,17 @@ sellMessage.innerText =
 "ลงขายสินค้าเรียบร้อยแล้ว!";
 
 
-document.getElementById("productTitle").value =
-"";
+document.getElementById("productTitle")
+.value = "";
 
-document.getElementById("productPrice").value =
-"";
+document.getElementById("productPrice")
+.value = "";
 
-document.getElementById("productLocation").value =
-"";
+document.getElementById("productLocation")
+.value = "";
 
-document.getElementById("productDescription").value =
-"";
+document.getElementById("productDescription")
+.value = "";
 
 productImage.value =
 "";
@@ -1495,7 +1560,8 @@ imagePreview.style.display =
 "none";
 
 
-setTimeout(function(){
+setTimeout(
+function(){
 
 sellModal.style.display =
 "none";
@@ -1505,7 +1571,9 @@ sellMessage.innerText =
 
 loadProducts();
 
-},1000);
+},
+1000
+);
 
 };
 
@@ -1514,7 +1582,9 @@ loadProducts();
 LOAD PRODUCTS
 ========================= */
 
-async function loadProducts(searchText=""){
+async function loadProducts(
+searchText=""
+){
 
 const productsBox =
 document.getElementById("products");
@@ -1581,9 +1651,7 @@ productsBox.innerHTML =
 "";
 
 
-/* =========================
-CREATE PRODUCT CARDS
-========================= */
+/* CREATE CARDS */
 
 data.forEach(
 function(product){
@@ -1612,7 +1680,6 @@ escapeHTML(product.image_url) +
 
 
 card.innerHTML =
-
 imageHTML +
 
 '<div class="info">' +
@@ -1624,9 +1691,11 @@ escapeHTML(product.title) +
 '<div class="price">' +
 Number(product.price)
 .toLocaleString() +
-' บาท</div>' +
+' บาท' +
+'</div>' +
 
-'<div class="location">📍 ' +
+'<div class="location">' +
+'📍 ' +
 escapeHTML(
 product.location ||
 "ไม่ระบุ"
@@ -1634,18 +1703,15 @@ product.location ||
 '</div>' +
 
 (
-product.description ?
-
+product.description
+?
 '<div class="description">' +
 escapeHTML(
 product.description
 ) +
 '</div>'
-
 :
-
 ""
-
 ) +
 
 '<button class="detail-button" type="button">' +
@@ -1661,7 +1727,9 @@ productsBox.appendChild(card);
 /* DETAIL BUTTON */
 
 const detailButton =
-card.querySelector(".detail-button");
+card.querySelector(
+".detail-button"
+);
 
 
 detailButton.addEventListener(
@@ -1686,7 +1754,9 @@ openProductDetail(product);
 OPEN PRODUCT DETAIL
 ========================= */
 
-async function openProductDetail(product){
+async function openProductDetail(
+product
+){
 
 const detailModal =
 document.getElementById(
@@ -1718,24 +1788,26 @@ document.getElementById(
 "detailSeller"
 );
 
-const contactSellerButton =
-document.getElementById(
-"contactSellerButton"
-);
-
 const detailDescription =
 document.getElementById(
 "detailDescription"
 );
 
+const contactSellerButton =
+document.getElementById(
+"contactSellerButton"
+);
 
-/* SAVE CURRENT PRODUCT */
+
+/* SAVE PRODUCT */
 
 currentProduct =
 product;
 
 
-/* IMAGE */
+/* =========================
+IMAGE
+========================= */
 
 detailImage.innerHTML =
 "";
@@ -1753,6 +1825,14 @@ img.alt =
 product.title ||
 "สินค้า";
 
+img.onerror =
+function(){
+
+detailImage.innerHTML =
+"🖥️";
+
+};
+
 detailImage.appendChild(img);
 
 }else{
@@ -1763,14 +1843,18 @@ detailImage.innerHTML =
 }
 
 
-/* TITLE */
+/* =========================
+TITLE
+========================= */
 
 detailTitle.innerText =
 product.title ||
 "ไม่ระบุชื่อสินค้า";
 
 
-/* PRICE */
+/* =========================
+PRICE
+========================= */
 
 detailPrice.innerText =
 Number(
@@ -1780,7 +1864,9 @@ product.price || 0
 " บาท";
 
 
-/* LOCATION */
+/* =========================
+LOCATION
+========================= */
 
 detailLocation.innerText =
 "📍 " +
@@ -1790,20 +1876,46 @@ product.location ||
 );
 
 
-/* SELLER LOADING */
-
-detailSeller.innerText =
-"👤 กำลังโหลดข้อมูลผู้ขาย...";
-
-
-/* DESCRIPTION */
+/* =========================
+DESCRIPTION
+========================= */
 
 detailDescription.innerText =
 product.description ||
 "ผู้ขายไม่ได้ระบุรายละเอียดสินค้า";
 
 
-/* SHOW MODAL FIRST */
+/* =========================
+SELLER
+========================= */
+
+/*
+แสดงก่อนเลย
+ไม่ต้องรอ Supabase
+*/
+
+detailSeller.style.display =
+"block";
+
+detailSeller.innerText =
+"👤 ผู้ขาย: ผู้ขาย PC2Deal";
+
+
+/* =========================
+CONTACT BUTTON
+========================= */
+
+/*
+แสดงปุ่มทันที
+*/
+
+contactSellerButton.style.display =
+"block";
+
+
+/* =========================
+SHOW MODAL
+========================= */
 
 detailModal.style.display =
 "flex";
@@ -1812,55 +1924,71 @@ document.body.style.overflow =
 "hidden";
 
 
-/* LOAD SELLER */
+/* =========================
+LOAD SELLER PROFILE
+========================= */
 
 if(product.user_id){
 
-const {data:seller,error:sellerError} =
+try{
+
+const {
+data:seller,
+error:sellerError
+} =
 await supabaseClient
 .from("profiles")
 .select("display_name")
-.eq("id",product.user_id)
+.eq(
+"id",
+product.user_id
+)
 .maybeSingle();
 
 
-if(sellerError){
-
-console.error(
-"โหลดข้อมูลผู้ขายไม่สำเร็จ:",
-sellerError
-);
-
-detailSeller.innerText =
-"👤 ผู้ขาย: ผู้ขาย PC2Deal";
-
-}else{
+if(
+!sellerError &&
+seller &&
+seller.display_name
+){
 
 detailSeller.innerText =
 "👤 ผู้ขาย: " +
-(
-seller?.display_name ||
-"ผู้ขาย PC2Deal"
+seller.display_name;
+
+}
+
+}catch(error){
+
+console.error(
+"โหลดข้อมูลผู้ขายไม่สำเร็จ:",
+error
 );
 
-}
-
-}else{
-
-detailSeller.innerText =
-"👤 ผู้ขาย: ผู้ขาย PC2Deal";
+/*
+ถ้าโหลดไม่ได้
+ยังคงแสดงชื่อเริ่มต้น
+*/
 
 }
 
+}
 
-/* CONTACT BUTTON */
+
+/* =========================
+CONTACT BUTTON
+========================= */
 
 contactSellerButton.onclick =
 async function(){
 
 const {data} =
-await supabaseClient.auth.getUser();
+await supabaseClient
+.auth
+.getUser();
 
+
+/* NOT LOGIN */
 
 if(!data.user){
 
@@ -1877,7 +2005,7 @@ return;
 }
 
 
-/* PREVENT CONTACTING YOURSELF */
+/* OWN PRODUCT */
 
 if(
 currentProduct &&
@@ -1894,23 +2022,16 @@ return;
 }
 
 
-/* TEMPORARY */
+/* TEMP CHAT */
 
 alert(
-"💬 ระบบแชทกำลังเตรียมเปิดใช้งาน\n\nขั้นต่อไปเราจะทำระบบแชทระหว่างผู้ซื้อกับผู้ขาย"
+"💬 ระบบแชทกำลังเตรียมเปิดใช้งาน\n\n" +
+"ขั้นต่อไปเราจะทำระบบแชทระหว่างผู้ซื้อกับผู้ขาย"
 );
 
 };
 
 }
-
-
-/* =========================
-CURRENT PRODUCT
-========================= */
-
-let currentProduct =
-null;
 
 
 /* =========================
@@ -1933,9 +2054,12 @@ document.body.style.overflow =
 }
 
 
+/* CLOSE BUTTON */
+
 document.getElementById(
 "closeDetailButton"
-).addEventListener(
+)
+.addEventListener(
 "click",
 function(event){
 
@@ -1949,17 +2073,17 @@ closeProductDetail();
 );
 
 
-/* CLICK BACKGROUND TO CLOSE */
+/* CLICK BACKGROUND */
 
 document.getElementById(
 "detailModal"
-).addEventListener(
+)
+.addEventListener(
 "click",
 function(event){
 
 if(
-event.target ===
-this
+event.target === this
 ){
 
 closeProductDetail();
@@ -1970,7 +2094,7 @@ closeProductDetail();
 );
 
 
-/* ESC TO CLOSE */
+/* ESC */
 
 document.addEventListener(
 "keydown",
@@ -1986,8 +2110,7 @@ document.getElementById(
 );
 
 if(
-modal.style.display ===
-"flex"
+modal.style.display === "flex"
 ){
 
 closeProductDetail();
@@ -2072,3 +2195,4 @@ loadProducts();
 
 </body>
 </html>
+```

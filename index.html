@@ -164,6 +164,22 @@ margin-top:10px;
 line-height:1.5
 }
 
+.detail-button{
+width:100%;
+margin-top:12px;
+padding:11px;
+border:0;
+border-radius:8px;
+background:#111827;
+color:white;
+font-weight:bold;
+cursor:pointer
+}
+
+.detail-button:hover{
+background:#2563eb
+}
+
 .empty{
 text-align:center;
 padding:40px;
@@ -287,6 +303,82 @@ border-radius:10px;
 margin-top:10px
 }
 
+
+/* =========================
+PRODUCT DETAIL
+========================= */
+
+.detail-box{
+background:white;
+width:100%;
+max-width:650px;
+border-radius:16px;
+overflow:hidden;
+max-height:90vh;
+overflow-y:auto
+}
+
+.detail-image{
+width:100%;
+height:320px;
+background:#e5e7eb;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:80px;
+overflow:hidden
+}
+
+.detail-image img{
+width:100%;
+height:100%;
+object-fit:cover
+}
+
+.detail-content{
+padding:25px
+}
+
+.detail-title{
+font-size:25px;
+font-weight:bold;
+margin-bottom:10px
+}
+
+.detail-price{
+font-size:25px;
+font-weight:bold;
+color:#2563eb;
+margin-bottom:8px
+}
+
+.detail-location{
+color:#6b7280;
+margin-bottom:20px
+}
+
+.detail-label{
+font-weight:bold;
+font-size:16px;
+margin-bottom:8px
+}
+
+.detail-description{
+background:#f5f6f8;
+padding:15px;
+border-radius:10px;
+line-height:1.7;
+white-space:pre-wrap;
+min-height:80px
+}
+
+.detail-close{
+margin-top:20px;
+background:#e5e7eb!important;
+color:#222!important
+}
+
+
 @media(max-width:600px){
 
 .hero h1{
@@ -311,6 +403,14 @@ font-size:20px
 
 .sell{
 white-space:nowrap
+}
+
+.detail-image{
+height:230px
+}
+
+.detail-title{
+font-size:21px
 }
 
 }
@@ -532,6 +632,42 @@ alt="ตัวอย่างรูปสินค้า"
 <button class="close" id="closeSellButton">
 ยกเลิก
 </button>
+
+</div>
+
+</div>
+
+
+
+<!-- PRODUCT DETAIL MODAL -->
+
+<div class="modal" id="detailModal">
+
+<div class="detail-box">
+
+<div id="detailImage" class="detail-image">
+🖥️
+</div>
+
+<div class="detail-content">
+
+<div id="detailTitle" class="detail-title"></div>
+
+<div id="detailPrice" class="detail-price"></div>
+
+<div id="detailLocation" class="detail-location"></div>
+
+<div class="detail-label">
+รายละเอียดสินค้า
+</div>
+
+<div id="detailDescription" class="detail-description"></div>
+
+<button class="detail-close" id="closeDetailButton">
+ปิด
+</button>
+
+</div>
 
 </div>
 
@@ -1337,14 +1473,138 @@ product.description
 
 "")+
 
+'<button class="detail-button" type="button">'+
+'🔎 ดูรายละเอียด'+
+'</button>'+
+
 '</div>';
 
 
 productsBox.appendChild(card);
 
+
+/* =========================
+DETAIL BUTTON
+========================= */
+
+const detailButton =
+card.querySelector(".detail-button");
+
+detailButton.onclick=function(event){
+
+event.stopPropagation();
+
+openProductDetail(product);
+
+};
+
 });
 
 }
+
+
+
+/* =========================
+OPEN PRODUCT DETAIL
+========================= */
+
+function openProductDetail(product){
+
+const detailModal =
+document.getElementById("detailModal");
+
+const detailImage =
+document.getElementById("detailImage");
+
+const detailTitle =
+document.getElementById("detailTitle");
+
+const detailPrice =
+document.getElementById("detailPrice");
+
+const detailLocation =
+document.getElementById("detailLocation");
+
+const detailDescription =
+document.getElementById("detailDescription");
+
+
+if(product.image_url){
+
+detailImage.innerHTML="";
+
+const img =
+document.createElement("img");
+
+img.src =
+product.image_url;
+
+img.alt =
+"สินค้า";
+
+detailImage.appendChild(img);
+
+}else{
+
+detailImage.innerHTML="🖥️";
+
+}
+
+
+detailTitle.innerText =
+product.title ||
+"ไม่ระบุชื่อสินค้า";
+
+
+detailPrice.innerText =
+Number(product.price || 0)
+.toLocaleString()+
+" บาท";
+
+
+detailLocation.innerText =
+"📍 "+
+(product.location ||
+"ไม่ระบุสถานที่");
+
+
+detailDescription.innerText =
+product.description ||
+"ผู้ขายไม่ได้ระบุรายละเอียดสินค้า";
+
+
+detailModal.style.display="flex";
+
+}
+
+
+
+/* =========================
+CLOSE DETAIL
+========================= */
+
+document.getElementById(
+"closeDetailButton"
+).onclick=function(){
+
+document.getElementById(
+"detailModal"
+).style.display="none";
+
+};
+
+
+document.getElementById(
+"detailModal"
+).onclick=function(event){
+
+if(event.target === this){
+
+this.style.display="none";
+
+}
+
+};
 
 
 
